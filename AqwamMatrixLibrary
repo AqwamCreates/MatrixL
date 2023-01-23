@@ -1,0 +1,296 @@
+local MatrixOperation = require(script.MatrixOperation)
+local MatrixBroadcast = require(script.MatrixBroadcast)
+local MatrixDotProduct = require(script.MatrixDotProduct)
+
+local AqwamMatrixLibrary = {}
+
+local function convertToMatrixIfScalar(value)
+
+	local isNotScalar
+
+	isNotScalar = pcall(function()
+
+		local testForScalar = value[1][1]
+
+	end)
+	
+	if not isNotScalar then
+		
+		return {{value}}
+		
+	else
+		
+		return value
+		
+	end
+	
+end
+
+local function broadcastAndCalculate(operation, ...)
+	
+	local matrices = {...}
+	
+	if (#matrices == 1) then
+		
+		return ...
+		
+	end
+
+	local matrix1 = convertToMatrixIfScalar(matrices[1])
+
+	local matrix2 = convertToMatrixIfScalar(matrices[2])
+	
+	matrix1, matrix2 = MatrixBroadcast:matrixBroadcast(matrix1, matrix2)
+
+	local result = MatrixOperation:matrixOperation(operation, matrix1, matrix2)
+
+	return broadcastAndCalculate(operation, result, select(3, ...))
+	
+end
+
+function AqwamMatrixLibrary:add(...)
+	
+	return broadcastAndCalculate('+', ...)
+	
+end
+
+function AqwamMatrixLibrary:subtract(...)
+
+	return broadcastAndCalculate('-', ...)
+
+end
+
+function AqwamMatrixLibrary:multiply(...)
+
+	return broadcastAndCalculate('*', ...)
+
+end
+
+function AqwamMatrixLibrary:divide(...)
+
+	return broadcastAndCalculate('/', ...)
+
+end
+
+function AqwamMatrixLibrary:logarithm(...)
+
+	return broadcastAndCalculate('log', ...)
+
+end
+
+function AqwamMatrixLibrary:exponent(...)
+
+	return broadcastAndCalculate('exp', ...)
+
+end
+
+function AqwamMatrixLibrary:dotProduct(...)
+
+	local matrices = {...}
+	
+	local firstMatrixIndex = #matrices
+	local secondMatrixIndex = firstMatrixIndex - 1 
+
+	local result
+	
+	local success = pcall(function()
+		
+		result = MatrixDotProduct:dotProduct(matrices[secondMatrixIndex], matrices[firstMatrixIndex])
+		
+	end)
+	
+	if (not success) then
+		
+		error("Argument " .. secondMatrixIndex .. " and " .. firstMatrixIndex .. " are incompatible!")
+		
+	end
+	
+	if ( (secondMatrixIndex - 1) > 0) then
+		
+		return AqwamMatrixLibrary:dotProduct(select(secondMatrixIndex - 1, ...), result)
+
+	else
+		
+		return result
+
+	end
+
+end
+
+function AqwamMatrixLibrary:sum(matrix)
+	
+	local result = 0
+	
+	local matrixRows = #matrix
+	local matrixColumns = #matrix[1]
+	
+	for row = 1, matrixRows, 1 do
+		
+		for column = 1, matrixColumns, 1 do
+			
+			result += matrix[row][column]
+			
+		end
+		
+	end
+	
+	return result
+	
+end
+
+function AqwamMatrixLibrary:createIdentityMatrix(numberOfRowsAndColumns)
+	
+	local result = {}
+	
+	for row = 1, numberOfRowsAndColumns, 1 do
+		
+		result[row] = {}
+		
+		for column = 1, numberOfRowsAndColumns, 1 do
+				
+			if (row == column) then
+					
+				result[row][column] = 1
+					
+			else
+					
+				result[row][column] = 0
+					
+			end
+				
+		end
+		
+	end
+	
+	return result
+	
+end
+
+function AqwamMatrixLibrary:createMatrix(numberOfRows, numberOfColumns, allNumberValues)
+	
+	allNumberValues = allNumberValues or 0
+	
+	local result = {}
+
+	for row = 1, numberOfRows, 1 do
+
+		result[row] = {}
+
+		for column = 1, numberOfColumns, 1 do
+
+			result[row][column] = allNumberValues
+
+		end	
+
+	end
+
+	return result
+	
+end
+
+function AqwamMatrixLibrary:getSize(matrix)
+	
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+	
+	return {numberOfRows, numberOfColumns}
+	
+end
+
+
+function AqwamMatrixLibrary:transpose(matrix)
+	
+	local currentRowVector
+	
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+	
+	local result = AqwamMatrixLibrary:createMatrix(numberOfColumns, numberOfRows)
+	
+	for row = 1, numberOfRows, 1 do
+		
+		currentRowVector = matrix[row]
+		
+		for column = 1, #currentRowVector, 1 do
+			
+			result[column][row] = currentRowVector[column]
+			
+		end
+		
+	end
+	
+	return result
+	
+end
+
+function AqwamMatrixLibrary:verticalSum(matrix)
+	
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+
+	local result = AqwamMatrixLibrary:createMatrix(1, numberOfColumns)
+
+
+	for row = 1, numberOfRows, 1 do
+		
+		for column = 1, numberOfColumns, 1 do
+
+			result[1][column] += matrix[row][column]
+
+		end	
+
+	end
+
+	return result
+
+end
+
+function AqwamMatrixLibrary:horizontalSum(matrix)
+
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+
+	local result = AqwamMatrixLibrary:createMatrix(numberOfRows, 1)
+
+	for row = 1, numberOfRows, 1 do
+
+		for column = 1, numberOfColumns, 1 do
+
+			result[row][1] += matrix[row][column]
+
+		end	
+
+	end
+
+	return result
+
+end
+
+function AqwamMatrixLibrary:printMatrix(matrix)
+	
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+	
+	local text = "\n\n"
+	
+	for row = 1, numberOfRows, 1 do
+		
+		text = text .. "{"
+
+		for column = 1, numberOfColumns, 1 do
+
+			text = text .. "\t" .. matrix[row][column]
+			
+		end
+		
+		text = text .. "\t}\n"
+
+	end
+	
+	text = text .. "\n"
+	
+	print(text)
+	
+end
+
+return AqwamMatrixLibrary
