@@ -204,7 +204,7 @@ function AqwamMatrixLibrary:createRandomMatrix(numberOfRows, numberOfColumns)
 
 		for column = 1, numberOfColumns, 1 do
 
-			result[row][column] = Random.new():NextInteger(-1000000000, 1000000000)
+			result[row][column] = Random.new():NextInteger(-100000, 100000)
 
 		end	
 
