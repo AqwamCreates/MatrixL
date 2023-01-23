@@ -32,6 +32,7 @@
 local MatrixOperation = require(script.MatrixOperation)
 local MatrixBroadcast = require(script.MatrixBroadcast)
 local MatrixDotProduct = require(script.MatrixDotProduct)
+local MatrixConcatenate = require(script.MatrixConcatenate)
 
 local AqwamRobloxMatrixLibrary = {}
 
@@ -395,6 +396,76 @@ function AqwamRobloxMatrixLibrary:printMatrix(matrix)
 	
 	print(text)
 	
+end
+
+function AqwamRobloxMatrixLibrary:horizontalConcatenate(...)
+
+	local matrices = {...}
+
+	local firstMatrixIndex = #matrices
+	local secondMatrixIndex = firstMatrixIndex - 1 
+
+	local result
+
+	local success = pcall(function()
+
+		result = MatrixConcatenate:horizontalConcatenate(matrices[secondMatrixIndex], matrices[firstMatrixIndex])
+
+	end)
+
+	if (not success) then
+
+		local text = generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
+
+		error(text)
+
+	end
+
+	if ( (secondMatrixIndex - 1) > 0) then
+
+		return AqwamRobloxMatrixLibrary:horizontalConcatenate(select(secondMatrixIndex - 1, ...), result)
+
+	else
+
+		return result
+
+	end
+	
+end
+
+function AqwamRobloxMatrixLibrary:verticalConcatenate(...)
+
+	local matrices = {...}
+
+	local firstMatrixIndex = #matrices
+	local secondMatrixIndex = firstMatrixIndex - 1 
+
+	local result
+
+	local success = pcall(function()
+
+		result = MatrixConcatenate:verticalConcatenate(matrices[secondMatrixIndex], matrices[firstMatrixIndex])
+
+	end)
+
+	if (not success) then
+
+		local text = generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
+
+		error(text)
+
+	end
+
+	if ( (secondMatrixIndex - 1) > 0) then
+
+		return AqwamRobloxMatrixLibrary:verticalConcatenate(select(secondMatrixIndex - 1, ...), result)
+
+	else
+
+		return result
+
+	end
+
 end
 
 return AqwamRobloxMatrixLibrary
