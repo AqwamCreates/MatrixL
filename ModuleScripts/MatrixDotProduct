@@ -4,7 +4,7 @@ local function onDotProductError(matrix1Column, matrix2Row)
 	
 	local errorMessage = "Incompatible Matrix Dimensions: " .. matrix1Column .. " Column(s), " .. matrix2Row .. " Row(s)."
 	
-	--error(errorMessage)
+	error(errorMessage)
 	
 end
 
