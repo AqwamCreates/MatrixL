@@ -2,7 +2,7 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.0
+	Version 1.2
 
 	Aqwam's Roblox Matrix Library (AR-MatrixL)
 
@@ -83,7 +83,7 @@ local function broadcastAndCalculate(operation, ...)
 	
 	matrix1, matrix2 = MatrixBroadcast:matrixBroadcast(matrix1, matrix2)
 
-	local result 
+	local result
 	
 	local success = pcall(function()
 
@@ -144,6 +144,36 @@ end
 function AqwamRobloxMatrixLibrary:exponent(...)
 
 	return broadcastAndCalculate('exp', ...)
+
+end
+
+function AqwamRobloxMatrixLibrary:areValuesEqual(...)
+
+	return broadcastAndCalculate('==', ...)
+
+end
+
+function AqwamRobloxMatrixLibrary:areMatricesEqual(...)
+
+	local resultMatrix = broadcastAndCalculate('==', ...)
+	
+	for rows = 1, #resultMatrix, 1 do
+		
+		for column = 1, #resultMatrix[1], 1 do
+			
+			return false
+			
+		end
+		
+	end
+	
+	return true
+
+end
+
+function AqwamRobloxMatrixLibrary:applyOperation(...)
+
+	return broadcastAndCalculate(select(1, ...), ...)
 
 end
 
