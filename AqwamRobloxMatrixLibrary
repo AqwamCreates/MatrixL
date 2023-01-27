@@ -389,7 +389,6 @@ function AqwamRobloxMatrixLibrary:verticalSum(matrix)
 
 	local result = AqwamRobloxMatrixLibrary:createMatrix(1, numberOfColumns)
 
-
 	for row = 1, numberOfRows, 1 do
 		
 		for column = 1, numberOfColumns, 1 do
