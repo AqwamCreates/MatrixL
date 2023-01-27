@@ -29,6 +29,8 @@
 
 --]]
 
+local libraryVersion = 1.3
+
 local MatrixOperation = require(script.MatrixOperation)
 local MatrixBroadcast = require(script.MatrixBroadcast)
 local MatrixDotProduct = require(script.MatrixDotProduct)
@@ -553,6 +555,12 @@ function AqwamRobloxMatrixLibrary:applyFunction(functionToApply, ...)
 	end
 
 	return result
+	
+end
+
+function AqwamRobloxMatrixLibrary:getVersion()
+	
+	return libraryVersion
 	
 end
 
