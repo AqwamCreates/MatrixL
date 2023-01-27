@@ -521,4 +521,25 @@ function AqwamRobloxMatrixLibrary:verticalConcatenate(...)
 
 end
 
+function AqwamRobloxMatrixLibrary:applyFunction(functionToApply, matrix)
+	
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+
+	local result = AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns)
+
+	for row = 1, numberOfRows, 1 do
+
+		for column = 1, numberOfColumns, 1 do
+
+			result[row][column] = functionToApply(matrix[row][column])
+
+		end	
+
+	end
+
+	return result
+	
+end
+
 return AqwamRobloxMatrixLibrary
