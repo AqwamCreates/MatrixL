@@ -159,6 +159,30 @@ function AqwamRobloxMatrixLibrary:areValuesEqual(...)
 
 end
 
+function AqwamRobloxMatrixLibrary:areValuesGreater(...)
+
+	return broadcastAndCalculate('>', ...)
+
+end
+
+function AqwamRobloxMatrixLibrary:areValuesGreaterOrEqual(...)
+
+	return broadcastAndCalculate('>=', ...)
+
+end
+
+function AqwamRobloxMatrixLibrary:areValuesLesser(...)
+
+	return broadcastAndCalculate('>', ...)
+
+end
+
+function AqwamRobloxMatrixLibrary:areValuesLesserOrEqual(...)
+
+	return broadcastAndCalculate('<=', ...)
+
+end
+
 function AqwamRobloxMatrixLibrary:areMatricesEqual(...)
 
 	local resultMatrix = broadcastAndCalculate('==', ...)
@@ -174,12 +198,6 @@ function AqwamRobloxMatrixLibrary:areMatricesEqual(...)
 	end
 	
 	return true
-
-end
-
-function AqwamRobloxMatrixLibrary:applyOperation(...)
-
-	return broadcastAndCalculate(select(1, ...), ...)
 
 end
 
