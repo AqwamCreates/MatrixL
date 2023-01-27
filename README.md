@@ -26,3 +26,6 @@ GIVE CREDIT AND SOURCE WHEN USING THIS LIBRARY IF YOUR USAGE FALLS UNDER ONE OF 
 - USED AS COMMERCIAL OR PUBLIC USE
 	
 --------------------------------------------------------------------
+
+Documentation can be found here:
+https://robloxmatrixl.substack.com/p/directory
