@@ -173,7 +173,7 @@ end
 
 function AqwamRobloxMatrixLibrary:areValuesLesser(...)
 
-	return broadcastAndCalculate('>', ...)
+	return broadcastAndCalculate('<', ...)
 
 end
 
