@@ -141,9 +141,15 @@ function AqwamRobloxMatrixLibrary:logarithm(...)
 
 end
 
-function AqwamRobloxMatrixLibrary:exponent(...)
+function AqwamRobloxMatrixLibrary:exp(...)
 
 	return broadcastAndCalculate('exp', ...)
+
+end
+
+function AqwamRobloxMatrixLibrary:power(...)
+
+	return broadcastAndCalculate('power', ...)
 
 end
 
@@ -157,11 +163,11 @@ function AqwamRobloxMatrixLibrary:areMatricesEqual(...)
 
 	local resultMatrix = broadcastAndCalculate('==', ...)
 	
-	for rows = 1, #resultMatrix, 1 do
+	for row = 1, #resultMatrix, 1 do
 		
 		for column = 1, #resultMatrix[1], 1 do
 			
-			return false
+			if (resultMatrix[row][column] == false) then return false end
 			
 		end
 		
