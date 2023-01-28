@@ -23,7 +23,7 @@
 	GIVE CREDIT AND SOURCE WHEN USING THIS LIBRARY IF YOUR USAGE FALLS UNDER ONE OF THESE CATEGORIES:
 	
 		- USED AS A VIDEO OR ARTICLE CONTENT
-		- USED AS COMMERCIAL OR PUBLIC USE
+		- USED AS COMMERCIAL OR PUBLIC USE 
 	
 	--------------------------------------------------------------------
 
@@ -426,29 +426,49 @@ function AqwamRobloxMatrixLibrary:horizontalSum(matrix)
 
 end
 
-function AqwamRobloxMatrixLibrary:printMatrix(matrix)
+local function generateMatrixString(matrix)
 	
 	local numberOfRows = #matrix
 	local numberOfColumns = #matrix[1]
-	
-	local text = "\n\n"
-	
+
+	local text = ""
+
 	for row = 1, numberOfRows, 1 do
-		
+
 		text = text .. "{"
 
 		for column = 1, numberOfColumns, 1 do
 
 			text = text .. "\t" .. matrix[row][column]
-			
+
 		end
-		
+
 		text = text .. "\t}\n"
 
 	end
 	
-	text = text .. "\n"
+	return text
 	
+end
+
+function AqwamRobloxMatrixLibrary:printMatrix(...)
+	
+	local text = "\n"
+	
+	local generatedText
+	
+	local matrices = {...}
+	
+	for matrixNumber = 1, #matrices, 1 do
+		
+		generatedText = generateMatrixString(matrices[matrixNumber])
+		
+		text = text .. generatedText
+		
+		text = text .. "\n"
+		
+	end
+
 	print(text)
 	
 end
