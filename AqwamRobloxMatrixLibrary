@@ -453,7 +453,7 @@ end
 
 function AqwamRobloxMatrixLibrary:printMatrix(...)
 	
-	local text = "\n"
+	local text = "\n\n"
 	
 	local generatedText
 	
