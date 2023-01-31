@@ -578,6 +578,91 @@ function AqwamRobloxMatrixLibrary:applyFunction(functionToApply, ...)
 	
 end
 
+function AqwamRobloxMatrixLibrary:findMaximumValueInMatrix(matrix)
+	
+	local maximumValue = -math.huge
+	
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1], 1 do
+			
+			maximumValue = math.max(maximumValue, matrix[row][column])
+
+		end
+
+	end
+	
+	return maximumValue
+	
+end
+
+function AqwamRobloxMatrixLibrary:findMinimumValueInMatrix(matrix)
+
+	local minimumValue = math.huge
+
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1], 1 do
+
+			minimumValue = math.min(minimumValue, matrix[row][column])
+
+		end
+
+	end
+
+	return minimumValue
+
+end
+
+function AqwamRobloxMatrixLibrary:findMeanForMatrix(matrix)
+	
+	local sum = 0
+	
+	local numberOfElements = #matrix * #matrix[1]
+	
+	local mean
+	
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1], 1 do
+
+			sum += matrix[row][column]
+
+		end
+
+	end
+	
+	mean = sum/numberOfElements
+	
+	return mean
+	
+end
+
+function AqwamRobloxMatrixLibrary:normalizeMatrix(matrix)
+	
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+	
+	local result = AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns)
+	
+	local maximumValue = AqwamRobloxMatrixLibrary:findMaximumValueInMatrix(matrix)
+	
+	local minimumValue = AqwamRobloxMatrixLibrary:findMinimumValueInMatrix(matrix)
+	
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1], 1 do
+
+			result[row][column] = (matrix[row][column] - minimumValue) / (maximumValue - minimumValue)
+
+		end
+
+	end
+
+	return result
+
+end
+
 function AqwamRobloxMatrixLibrary:getVersion()
 	
 	return libraryVersion
