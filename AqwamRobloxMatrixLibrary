@@ -2,7 +2,7 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.3
+	Version 1.4
 
 	Aqwam's Roblox Matrix Library (AR-MatrixL)
 
@@ -635,6 +635,36 @@ function AqwamRobloxMatrixLibrary:findMeanForMatrix(matrix)
 	mean = sum/numberOfElements
 	
 	return mean
+	
+end
+
+function AqwamRobloxMatrixLibrary:findStandardDeviation(matrix)
+	
+	local mean = AqwamRobloxMatrixLibrary:findMeanForMatrix(matrix)
+	
+	local numberOfElements = #matrix * #matrix[1]
+	
+	local sum = 0
+	
+	local squaredSum
+	
+	local standardDeviation
+	
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1], 1 do
+
+			sum += matrix[row][column] - mean
+
+		end
+
+	end
+	
+	squaredSum = sum^2
+	
+	standardDeviation = math.sqrt(squaredSum/numberOfElements)
+	
+	return standardDeviation	
 	
 end
 
