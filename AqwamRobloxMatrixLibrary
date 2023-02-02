@@ -638,7 +638,7 @@ function AqwamRobloxMatrixLibrary:findMeanForMatrix(matrix)
 	
 end
 
-function AqwamRobloxMatrixLibrary:findStandardDeviation(matrix)
+function AqwamRobloxMatrixLibrary:findStandardDeviationForMatrix(matrix)
 	
 	local mean = AqwamRobloxMatrixLibrary:findMeanForMatrix(matrix)
 	
