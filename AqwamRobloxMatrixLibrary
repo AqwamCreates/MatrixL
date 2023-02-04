@@ -29,7 +29,7 @@
 
 --]]
 
-local libraryVersion = 1.4
+local libraryVersion = 1.5
 
 local MatrixOperation = require(script.MatrixOperation)
 local MatrixBroadcast = require(script.MatrixBroadcast)
@@ -421,6 +421,52 @@ function AqwamRobloxMatrixLibrary:horizontalSum(matrix)
 		end	
 
 	end
+
+	return result
+
+end
+
+function AqwamRobloxMatrixLibrary:verticalMean(matrix)
+
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+
+	local verticalSum = AqwamRobloxMatrixLibrary:createMatrix(1, numberOfColumns)
+
+	for row = 1, numberOfRows, 1 do
+
+		for column = 1, numberOfColumns, 1 do
+
+			verticalSum[1][column] += matrix[row][column]
+
+		end	
+
+	end
+	
+	local result = AqwamRobloxMatrixLibrary:divide(verticalSum, numberOfRows) 
+
+	return result
+
+end
+
+function AqwamRobloxMatrixLibrary:horizontalMean(matrix)
+
+	local numberOfRows = #matrix
+	local numberOfColumns = #matrix[1]
+
+	local horizontalSum = AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, 1)
+
+	for row = 1, numberOfRows, 1 do
+
+		for column = 1, numberOfColumns, 1 do
+
+			horizontalSum[row][1] += matrix[row][column]
+
+		end	
+
+	end
+	
+	local result = AqwamRobloxMatrixLibrary:divide(horizontalSum, numberOfColumns)
 
 	return result
 
