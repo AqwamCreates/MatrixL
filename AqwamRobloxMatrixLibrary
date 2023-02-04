@@ -538,7 +538,7 @@ function AqwamRobloxMatrixLibrary:horizontalStandardDeviation(matrix)
 
 	local squaredMatrixSubtractedByMean = AqwamRobloxMatrixLibrary:power(matrixSubtractedByMean, 2)
 
-	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, #matrix)
+	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, #matrix[1])
 
 	local squareRootMatrix = AqwamRobloxMatrixLibrary:power(dividedMatrix, (1/2))
 
