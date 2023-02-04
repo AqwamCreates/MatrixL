@@ -1,4 +1,4 @@
---[[
+---[[
 
 	--------------------------------------------------------------------
 
@@ -426,22 +426,25 @@ function AqwamRobloxMatrixLibrary:horizontalSum(matrix)
 
 end
 
+function AqwamRobloxMatrixLibrary:mean(matrix)
+
+	local sum = 0
+
+	local numberOfElements = #matrix * #matrix[1]
+	
+	local sum = AqwamRobloxMatrixLibrary:sum(matrix)
+
+	local mean = sum/numberOfElements
+
+	return mean
+
+end
+
 function AqwamRobloxMatrixLibrary:verticalMean(matrix)
 
 	local numberOfRows = #matrix
-	local numberOfColumns = #matrix[1]
 
-	local verticalSum = AqwamRobloxMatrixLibrary:createMatrix(1, numberOfColumns)
-
-	for row = 1, numberOfRows, 1 do
-
-		for column = 1, numberOfColumns, 1 do
-
-			verticalSum[1][column] += matrix[row][column]
-
-		end	
-
-	end
+	local verticalSum = AqwamRobloxMatrixLibrary:verticalSum(matrix)
 	
 	local result = AqwamRobloxMatrixLibrary:divide(verticalSum, numberOfRows) 
 
@@ -451,24 +454,95 @@ end
 
 function AqwamRobloxMatrixLibrary:horizontalMean(matrix)
 
-	local numberOfRows = #matrix
 	local numberOfColumns = #matrix[1]
 
-	local horizontalSum = AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, 1)
-
-	for row = 1, numberOfRows, 1 do
-
-		for column = 1, numberOfColumns, 1 do
-
-			horizontalSum[row][1] += matrix[row][column]
-
-		end	
-
-	end
+	local horizontalSum = AqwamRobloxMatrixLibrary:horizontalSum(matrix)
 	
 	local result = AqwamRobloxMatrixLibrary:divide(horizontalSum, numberOfColumns)
 
 	return result
+
+end
+
+function AqwamRobloxMatrixLibrary:standardDeviation(matrix)
+
+	local mean = AqwamRobloxMatrixLibrary:mean(matrix)
+
+	local numberOfElements = #matrix * #matrix[1]
+
+	local sum = 0
+
+	local squaredSum
+
+	local standardDeviation
+
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1], 1 do
+
+			sum += matrix[row][column] - mean
+
+		end
+
+	end
+
+	squaredSum = sum^2
+
+	standardDeviation = math.sqrt(squaredSum/numberOfElements)
+
+	return standardDeviation	
+
+end
+
+function AqwamRobloxMatrixLibrary:verticalStandardDeviation(matrix)
+	
+	local verticalMean = AqwamRobloxMatrixLibrary:verticalMean(matrix)
+	
+	local matrixSubtractedByMean = AqwamRobloxMatrixLibrary:createMatrix(#matrix, #matrix[1])
+	
+	for row = 1, #matrix, 1 do
+		
+		for column = 1, #matrix[1], 1 do
+			
+			matrixSubtractedByMean[row][column] = matrix[row][column] - verticalMean[1][column]
+			
+		end
+		
+	end
+	
+	local squaredMatrixSubtractedByMean = AqwamRobloxMatrixLibrary:power(matrixSubtractedByMean, 2)
+	
+	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, #matrix)
+	
+	local squareRootMatrix = AqwamRobloxMatrixLibrary:power(dividedMatrix, (1/2))
+	
+	return squareRootMatrix
+	
+end
+
+function AqwamRobloxMatrixLibrary:horizontalStandardDeviation(matrix)
+
+	local horizontalMean = AqwamRobloxMatrixLibrary:horizontalMean(matrix)
+
+	local matrixSubtractedByMean = AqwamRobloxMatrixLibrary:createMatrix(#matrix, #matrix[1])
+
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1], 1 do
+
+			matrixSubtractedByMean[row][column] = matrix[row][column] - horizontalMean[row][1]
+
+		end
+
+	end
+
+	local squaredMatrixSubtractedByMean = AqwamRobloxMatrixLibrary:power(matrixSubtractedByMean, 2)
+
+	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, #matrix)
+
+	local squareRootMatrix = AqwamRobloxMatrixLibrary:power(dividedMatrix, (1/2))
+
+	return squareRootMatrix
 
 end
 
@@ -658,60 +732,6 @@ function AqwamRobloxMatrixLibrary:findMinimumValueInMatrix(matrix)
 
 	return minimumValue
 
-end
-
-function AqwamRobloxMatrixLibrary:findMeanForMatrix(matrix)
-	
-	local sum = 0
-	
-	local numberOfElements = #matrix * #matrix[1]
-	
-	local mean
-	
-	for row = 1, #matrix, 1 do
-
-		for column = 1, #matrix[1], 1 do
-
-			sum += matrix[row][column]
-
-		end
-
-	end
-	
-	mean = sum/numberOfElements
-	
-	return mean
-	
-end
-
-function AqwamRobloxMatrixLibrary:findStandardDeviationForMatrix(matrix)
-	
-	local mean = AqwamRobloxMatrixLibrary:findMeanForMatrix(matrix)
-	
-	local numberOfElements = #matrix * #matrix[1]
-	
-	local sum = 0
-	
-	local squaredSum
-	
-	local standardDeviation
-	
-	for row = 1, #matrix, 1 do
-
-		for column = 1, #matrix[1], 1 do
-
-			sum += matrix[row][column] - mean
-
-		end
-
-	end
-	
-	squaredSum = sum^2
-	
-	standardDeviation = math.sqrt(squaredSum/numberOfElements)
-	
-	return standardDeviation	
-	
 end
 
 function AqwamRobloxMatrixLibrary:normalizeMatrix(matrix)
