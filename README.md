@@ -30,3 +30,7 @@ GIVE CREDIT AND SOURCE WHEN USING THIS LIBRARY IF YOUR USAGE FALLS UNDER ONE OF 
 Documentation can be found here:
 
 https://robloxmatrixl.substack.com/p/directory
+
+https://aqwamcreates.github.io/MatrixL/
+
+By using or possesing any copies of this library, you agree to our [Terms and Conditions](docs/TermsAndConditions.md).
