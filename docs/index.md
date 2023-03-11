@@ -2,7 +2,7 @@
 
 MatrixL is a matrix library for Roblox.
 
-Although there are other matrix library available, this was created to avoid legal issues when creating [DataPredict](../DataPredict) library.
+Although there are other matrix library available, this was created to avoid legal issues when creating [DataPredict](../../DataPredict) library.
 
 If there are any suggestions or issues for this library, don't be afraid to reach out to me at my [LinkedIn](https://www.linkedin.com/in/aqwam-harish-aiman/)
 
