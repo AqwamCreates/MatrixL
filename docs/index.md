@@ -10,15 +10,7 @@ In addition, if you are interested in Roblox tutorials and future projects by me
 
 ## API Reference
 
-[Matrix Creation](API/MatrixCreation.md)
-
-[Matrix Operations](API/MatrixOperations.md)
-
-[Matrix Functions](API/MatrixFunctions.md)
-
-[Matrix Statistics](API/MatrixStatistics.md)
-
-[Matrix Concatenations](API/MatrixConcatenations.md)
+[API Reference](API.md)
 
 ## Links
 
