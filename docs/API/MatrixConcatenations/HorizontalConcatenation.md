@@ -1,4 +1,4 @@
-# API Reference - Matrix Operations - Horizontal Concatenation
+# API Reference - Matrix Concatenations - Horizontal Concatenation
 
 ## Code Sample
 
