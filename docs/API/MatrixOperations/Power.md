@@ -1,4 +1,4 @@
-# API Reference - Matrix Operations - Power
+# [API Reference](../../API.md) - [Matrix Operations](../MatrixOperations.md) - Power
 
 ## Code Sample
 
