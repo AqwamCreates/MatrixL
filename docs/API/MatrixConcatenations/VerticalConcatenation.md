@@ -1,4 +1,4 @@
-# API Reference - Matrix Operations - Vertical Concatenation
+# [API Reference](../../API.md) - [Matrix Concatenations](../MatrixConcatenations.md) - Vertical Concatenation
 
 ## Code Sample
 
