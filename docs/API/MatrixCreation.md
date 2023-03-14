@@ -1,4 +1,4 @@
-# [API Reference](../../API.md) - Matrix Creation
+# [API Reference](../API.md) - Matrix Creation
 
 [Create Matrix](CreateMatrix.md)
 
