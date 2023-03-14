@@ -1,4 +1,4 @@
-#API Reference
+# API Reference
 
 [Matrix Creation](API/MatrixCreation.md)
 
