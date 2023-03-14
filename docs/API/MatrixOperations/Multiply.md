@@ -1,4 +1,4 @@
-# API Reference - Matrix Operations - Add
+# API Reference - Matrix Operations - Multiply
 
 ## Code Sample
 
