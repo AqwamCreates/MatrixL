@@ -4,4 +4,6 @@
 
 [Print Matrix](MatrixFunctions/PrintMatrix.md)
 
+[Transpose](MatrixFunctions/Transpose.md)
+
 [Apply Function](MatrixFunctions/ApplyFunction.md)
