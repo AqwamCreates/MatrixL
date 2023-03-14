@@ -1,4 +1,4 @@
-# [API Reference](../../API.md) - Matrix Concatenations
+# [API Reference](../API.md) - Matrix Concatenations
 
 [Horizontal Concatenation](MatrixConcatenations/HorizontalConcatenation.md)
 
