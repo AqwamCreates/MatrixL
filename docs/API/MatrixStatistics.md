@@ -1,12 +1,21 @@
 # [API Reference](../API.md) - Matrix Statistics
 
+
+## Sum
+
+[Sum](MatrixStatistics/Sum.md)
+
+[Horizontal Sum](MatrixStatistics/HorizontalSum.md)
+
+[Vertical Sum](MatrixStatistics/VerticalSum.md)
+
 ## Mean
 
 [Mean](MatrixStatistics/Mean.md)
 
 [Horizontal Mean](MatrixStatistics/HorizontalMean.md)
 
-[Verical Mean](MatrixStatistics/VerticalMean.md)
+[Vertical Mean](MatrixStatistics/VerticalMean.md)
 
 ## Standard Deviation
 
@@ -14,4 +23,4 @@
 
 [Horizontal StandardDeviation](MatrixStatistics/HorizontalStandardDeviation.md)
 
-[Verical StandardDeviation](MatrixStatistics/VerticalStandardDeviation.md)
+[Veritcal StandardDeviation](MatrixStatistics/VerticalStandardDeviation.md)
