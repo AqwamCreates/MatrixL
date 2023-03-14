@@ -1,4 +1,4 @@
-# [API Reference](../../API.md) - Matrix Operations
+# [API Reference](../API.md) - Matrix Operations
 
 [Add](MatrixOperations/Add.md)
 
