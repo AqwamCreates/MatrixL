@@ -28,7 +28,7 @@ divide(...): matrix
 
 ## Arguments:
 
-… : any number of matrices or scalar. The second argument is the denominator for first argument, the third argument is the demoninator for second argument 
+… : any number of matrices or scalar. The second argument is the denominator for first argument, the third argument is the demoninator for second argument.
 
 ## Returns
 
