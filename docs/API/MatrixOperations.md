@@ -13,3 +13,5 @@
 [Exponent](MatrixOperations/Exponent.md)
 
 [Log](MatrixOperations/Log.md)
+
+[Dot Product](MatrixOperations/DotProduct.md)
