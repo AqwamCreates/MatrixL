@@ -28,7 +28,7 @@ subtract(...): matrix
 
 ## Arguments:
 
-… : any number of matrices or scalar
+… : any number of matrices or scalar.
 
 ## Returns
 
