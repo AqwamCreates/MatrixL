@@ -1,8 +1,8 @@
----[[
+--[[
 
 	--------------------------------------------------------------------
 
-	Version 1.5
+	Version 1.6
 
 	Aqwam's Roblox Matrix Library (AR-MatrixL)
 
@@ -29,7 +29,7 @@
 
 --]]
 
-local libraryVersion = 1.5
+local libraryVersion = 1.6
 
 local MatrixOperation = require(script.MatrixOperation)
 local MatrixBroadcast = require(script.MatrixBroadcast)
@@ -700,37 +700,61 @@ end
 
 function AqwamRobloxMatrixLibrary:findMaximumValueInMatrix(matrix)
 	
+	local matrixIndex
+	
+	local currentValue
+	
 	local maximumValue = -math.huge
 	
 	for row = 1, #matrix, 1 do
 
 		for column = 1, #matrix[1], 1 do
 			
-			maximumValue = math.max(maximumValue, matrix[row][column])
+			currentValue = matrix[row][column]
+			
+			if (currentValue > maximumValue) then
+				
+				maximumValue = currentValue
+				
+				matrixIndex = {row, column}
+				
+			end
 
 		end
 
 	end
 	
-	return maximumValue
+	return maximumValue, matrixIndex
 	
 end
 
 function AqwamRobloxMatrixLibrary:findMinimumValueInMatrix(matrix)
+	
+	local matrixIndex
+	
+	local currentValue
 
 	local minimumValue = math.huge
 
 	for row = 1, #matrix, 1 do
 
 		for column = 1, #matrix[1], 1 do
+			
+			currentValue = matrix[row][column]
 
-			minimumValue = math.min(minimumValue, matrix[row][column])
+			if (currentValue < minimumValue) then
+
+				minimumValue = currentValue
+
+				matrixIndex = {row, column}
+
+			end
 
 		end
 
 	end
 
-	return minimumValue
+	return minimumValue, matrixIndex
 
 end
 
