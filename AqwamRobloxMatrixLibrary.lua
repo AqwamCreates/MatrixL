@@ -2,7 +2,7 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.6
+	Version 1.8
 
 	Aqwam's Roblox Matrix Library (AR-MatrixL)
 
@@ -781,6 +781,80 @@ function AqwamRobloxMatrixLibrary:normalizeMatrix(matrix)
 
 	return result
 
+end
+
+local function extract(matrix, startingIndex, endingIndex)
+	
+	local result = {}
+	
+	if (endingIndex >= startingIndex) then
+		
+		for index = startingIndex, endingIndex, 1 do
+			
+			table.insert(result, matrix[index])
+			
+		end
+		
+	else
+		
+		for index = endingIndex, #matrix do
+			
+			table.insert(result, matrix[index])
+			
+		end
+		
+		for index = 1, startingIndex, 1 do
+			
+			table.insert(result, matrix[index])
+			
+		end
+		
+	end
+	
+	return result
+	
+end
+
+function AqwamRobloxMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex)
+	
+	local result = extract(matrix, startingRowIndex, endingRowIndex)
+	
+	return result
+	
+end
+
+function AqwamRobloxMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingColumnIndex)
+	
+	local transposedMatrix = AqwamRobloxMatrixLibrary:transpose(matrix)
+
+	local result = extract(transposedMatrix, startingColumnIndex, endingColumnIndex)
+	
+	result = AqwamRobloxMatrixLibrary:transpose(result)
+
+	return result
+
+end
+
+function AqwamRobloxMatrixLibrary:copy(matrix)
+	
+	local numberOfRows = #matrix
+	
+	local numberOfColumns = #matrix[1]
+	
+	local result = AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns)
+	
+	for row = 1, numberOfRows, 1 do
+		
+		for column = 1, numberOfColumns, 1 do
+			
+			result[row][column] = matrix[row][column]
+			
+		end
+		
+	end
+	
+	return result
+	
 end
 
 function AqwamRobloxMatrixLibrary:getVersion()
