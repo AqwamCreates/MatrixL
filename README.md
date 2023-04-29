@@ -2,7 +2,7 @@
 
 --------------------------------------------------------------------
 
-Version 1.8
+Version 1.9
 
 Aqwam's Roblox Matrix Library (AR-MatrixL)
 
