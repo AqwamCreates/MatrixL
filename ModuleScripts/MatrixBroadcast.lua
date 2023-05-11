@@ -15,27 +15,41 @@ local function checkIfCanBroadcast(matrix1, matrix2)
 	local matrix2Rows = #matrix2
 	
 	local matrix1Columns = #matrix1[1]
+	
 	local matrix2Columns = #matrix2[1]
 	
 	local isMatrix1Broadcasted
 	local isMatrix2Broadcasted
 	
-	if (matrix1Rows == matrix2Rows) and (matrix1Columns == matrix2Columns) then
+	local hasSameRowSize = (matrix1Rows == matrix2Rows)
+	
+	local hasSameColumnSize = (matrix1Columns == matrix2Columns)
+	
+	local hasSameDimension = hasSameRowSize and hasSameColumnSize
+	
+	local isMatrix1IsLargerInOneDimension = ((matrix1Rows > 1) and hasSameColumnSize) or ((matrix1Columns > 1) and hasSameRowSize)
+	
+	local isMatrix2IsLargerInOneDimension = ((matrix2Rows > 1) and hasSameColumnSize) or ((matrix2Columns > 1) and hasSameRowSize)
+	
+	local isMatrix1Scalar = (matrix1Rows == 1) and (matrix1Columns == 1)
+	
+	local isMatrix2Scalar = (matrix2Rows == 1) and (matrix2Columns == 1)
+	
+	local isMatrix1Larger = (matrix1Rows > matrix2Rows) and (matrix1Columns > matrix2Columns)
+	
+	local isMatrix2Larger = (matrix2Rows > matrix1Rows) and (matrix2Columns > matrix1Columns)
+	
+	if (hasSameDimension) then
 		
-		isMatrix1Broadcasted = false
-		isMatrix2Broadcasted = false
-		
-	elseif (matrix1Rows == 1) and (matrix1Columns == 1) and (matrix2Rows == 1) and (matrix2Columns == 1) then
-
 		isMatrix1Broadcasted = false
 		isMatrix2Broadcasted = false
 	
-	elseif (matrix2Rows > 1) or (matrix2Columns > 1) then
+	elseif (isMatrix2IsLargerInOneDimension) or (isMatrix2Larger and isMatrix1Scalar) then
 		
 		isMatrix1Broadcasted = true
 		isMatrix2Broadcasted = false
 		
-	elseif (matrix1Rows > 1) or (matrix1Columns > 1) then
+	elseif (isMatrix1IsLargerInOneDimension) or (isMatrix1Larger and isMatrix2Scalar) then
 		
 		isMatrix1Broadcasted = false
 		isMatrix2Broadcasted = true
@@ -53,18 +67,41 @@ end
 local function broadcastMatrix(matrix, rowSize, columnSize)
 	
 	local result = {}
-	local value = matrix[1][1]
+
+	local isMatrixSmallerThanRowSize = (#matrix < rowSize)
+
+	local isMatrixSmallerThanColumnSize = (#matrix[1] < columnSize)
 	
-	for row = 1, rowSize, 1 do
-		
-		result[row] = {}
-		
-		for column = 1, columnSize, 1 do
-			
-			result[row][column] = value
-			
+	if (isMatrixSmallerThanRowSize == true) and (isMatrixSmallerThanColumnSize == false) then
+
+		for row = 1, rowSize, 1 do
+
+			result[row] = {}
+
+			for column = 1, columnSize, 1 do result[row][column] = matrix[1][column] end
+
 		end
-		
+
+	elseif (isMatrixSmallerThanRowSize == false) and (isMatrixSmallerThanColumnSize == true) then
+
+		for row = 1, rowSize, 1 do
+
+			result[row] = {}
+
+			for column = 1, columnSize, 1 do result[row][column] = matrix[row][1] end
+
+		end
+
+	else
+
+		for row = 1, rowSize, 1 do
+
+			result[row] = {}
+
+			for column = 1, columnSize, 1 do result[row][column] = matrix[1][1] end
+
+		end
+
 	end
 	
 	return result
@@ -93,3 +130,4 @@ function module:matrixBroadcast(matrix1, matrix2)
 end
 
 return module
+
