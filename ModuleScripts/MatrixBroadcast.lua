@@ -27,9 +27,9 @@ local function checkIfCanBroadcast(matrix1, matrix2)
 	
 	local hasSameDimension = hasSameRowSize and hasSameColumnSize
 	
-	local isMatrix1IsLargerInOneDimension = ((matrix1Rows > 1) and hasSameColumnSize) or ((matrix1Columns > 1) and hasSameRowSize)
+	local isMatrix1IsLargerInOneDimension = ((matrix1Rows > 1) and hasSameColumnSize and (matrix2Rows == 1)) or ((matrix1Columns > 1) and hasSameRowSize and (matrix2Columns == 1))
 	
-	local isMatrix2IsLargerInOneDimension = ((matrix2Rows > 1) and hasSameColumnSize) or ((matrix2Columns > 1) and hasSameRowSize)
+	local isMatrix2IsLargerInOneDimension = ((matrix2Rows > 1) and hasSameColumnSize and (matrix1Rows == 1)) or ((matrix2Columns > 1) and hasSameRowSize and (matrix1Columns == 1))
 	
 	local isMatrix1Scalar = (matrix1Rows == 1) and (matrix1Columns == 1)
 	
@@ -130,5 +130,3 @@ function module:matrixBroadcast(matrix1, matrix2)
 end
 
 return module
-
-
