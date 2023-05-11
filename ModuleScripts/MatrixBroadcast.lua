@@ -92,7 +92,7 @@ local function broadcastMatrix(matrix, rowSize, columnSize)
 
 		end
 
-	else
+	elseif (isMatrixSmallerThanRowSize == true) and (isMatrixSmallerThanColumnSize == true) then
 
 		for row = 1, rowSize, 1 do
 
@@ -130,4 +130,5 @@ function module:matrixBroadcast(matrix1, matrix2)
 end
 
 return module
+
 
