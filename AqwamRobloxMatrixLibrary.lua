@@ -309,7 +309,23 @@ function AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns, al
 	
 end
 
-function AqwamRobloxMatrixLibrary:createRandomMatrix(numberOfRows, numberOfColumns)
+function AqwamRobloxMatrixLibrary:createRandomMatrix(numberOfRows, numberOfColumns, minimumValue, maximumValue)
+	
+	if (minimumValue == nil) and (maximumValue == nil) then
+		
+		minimumValue = -100000
+		
+		maximumValue = 100000
+		
+	elseif (minimumValue == nil) then
+		
+		minimumValue = 0
+		
+	elseif (maximumValue == nil) then
+		
+		maximumValue = 0
+		
+	end
 
 	local result = {}
 
@@ -319,7 +335,7 @@ function AqwamRobloxMatrixLibrary:createRandomMatrix(numberOfRows, numberOfColum
 
 		for column = 1, numberOfColumns, 1 do
 
-			result[row][column] = Random.new():NextInteger(-100000, 100000)
+			result[row][column] = Random.new():NextInteger(minimumValue, maximumValue)
 
 		end	
 
