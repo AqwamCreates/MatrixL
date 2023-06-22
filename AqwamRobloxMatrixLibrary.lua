@@ -47,46 +47,46 @@ local function convertToMatrixIfScalar(value)
 		local testForScalar = value[1][1]
 
 	end)
-	
+
 	if not isNotScalar then
-		
+
 		return {{value}}
-		
+
 	else
-		
+
 		return value
-		
+
 	end
-	
+
 end
 
 local function generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
-	
+
 	local text1 = "Argument " .. secondMatrixIndex .. " and " .. firstMatrixIndex .. " are incompatible! "
 
 	local text2 = "(" ..  #matrices[secondMatrixIndex] .. ", " .. #matrices[secondMatrixIndex][1] .. ") and " .. "(" ..  #matrices[firstMatrixIndex] .. ", " .. #matrices[firstMatrixIndex][1] .. ")"
-	
+
 	local text = text1 .. text2
-	
+
 	return text
-	
+
 end
 
 local function broadcastAndCalculate(operation, ...)
-	
+
 	local matrices = {...}
-	
+
 	local firstMatrixIndex = #matrices
 	local secondMatrixIndex = firstMatrixIndex - 1 
 
 	local matrix1 = convertToMatrixIfScalar(matrices[firstMatrixIndex])
 
 	local matrix2 = convertToMatrixIfScalar(matrices[secondMatrixIndex])
-	
+
 	matrix1, matrix2 = MatrixBroadcast:matrixBroadcast(matrix1, matrix2)
 
 	local result
-	
+
 	local success = pcall(function()
 
 		result = MatrixOperation:matrixOperation(operation, matrix1, matrix2)
@@ -94,7 +94,7 @@ local function broadcastAndCalculate(operation, ...)
 	end)
 
 	if (not success) then
-		
+
 		local text = generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
 
 		error(text)
@@ -110,13 +110,13 @@ local function broadcastAndCalculate(operation, ...)
 		return result
 
 	end
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:add(...)
-	
+
 	return broadcastAndCalculate('+', ...)
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:subtract(...)
@@ -188,17 +188,17 @@ end
 function AqwamRobloxMatrixLibrary:areMatricesEqual(...)
 
 	local resultMatrix = broadcastAndCalculate('==', ...)
-	
+
 	for row = 1, #resultMatrix, 1 do
-		
+
 		for column = 1, #resultMatrix[1], 1 do
-			
+
 			if (resultMatrix[row][column] == false) then return false end
-			
+
 		end
-		
+
 	end
-	
+
 	return true
 
 end
@@ -206,32 +206,32 @@ end
 function AqwamRobloxMatrixLibrary:dotProduct(...)
 
 	local matrices = {...}
-	
+
 	local firstMatrixIndex = #matrices
 	local secondMatrixIndex = firstMatrixIndex - 1 
 
 	local result
-	
+
 	local success = pcall(function()
-		
+
 		result = MatrixDotProduct:dotProduct(matrices[secondMatrixIndex], matrices[firstMatrixIndex])
-		
+
 	end)
-	
+
 	if (not success) then
-		
+
 		local text = generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
 
 		error(text)
-		
+
 	end
-	
+
 	if ( (secondMatrixIndex - 1) > 0) then
-		
+
 		return AqwamRobloxMatrixLibrary:dotProduct(select(secondMatrixIndex - 1, ...), result)
 
 	else
-		
+
 		return result
 
 	end
@@ -239,58 +239,58 @@ function AqwamRobloxMatrixLibrary:dotProduct(...)
 end
 
 function AqwamRobloxMatrixLibrary:sum(matrix)
-	
+
 	local result = 0
-	
+
 	local matrixRows = #matrix
 	local matrixColumns = #matrix[1]
-	
+
 	for row = 1, matrixRows, 1 do
-		
+
 		for column = 1, matrixColumns, 1 do
-			
+
 			result += matrix[row][column]
-			
+
 		end
-		
+
 	end
-	
+
 	return result
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:createIdentityMatrix(numberOfRowsAndColumns)
-	
+
 	local result = {}
-	
+
 	for row = 1, numberOfRowsAndColumns, 1 do
-		
+
 		result[row] = {}
-		
+
 		for column = 1, numberOfRowsAndColumns, 1 do
-				
+
 			if (row == column) then
-					
+
 				result[row][column] = 1
-					
+
 			else
-					
+
 				result[row][column] = 0
-					
+
 			end
-				
+
 		end
-		
+
 	end
-	
+
 	return result
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns, allNumberValues)
-	
+
 	allNumberValues = allNumberValues or 0
-	
+
 	local result = {}
 
 	for row = 1, numberOfRows, 1 do
@@ -306,25 +306,25 @@ function AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns, al
 	end
 
 	return result
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:createRandomMatrix(numberOfRows, numberOfColumns, minimumValue, maximumValue)
-	
+
 	if (minimumValue == nil) and (maximumValue == nil) then
-		
+
 		minimumValue = -100000
-		
+
 		maximumValue = 100000
-		
+
 	elseif (minimumValue == nil) then
-		
+
 		minimumValue = 0
-		
+
 	elseif (maximumValue == nil) then
-		
+
 		maximumValue = 0
-		
+
 	end
 
 	local result = {}
@@ -354,7 +354,7 @@ function AqwamRobloxMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberO
 		result[row] = {}
 
 		for column = 1, numberOfColumns, 1 do
-			
+
 			result[row][column] = Random.new():NextNumber()
 
 		end	
@@ -366,49 +366,49 @@ function AqwamRobloxMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberO
 end
 
 function AqwamRobloxMatrixLibrary:getSize(matrix)
-	
+
 	local numberOfRows = #matrix
 	local numberOfColumns = #matrix[1]
-	
+
 	return {numberOfRows, numberOfColumns}
-	
+
 end
 
 
 function AqwamRobloxMatrixLibrary:transpose(matrix)
-	
+
 	local currentRowVector
-	
+
 	local numberOfRows = #matrix
 	local numberOfColumns = #matrix[1]
-	
+
 	local result = AqwamRobloxMatrixLibrary:createMatrix(numberOfColumns, numberOfRows)
-	
+
 	for row = 1, numberOfRows, 1 do
-		
+
 		currentRowVector = matrix[row]
-		
+
 		for column = 1, #currentRowVector, 1 do
-			
+
 			result[column][row] = currentRowVector[column]
-			
+
 		end
-		
+
 	end
-	
+
 	return result
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:verticalSum(matrix)
-	
+
 	local numberOfRows = #matrix
 	local numberOfColumns = #matrix[1]
 
 	local result = AqwamRobloxMatrixLibrary:createMatrix(1, numberOfColumns)
 
 	for row = 1, numberOfRows, 1 do
-		
+
 		for column = 1, numberOfColumns, 1 do
 
 			result[1][column] += matrix[row][column]
@@ -447,7 +447,7 @@ function AqwamRobloxMatrixLibrary:mean(matrix)
 	local sum = 0
 
 	local numberOfElements = #matrix * #matrix[1]
-	
+
 	local sum = AqwamRobloxMatrixLibrary:sum(matrix)
 
 	local mean = sum/numberOfElements
@@ -461,7 +461,7 @@ function AqwamRobloxMatrixLibrary:verticalMean(matrix)
 	local numberOfRows = #matrix
 
 	local verticalSum = AqwamRobloxMatrixLibrary:verticalSum(matrix)
-	
+
 	local result = AqwamRobloxMatrixLibrary:divide(verticalSum, numberOfRows) 
 
 	return result
@@ -473,7 +473,7 @@ function AqwamRobloxMatrixLibrary:horizontalMean(matrix)
 	local numberOfColumns = #matrix[1]
 
 	local horizontalSum = AqwamRobloxMatrixLibrary:horizontalSum(matrix)
-	
+
 	local result = AqwamRobloxMatrixLibrary:divide(horizontalSum, numberOfColumns)
 
 	return result
@@ -511,29 +511,29 @@ function AqwamRobloxMatrixLibrary:standardDeviation(matrix)
 end
 
 function AqwamRobloxMatrixLibrary:verticalStandardDeviation(matrix)
-	
+
 	local verticalMean = AqwamRobloxMatrixLibrary:verticalMean(matrix)
-	
+
 	local matrixSubtractedByMean = AqwamRobloxMatrixLibrary:createMatrix(#matrix, #matrix[1])
-	
+
 	for row = 1, #matrix, 1 do
-		
+
 		for column = 1, #matrix[1], 1 do
-			
+
 			matrixSubtractedByMean[row][column] = matrix[row][column] - verticalMean[1][column]
-			
+
 		end
-		
+
 	end
-	
+
 	local squaredMatrixSubtractedByMean = AqwamRobloxMatrixLibrary:power(matrixSubtractedByMean, 2)
-	
+
 	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, #matrix)
-	
+
 	local squareRootMatrix = AqwamRobloxMatrixLibrary:power(dividedMatrix, (1/2))
-	
+
 	return squareRootMatrix
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:horizontalStandardDeviation(matrix)
@@ -563,9 +563,9 @@ function AqwamRobloxMatrixLibrary:horizontalStandardDeviation(matrix)
 end
 
 local function generateMatrixString(matrix)
-	
+
 	if (matrix == nil) then return "" end
-	
+
 	local numberOfRows = #matrix
 	local numberOfColumns = #matrix[1]
 
@@ -584,31 +584,31 @@ local function generateMatrixString(matrix)
 		text = text .. "\t}\n"
 
 	end
-	
+
 	return text
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:printMatrix(...)
-	
+
 	local text = "\n\n"
-	
+
 	local generatedText
-	
+
 	local matrices = {...}
-	
+
 	for matrixNumber = 1, #matrices, 1 do
-		
+
 		generatedText = generateMatrixString(matrices[matrixNumber])
-		
+
 		text = text .. generatedText
-		
+
 		text = text .. "\n"
-		
+
 	end
 
 	print(text)
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:horizontalConcatenate(...)
@@ -643,7 +643,7 @@ function AqwamRobloxMatrixLibrary:horizontalConcatenate(...)
 		return result
 
 	end
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:verticalConcatenate(...)
@@ -683,12 +683,12 @@ end
 
 
 function AqwamRobloxMatrixLibrary:applyFunction(functionToApply, ...)
-	
+
 	local matricesValues
-	
+
 	local matrices = {...}
 	local matrix = matrices[1]
-	
+
 	local numberOfRows = #matrix
 	local numberOfColumns = #matrix[1]
 
@@ -697,13 +697,13 @@ function AqwamRobloxMatrixLibrary:applyFunction(functionToApply, ...)
 	for row = 1, numberOfRows, 1 do
 
 		for column = 1, numberOfColumns, 1 do
-			
+
 			matricesValues = {}
-			
+
 			for matrixArgument = 1, #matrices, 1  do
-				
+
 				table.insert(matricesValues, matrices[matrixArgument][row][column])
-				
+
 			end 
 
 			result[row][column] = functionToApply(table.unpack(matricesValues))
@@ -713,43 +713,43 @@ function AqwamRobloxMatrixLibrary:applyFunction(functionToApply, ...)
 	end
 
 	return result
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:findMaximumValueInMatrix(matrix)
-	
+
 	local matrixIndex
-	
+
 	local currentValue
-	
+
 	local maximumValue = -math.huge
-	
+
 	for row = 1, #matrix, 1 do
 
 		for column = 1, #matrix[1], 1 do
-			
+
 			currentValue = matrix[row][column]
-			
+
 			if (currentValue > maximumValue) then
-				
+
 				maximumValue = currentValue
-				
+
 				matrixIndex = {row, column}
-				
+
 			end
 
 		end
 
 	end
-	
+
 	return maximumValue, matrixIndex
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:findMinimumValueInMatrix(matrix)
-	
+
 	local matrixIndex
-	
+
 	local currentValue
 
 	local minimumValue = math.huge
@@ -757,7 +757,7 @@ function AqwamRobloxMatrixLibrary:findMinimumValueInMatrix(matrix)
 	for row = 1, #matrix, 1 do
 
 		for column = 1, #matrix[1], 1 do
-			
+
 			currentValue = matrix[row][column]
 
 			if (currentValue < minimumValue) then
@@ -777,13 +777,13 @@ function AqwamRobloxMatrixLibrary:findMinimumValueInMatrix(matrix)
 end
 
 function AqwamRobloxMatrixLibrary:normalizeMatrix(matrix)
-	
+
 	local mean = AqwamRobloxMatrixLibrary:mean(matrix)
-	
+
 	local standardDeviation = AqwamRobloxMatrixLibrary:standardDeviation(matrix)
-	
+
 	local result = AqwamRobloxMatrixLibrary:subtract(matrix, mean)
-	
+
 	result = AqwamRobloxMatrixLibrary:divide(result, standardDeviation)
 
 	return result
@@ -791,112 +791,114 @@ function AqwamRobloxMatrixLibrary:normalizeMatrix(matrix)
 end
 
 function AqwamRobloxMatrixLibrary:verticalNormalizeMatrix(matrix)
-	
+
 	local verticalMean = AqwamRobloxMatrixLibrary:verticalMean(matrix)
-	
+
 	local verticalStandardDeviaton = AqwamRobloxMatrixLibrary:verticalStandardDeviation(matrix)
-	
+
 	local rowVector
-	
+
 	local result = {}
-	
+
 	for row = 1, #matrix, 1 do
-		
+
 		rowVector = AqwamRobloxMatrixLibrary:subtract({matrix[1]}, verticalMean)
-		
+
 		result[row] = AqwamRobloxMatrixLibrary:divide(rowVector, verticalStandardDeviaton)[1]
-		
+
 	end
-	
+
 	return result, verticalMean, verticalStandardDeviaton
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:horizontalNormalizeMatrix(matrix)
-	
+
 	local horizontalMean = AqwamRobloxMatrixLibrary:horizontalMean(matrix)
-	
+
 	local horizontalStandardDeviation = AqwamRobloxMatrixLibrary:horizontalStandardDeviation(matrix)
-	
+
 	local columnVector
-	
+
 	local result
-	
+
 	for column = 1, #matrix[1], 1 do
-		
+
 		columnVector = AqwamRobloxMatrixLibrary:extractColumns(matrix, column, column)
-		
+
 		columnVector = AqwamRobloxMatrixLibrary:subtract(columnVector, horizontalMean)
-		
+
 		columnVector = AqwamRobloxMatrixLibrary:divide(columnVector, horizontalStandardDeviation)
-		
+
 		if (result == nil) then
-			
+
 			result = columnVector
-			
+
 		else
-			
+
 			result = AqwamRobloxMatrixLibrary:horizontalConcatenate(result, columnVector)
-			
+
 		end
-		
+
 	end
-	
-	
+
+
 	return result, horizontalMean, horizontalStandardDeviation
-	
+
 end
 
 local function extract(matrix, startingIndex, endingIndex)
 	
+	if (endingIndex == nil) then endingIndex = #matrix end
+
 	if (startingIndex < 0) then error("The starting index must be a positive integer value!") end 
 
 	if (endingIndex < 0) then error("The ending index must be a positive integer value!") end 
-	
+
 	local result = {}
-	
+
 	if (endingIndex >= startingIndex) then
-		
+
 		for index = startingIndex, endingIndex, 1 do
-			
+
 			table.insert(result, matrix[index])
-			
+
 		end
-		
+
 	else
-		
+
 		for index = endingIndex, #matrix do
-			
+
 			table.insert(result, matrix[index])
-			
+
 		end
-		
+
 		for index = 1, startingIndex, 1 do
-			
+
 			table.insert(result, matrix[index])
-			
+
 		end
-		
+
 	end
-	
+
 	return result
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex)
-	
+
 	local result = extract(matrix, startingRowIndex, endingRowIndex)
-	
+
 	return result
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingColumnIndex)
-	
+
 	local transposedMatrix = AqwamRobloxMatrixLibrary:transpose(matrix)
 
 	local result = extract(transposedMatrix, startingColumnIndex, endingColumnIndex)
-	
+
 	result = AqwamRobloxMatrixLibrary:transpose(result)
 
 	return result
@@ -904,25 +906,25 @@ function AqwamRobloxMatrixLibrary:extractColumns(matrix, startingColumnIndex, en
 end
 
 function AqwamRobloxMatrixLibrary:copy(matrix)
-	
+
 	local numberOfRows = #matrix
-	
+
 	local numberOfColumns = #matrix[1]
-	
+
 	local result = AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns)
-	
+
 	for row = 1, numberOfRows, 1 do
-		
+
 		for column = 1, numberOfColumns, 1 do
-			
+
 			result[row][column] = matrix[row][column]
-			
+
 		end
-		
+
 	end
-	
+
 	return result
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:minor(matrix, row, column)
@@ -1048,35 +1050,35 @@ function AqwamRobloxMatrixLibrary:inverse(matrix)
 end
 
 function AqwamRobloxMatrixLibrary:isMatrix(matrix)
-	
+
 	local matrixCheck
-	
+
 	local notIndexNumberCheck
-	
+
 	local itIsAMatrix
-	
+
 	matrixCheck = pcall(function()
-		
+
 		local test = matrix[1][1]
-		
+
 	end)
-	
+
 	notIndexNumberCheck = pcall(function()
-		
+
 		local test = matrix[1][1][1]
-		
+
 	end)
-	
+
 	itIsAMatrix = (matrixCheck) and (not notIndexNumberCheck)
-	
+
 	return itIsAMatrix 
-	
+
 end
 
 function AqwamRobloxMatrixLibrary:getVersion()
-	
+
 	return libraryVersion
-	
+
 end
 
 return AqwamRobloxMatrixLibrary
