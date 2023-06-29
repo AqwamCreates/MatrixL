@@ -564,29 +564,59 @@ end
 
 local function generateMatrixString(matrix)
 
-	if (matrix == nil) then return "" end
+	if matrix == nil then return "" end
 
 	local numberOfRows = #matrix
+	
 	local numberOfColumns = #matrix[1]
+
+	local columnWidths = {}
+
+	-- Calculate maximum width for each column
+	for column = 1, numberOfColumns do
+		
+		local maxWidth = 0
+		
+		for row = 1, numberOfRows do
+			
+			local cellWidth = string.len(tostring(matrix[row][column]))
+			
+			if cellWidth > maxWidth then
+				
+				maxWidth = cellWidth
+				
+			end
+			
+		end
+		
+		columnWidths[column] = maxWidth
+		
+	end
 
 	local text = ""
 
-	for row = 1, numberOfRows, 1 do
-
+	for row = 1, numberOfRows do
+		
 		text = text .. "{"
 
-		for column = 1, numberOfColumns, 1 do
+		for column = 1, numberOfColumns do
+			
+			local cellValue = matrix[row][column]
+			
+			local cellText = tostring(cellValue)
+			
+			local cellWidth = string.len(cellText)
+			
+			local padding = columnWidths[column] - cellWidth + 1
 
-			text = text .. "\t" .. matrix[row][column]
-
+			text = text .. string.rep(" ", padding) .. cellText
 		end
 
-		text = text .. "\t}\n"
-
+		text = text .. " }\n"
 	end
 
 	return text
-
+	
 end
 
 function AqwamRobloxMatrixLibrary:printMatrix(...)
