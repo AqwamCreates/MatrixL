@@ -62,9 +62,9 @@ end
 
 local function generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
 
-	local text1 = "Argument " .. secondMatrixIndex .. " and " .. firstMatrixIndex .. " are incompatible! "
+	local text1 = "Argument " .. firstMatrixIndex .. " and " .. secondMatrixIndex .. " are incompatible! "
 
-	local text2 = "(" ..  #matrices[secondMatrixIndex] .. ", " .. #matrices[secondMatrixIndex][1] .. ") and " .. "(" ..  #matrices[firstMatrixIndex] .. ", " .. #matrices[firstMatrixIndex][1] .. ")"
+	local text2 = "(" ..  #matrices[firstMatrixIndex] .. ", " .. #matrices[firstMatrixIndex][1] .. ") and " .. "(" ..  #matrices[secondMatrixIndex] .. ", " .. #matrices[secondMatrixIndex][1] .. ")"
 
 	local text = text1 .. text2
 
@@ -76,12 +76,9 @@ local function broadcastAndCalculate(operation, ...)
 
 	local matrices = {...}
 
-	local firstMatrixIndex = #matrices
-	local secondMatrixIndex = firstMatrixIndex - 1 
+	local matrix1 = convertToMatrixIfScalar(matrices[1])
 
-	local matrix1 = convertToMatrixIfScalar(matrices[firstMatrixIndex])
-
-	local matrix2 = convertToMatrixIfScalar(matrices[secondMatrixIndex])
+	local matrix2 = convertToMatrixIfScalar(matrices[2])
 
 	matrix1, matrix2 = MatrixBroadcast:matrixBroadcast(matrix1, matrix2)
 
@@ -95,15 +92,15 @@ local function broadcastAndCalculate(operation, ...)
 
 	if (not success) then
 
-		local text = generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
+		local text = generateArgumentErrorString(matrices, 1, 2)
 
 		error(text)
 
 	end
 
-	if ( (secondMatrixIndex - 1) > 0) then
+	if (#matrices > 2) then
 
-		return broadcastAndCalculate(operation, select(secondMatrixIndex - 1, ...), result)
+		return broadcastAndCalculate(operation, result, select(3, ...))
 
 	else
 
