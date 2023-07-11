@@ -519,7 +519,7 @@ function AqwamRobloxMatrixLibrary:verticalStandardDeviation(matrix)
 	
 	local divisor =  #matrix - 1
 
-	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, divisor)
+	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
 
 	local squareRootMatrix = AqwamRobloxMatrixLibrary:power(dividedMatrix, (1/2))
 
@@ -539,7 +539,7 @@ function AqwamRobloxMatrixLibrary:horizontalStandardDeviation(matrix)
 	
 	local divisor =  #matrix[1] - 1
 
-	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean,divisor)
+	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
 
 	local squareRootMatrix = AqwamRobloxMatrixLibrary:power(dividedMatrix, (1/2))
 
