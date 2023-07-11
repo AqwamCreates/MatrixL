@@ -511,21 +511,15 @@ function AqwamRobloxMatrixLibrary:verticalStandardDeviation(matrix)
 
 	local verticalMean = AqwamRobloxMatrixLibrary:verticalMean(matrix)
 
-	local matrixSubtractedByMean = AqwamRobloxMatrixLibrary:createMatrix(#matrix, #matrix[1])
-
-	for row = 1, #matrix, 1 do
-
-		for column = 1, #matrix[1], 1 do
-
-			matrixSubtractedByMean[row][column] = matrix[row][column] - verticalMean[1][column]
-
-		end
-
-	end
+	local matrixSubtractedByMean = AqwamRobloxMatrixLibrary:subtract(matrix, verticalMean)
 
 	local squaredMatrixSubtractedByMean = AqwamRobloxMatrixLibrary:power(matrixSubtractedByMean, 2)
+	
+	local summedSquaredMatrixSubtractedByMean = AqwamRobloxMatrixLibrary:verticalSum(squaredMatrixSubtractedByMean, 2)
+	
+	local divisor =  #matrix - 1
 
-	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, #matrix)
+	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, divisor)
 
 	local squareRootMatrix = AqwamRobloxMatrixLibrary:power(dividedMatrix, (1/2))
 
@@ -537,21 +531,15 @@ function AqwamRobloxMatrixLibrary:horizontalStandardDeviation(matrix)
 
 	local horizontalMean = AqwamRobloxMatrixLibrary:horizontalMean(matrix)
 
-	local matrixSubtractedByMean = AqwamRobloxMatrixLibrary:createMatrix(#matrix, #matrix[1])
-
-	for row = 1, #matrix, 1 do
-
-		for column = 1, #matrix[1], 1 do
-
-			matrixSubtractedByMean[row][column] = matrix[row][column] - horizontalMean[row][1]
-
-		end
-
-	end
+	local matrixSubtractedByMean = AqwamRobloxMatrixLibrary:subtract(matrix, horizontalMean)
 
 	local squaredMatrixSubtractedByMean = AqwamRobloxMatrixLibrary:power(matrixSubtractedByMean, 2)
+	
+	local summedSquaredMatrixSubtractedByMean = AqwamRobloxMatrixLibrary:horizontalSum(squaredMatrixSubtractedByMean, 2)
+	
+	local divisor =  #matrix[1] - 1
 
-	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean, #matrix[1])
+	local dividedMatrix = AqwamRobloxMatrixLibrary:divide(squaredMatrixSubtractedByMean,divisor)
 
 	local squareRootMatrix = AqwamRobloxMatrixLibrary:power(dividedMatrix, (1/2))
 
