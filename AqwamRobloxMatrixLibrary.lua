@@ -75,38 +75,40 @@ end
 local function broadcastAndCalculate(operation, ...)
 
 	local matrices = {...}
+	
+	local numberOfMatrices = #matrices
+	
+	local firstMatrix = matrices[1]
+	
+	local secondMatrix
+	
+	local result = AqwamRobloxMatrixLibrary:copy(firstMatrix)
+	
+	local result = convertToMatrixIfScalar(result)
 
-	local matrix1 = convertToMatrixIfScalar(matrices[1])
-
-	local matrix2 = convertToMatrixIfScalar(matrices[2])
-
-	matrix1, matrix2 = MatrixBroadcast:matrixBroadcast(matrix1, matrix2)
-
-	local result
-
-	local success = pcall(function()
-
-		result = MatrixOperation:matrixOperation(operation, matrix1, matrix2)
-
-	end)
-
-	if (not success) then
-
-		local text = generateArgumentErrorString(matrices, 1, 2)
-
-		error(text)
-
+	for i = 2, numberOfMatrices, 1 do
+		
+		local success = pcall(function()
+			
+			local secondMatrix = convertToMatrixIfScalar(matrices[i])
+			
+			result, secondMatrix = MatrixBroadcast:matrixBroadcast(result, secondMatrix)
+			
+			result = MatrixOperation:matrixOperation(operation, result, secondMatrix)
+			
+		end)
+		
+		if not success then
+			
+			local text = generateArgumentErrorString(matrices, (i - 1), i)
+			
+			error(text)
+			
+		end
+		
 	end
 
-	if (#matrices > 2) then
-
-		return broadcastAndCalculate(operation, result, select(3, ...))
-
-	else
-
-		return result
-
-	end
+	return result
 
 end
 
@@ -204,28 +206,28 @@ function AqwamRobloxMatrixLibrary:dotProduct(...)
 
 	local matrices = {...}
 
-	local firstMatrixIndex = #matrices
-	local secondMatrixIndex = firstMatrixIndex - 1 
+	local lastMatrixIndex = #matrices
+	local secondLastMatrixIndex = lastMatrixIndex - 1 
 
 	local result
 
 	local success = pcall(function()
 
-		result = MatrixDotProduct:dotProduct(matrices[secondMatrixIndex], matrices[firstMatrixIndex])
+		result = MatrixDotProduct:dotProduct(matrices[secondLastMatrixIndex], matrices[lastMatrixIndex])
 
 	end)
 
 	if (not success) then
 
-		local text = generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
+		local text = generateArgumentErrorString(matrices, secondLastMatrixIndex, lastMatrixIndex)
 
 		error(text)
 
 	end
 
-	if ( (secondMatrixIndex - 1) > 0) then
+	if (secondLastMatrixIndex > 1) then
 
-		return AqwamRobloxMatrixLibrary:dotProduct(select(secondMatrixIndex - 1, ...), result)
+		return AqwamRobloxMatrixLibrary:dotProduct(select(secondLastMatrixIndex - 1, ...), result)
 
 	else
 
@@ -630,28 +632,28 @@ function AqwamRobloxMatrixLibrary:horizontalConcatenate(...)
 
 	local matrices = {...}
 
-	local firstMatrixIndex = #matrices
-	local secondMatrixIndex = firstMatrixIndex - 1 
+	local lastMatrixIndex = #matrices
+	local secondLastMatrixIndex = lastMatrixIndex - 1 
 
 	local result
 
 	local success = pcall(function()
 
-		result = MatrixConcatenate:horizontalConcatenate(matrices[secondMatrixIndex], matrices[firstMatrixIndex])
+		result = MatrixConcatenate:horizontalConcatenate(matrices[secondLastMatrixIndex], matrices[lastMatrixIndex])
 
 	end)
 
 	if (not success) then
 
-		local text = generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
+		local text = generateArgumentErrorString(matrices, secondLastMatrixIndex, lastMatrixIndex)
 
 		error(text)
 
 	end
 
-	if ( (secondMatrixIndex - 1) > 0) then
+	if (secondLastMatrixIndex > 1) then
 
-		return AqwamRobloxMatrixLibrary:horizontalConcatenate(select(secondMatrixIndex - 1, ...), result)
+		return AqwamRobloxMatrixLibrary:horizontalConcatenate(select(secondLastMatrixIndex - 1, ...), result)
 
 	else
 
@@ -665,28 +667,28 @@ function AqwamRobloxMatrixLibrary:verticalConcatenate(...)
 
 	local matrices = {...}
 
-	local firstMatrixIndex = #matrices
-	local secondMatrixIndex = firstMatrixIndex - 1 
+	local lastMatrixIndex = #matrices
+	local secondLastMatrixIndex = lastMatrixIndex - 1 
 
 	local result
 
 	local success = pcall(function()
 
-		result = MatrixConcatenate:verticalConcatenate(matrices[secondMatrixIndex], matrices[firstMatrixIndex])
+		result = MatrixConcatenate:verticalConcatenate(matrices[secondLastMatrixIndex], matrices[lastMatrixIndex])
 
 	end)
 
 	if (not success) then
 
-		local text = generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
+		local text = generateArgumentErrorString(matrices, secondLastMatrixIndex, lastMatrixIndex)
 
 		error(text)
 
 	end
 
-	if ( (secondMatrixIndex - 1) > 0) then
+	if (secondLastMatrixIndex > 1) then
 
-		return AqwamRobloxMatrixLibrary:verticalConcatenate(select(secondMatrixIndex - 1, ...), result)
+		return AqwamRobloxMatrixLibrary:verticalConcatenate(select(secondLastMatrixIndex - 1, ...), result)
 
 	else
 
@@ -921,6 +923,8 @@ function AqwamRobloxMatrixLibrary:extractColumns(matrix, startingColumnIndex, en
 end
 
 function AqwamRobloxMatrixLibrary:copy(matrix)
+	
+	if (typeof(matrix) == "number") then return matrix end
 
 	local numberOfRows = #matrix
 
