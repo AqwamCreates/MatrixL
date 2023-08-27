@@ -26,8 +26,15 @@
 		- USED AS COMMERCIAL OR PUBLIC USE 
 	
 	--------------------------------------------------------------------
+	
+	By using or possesing any copies of this library, you agree to our Terms and Conditions at:
+	
+	https://aqwamcreates.github.io/MatrixL/TermsAndConditions.html
+	
+	--------------------------------------------------------------------
 
 --]]
+
 
 local libraryVersion = 1.9
 
@@ -75,37 +82,37 @@ end
 local function broadcastAndCalculate(operation, ...)
 
 	local matrices = {...}
-	
+
 	local numberOfMatrices = #matrices
-	
+
 	local firstMatrix = matrices[1]
-	
+
 	local secondMatrix
-	
+
 	local result = AqwamRobloxMatrixLibrary:copy(firstMatrix)
-	
+
 	local result = convertToMatrixIfScalar(result)
 
 	for i = 2, numberOfMatrices, 1 do
-		
+
 		local success = pcall(function()
-			
+
 			local secondMatrix = convertToMatrixIfScalar(matrices[i])
-			
+
 			result, secondMatrix = MatrixBroadcast:matrixBroadcast(result, secondMatrix)
-			
+
 			result = MatrixOperation:matrixOperation(operation, result, secondMatrix)
-			
+
 		end)
-		
+
 		if not success then
-			
+
 			local text = generateArgumentErrorString(matrices, (i - 1), i)
-			
+
 			error(text)
-			
+
 		end
-		
+
 	end
 
 	return result
@@ -923,7 +930,7 @@ function AqwamRobloxMatrixLibrary:extractColumns(matrix, startingColumnIndex, en
 end
 
 function AqwamRobloxMatrixLibrary:copy(matrix)
-	
+
 	if (typeof(matrix) == "number") then return matrix end
 
 	local numberOfRows = #matrix
