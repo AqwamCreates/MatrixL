@@ -8,7 +8,7 @@ User shall not:
 * Sell, resell, distribute, sublicense, or otherwise transfer the Library, in whole or in part, to any third party, whether for profit or not;
 * Modify, adapt, translate, reverse engineer, decompile, disassemble, or create derivative works of the Library;
 * Remove or alter any copyright, trademark, or other proprietary notices or labels contained in the Library;
-* Use the Library for cheat development, use, or any activities falling within that category, unless explicitly approved by the person / company / organization that owns the target application or the Licensor.
+* Use the Library for cheat development, use, or any activities falling within that category, unless explicitly approved by the person/company/organization that owns the target application or the Licensor.
 * Use the Library in any manner that violates any applicable laws or regulations.
 
 ## Liability
@@ -20,7 +20,7 @@ The Library is provided "AS IS" and without warranty of any kind. Licensor shall
 
 ## Removal of Credit
 * If the User wish to remove the credits or source information from the User’s publication or presentation that uses the Library, the User shall seek the Licensor’s confirmation that the library can been removed but may subject to commercial agreement.
-* Once the Licensor have agreed that the library can been removed, the User may remove the credits or source information in any publication or presentation that uses the Library.
+* Once the Licensor have agreed that the library have been removed, the User may remove the credits or source information in any publication or presentation that uses the Library.
 
 ## Governing Law
 This Agreement shall be governed by and construed in accordance with the laws of a jurisdiction selected at the sole discretion of the Licensor. In the absence of a choice by the Licensor, the laws of Malaysia shall apply.
