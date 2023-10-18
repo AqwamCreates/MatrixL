@@ -33,7 +33,7 @@ In the event that the User engages in cheating, cheat development, cheat and exp
 
 * Loss of Revenue: The User shall be responsible for compensating the Licensor for any loss of revenue incurred due to cheating, cheat and exploit distribution, or anti-cheat and anti-exploit evasion distribution activities.
 
-* Profits Derived: The User shall be liable to surrender any profits derived directly or indirectly from cheating, cheat and exploit distribution, or anti-cheat and anti-exploit evasion distribution, and these profits shall be awarded the Licensor.
+* Profits Derived: The User shall be liable to surrender any profits derived directly or indirectly from cheating, cheat and exploit distribution, or anti-cheat and anti-exploit evasion distribution, and these profits shall be awarded to the Licensor.
 
 * Legal Costs: The User shall bear the costs associated with any legal actions, including but not limited to attorney's fees and court costs, initiated by the Licensor to address the cheating, cheat and exploit distribution, or anti-cheat and anti-exploit evasion distribution activities.
 
