@@ -293,9 +293,9 @@ function AqwamRobloxMatrixLibrary:createIdentityMatrix(numberOfRowsAndColumns)
 
 end
 
-function AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns, allNumberValues)
+function AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns, allValues)
 
-	allNumberValues = allNumberValues or 0
+	allValues = allValues or 0
 
 	local result = {}
 
@@ -305,7 +305,7 @@ function AqwamRobloxMatrixLibrary:createMatrix(numberOfRows, numberOfColumns, al
 
 		for column = 1, numberOfColumns, 1 do
 
-			result[row][column] = allNumberValues
+			result[row][column] = allValues
 
 		end	
 
