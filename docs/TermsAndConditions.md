@@ -3,13 +3,17 @@
 ## License
 These terms and conditions (“Agreement”) are a legal agreement between you (or company or organization) recognized as “User” and Aqwam Harish Aiman recognised as “Licensor” for the use of MatrixL (or formerly known as Aqwam’s Roblox Matrix Library) (“Library”) within this terms and conditions. By using the Library, User,  agrees to be bound by the terms of this Agreement.
 
+## License Exceptions
+
+This license will not be granted to Roblox Corporation or any of its employees. A separate commercial agreement must be made between the Licensor and Roblox Corporation in order to use or possess the Library.
+
 ## Prohibited Actions
 User shall not:
 * Sell, resell, distribute, sublicense, or otherwise transfer the Library, in whole or in part, to any third party, whether for profit or not;
 * Modify, adapt, translate, reverse engineer, decompile, disassemble, or create derivative works of the Library;
 * Remove or alter any copyright, trademark, or other proprietary notices or labels contained in the Library;
 * Use the Library for cheat development, use, or any activities falling within that category, unless explicitly approved by the person/company/organization that owns the target application or the Licensor.
-*  Use the Library for anti-exploit or anti-cheat evasion purposes, or engage in any actions intended to circumvent security measures, unless explicitly approved by the person/company/organization that owns the target application or the Licensor.
+* Use the Library for anti-exploit or anti-cheat evasion purposes, or engage in any actions intended to circumvent security measures, unless explicitly approved by the person/company/organization that owns the target application or the Licensor.
 * Use the Library in any manner that violates any applicable laws or regulations.
 
 ## Liability
