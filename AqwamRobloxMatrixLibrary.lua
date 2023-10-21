@@ -575,7 +575,7 @@ local function generateMatrixString(matrix)
 
 			local cellWidth = string.len(tostring(matrix[row][column]))
 
-			if cellWidth > maxWidth then
+			if (cellWidth > maxWidth) then
 
 				maxWidth = cellWidth
 
@@ -654,13 +654,13 @@ local function generateMatrixStringWithComma(matrix)
 
 			local cellWidth = string.len(tostring(matrix[row][column]))
 			
-			if column < numberOfColumns then
+			if (column < numberOfColumns) then
 				
 				cellWidth += 1
 				
 			end
 
-			if cellWidth > maxWidth then
+			if (cellWidth > maxWidth) then
 
 				maxWidth = cellWidth
 
@@ -690,7 +690,7 @@ local function generateMatrixStringWithComma(matrix)
 
 			text = text .. string.rep(" ", padding) .. cellText
 			
-			if column < numberOfColumns then
+			if (column < numberOfColumns) then
 
 				text = text .. ","
 
@@ -746,13 +746,13 @@ local function generatePortableMatrixString(matrix)
 
 			local cellWidth = string.len(tostring(matrix[row][column]))
 
-			if column < numberOfColumns then
+			if (column < numberOfColumns) then
 
 				cellWidth += 1
 
 			end
 
-			if cellWidth > maxWidth then
+			if (cellWidth > maxWidth) then
 
 				maxWidth = cellWidth
 
@@ -768,7 +768,7 @@ local function generatePortableMatrixString(matrix)
 
 	for row = 1, numberOfRows do
 
-		text = text .. "{"
+		text = text .. "\t{"
 
 		for column = 1, numberOfColumns do
 
@@ -782,15 +782,24 @@ local function generatePortableMatrixString(matrix)
 
 			text = text .. string.rep(" ", padding) .. cellText
 
-			if column < numberOfColumns then
+			if (column < numberOfColumns) then
 
 				text = text .. ","
 
 			end
 
 		end
-
-		text = text .. " }\n"
+		
+		text = text .. "}"
+		
+		if (row < numberOfRows) then
+			
+			text = text .. ","
+			
+		end
+		
+		text = text .. "\n"
+		
 	end
 	
 	text = text .. "}\n"
