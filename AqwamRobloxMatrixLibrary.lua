@@ -727,6 +727,100 @@ function AqwamRobloxMatrixLibrary:printMatrixWithComma(...)
 
 end
 
+local function generatePortableMatrixString(matrix)
+
+	if matrix == nil then return "" end
+
+	local numberOfRows = #matrix
+
+	local numberOfColumns = #matrix[1]
+
+	local columnWidths = {}
+
+	-- Calculate maximum width for each column
+	for column = 1, numberOfColumns do
+
+		local maxWidth = 0
+
+		for row = 1, numberOfRows do
+
+			local cellWidth = string.len(tostring(matrix[row][column]))
+
+			if column < numberOfColumns then
+
+				cellWidth += 1
+
+			end
+
+			if cellWidth > maxWidth then
+
+				maxWidth = cellWidth
+
+			end
+
+		end
+
+		columnWidths[column] = maxWidth
+
+	end
+
+	local text = "{\n"
+
+	for row = 1, numberOfRows do
+
+		text = text .. "{"
+
+		for column = 1, numberOfColumns do
+
+			local cellValue = matrix[row][column]
+
+			local cellText = tostring(cellValue) 
+
+			local cellWidth = string.len(cellText)
+
+			local padding = columnWidths[column] - cellWidth + 1
+
+			text = text .. string.rep(" ", padding) .. cellText
+
+			if column < numberOfColumns then
+
+				text = text .. ","
+
+			end
+
+		end
+
+		text = text .. " }\n"
+	end
+	
+	text = text .. "\n}"
+
+	return text
+
+end
+
+function AqwamRobloxMatrixLibrary:printPortableMatrix(...)
+
+	local text = "\n\n"
+
+	local generatedText
+
+	local matrices = {...}
+
+	for matrixNumber = 1, #matrices, 1 do
+
+		generatedText = generatePortableMatrixString(matrices[matrixNumber])
+
+		text = text .. generatedText
+
+		text = text .. "\n"
+
+	end
+
+	print(text)
+
+end
+
 function AqwamRobloxMatrixLibrary:horizontalConcatenate(...)
 
 	local matrices = {...}
