@@ -793,7 +793,7 @@ local function generatePortableMatrixString(matrix)
 		text = text .. " }\n"
 	end
 	
-	text = text .. "\n}"
+	text = text .. "}\n"
 
 	return text
 
