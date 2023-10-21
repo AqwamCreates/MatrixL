@@ -2,7 +2,7 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.92
+	Version 1.93
 
 	Aqwam's Roblox Matrix Library (AR-MatrixL)
 
@@ -790,15 +790,7 @@ local function generatePortableMatrixString(matrix)
 
 		end
 		
-		text = text .. "}"
-		
-		if (row < numberOfRows) then
-			
-			text = text .. ","
-			
-		end
-		
-		text = text .. "\n"
+		text = text .. "},\n"
 		
 	end
 	
