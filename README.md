@@ -4,7 +4,7 @@
 
 Version 1.91
 
-Aqwam's Matrix Library (AR-MatrixL)
+Aqwam's Matrix Library (Aqwam-MatrixL)
 
 Author: Aqwam Harish Aiman
 	
