@@ -28,8 +28,4 @@ By using or possesing any copies of this library, you agree to our [Terms and Co
 
 [MatrixL (Matrix Library)](https://github.com/AqwamCreates/MatrixL)
 
-## Version History
-
-Have a look at this library's update progress [here](VersionHistory/VersionHistory.md)!
-
 
