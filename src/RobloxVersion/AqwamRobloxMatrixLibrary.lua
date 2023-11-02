@@ -2,9 +2,7 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.93
-
-	Aqwam's Roblox Matrix Library (AR-MatrixL)
+	Aqwam's Matrix Library (Aqwam-MatrixL)
 
 	Author: Aqwam Harish Aiman
 	
