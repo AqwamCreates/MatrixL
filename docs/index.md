@@ -1,6 +1,6 @@
 # Welcome to Aqwam's MatrixL Library!
 
-MatrixL is a matrix library for Roblox.
+MatrixL is a matrix library for Lua.
 
 Although there are other matrix libraries available, this was created to avoid legal issues when creating [DataPredict](https://github.com/AqwamCreates/DataPredict) library.
 
