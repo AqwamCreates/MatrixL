@@ -22,7 +22,7 @@ By using or possesing any copies of this library, you agree to our [Terms and Co
 
 ### ModuleScripts
 
-[Aqwam's Roblox Matrix Library](https://www.roblox.com/library/12256162800/Aqwams-Roblox-Matrix-Library)
+[Aqwam's Matrix Library](https://www.roblox.com/library/12256162800/Aqwams-Roblox-Matrix-Library)
 
 ### Repository
 
