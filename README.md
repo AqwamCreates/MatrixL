@@ -2,6 +2,10 @@
 
 --------------------------------------------------------------------
 
+## THIS IS A PROPRIETARY SOURCE CODE! NOT OPEN SOURCE! 
+
+--------------------------------------------------------------------
+
 Version 1.91
 
 Aqwam's Matrix Library (Aqwam-MatrixL)
