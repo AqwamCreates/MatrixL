@@ -12,10 +12,15 @@ These terms and conditions (“Agreement”) are a legal agreement between you (
 ## Prohibited Actions
 User shall not:
 * Sell, resell, distribute, sublicense, or otherwise transfer the Library, in whole or in part, to any third party, whether for profit or not;
+
 * Modify, adapt, translate, reverse engineer, decompile, disassemble, or create derivative works of the Library;
+
 * Remove or alter any copyright, trademark, or other proprietary notices or labels contained in the Library;
+
 * Use the Library for cheat/exploit development, use, or any activities falling within that category, unless explicitly approved by the person/company/organization that owns the target application or the Licensor.
+
 * Use the Library for anti-exploit or anti-cheat evasion purposes, or engage in any actions intended to circumvent security measures, unless explicitly approved by the person/company/organization that owns the target application or the Licensor.
+
 * Use the Library in any manner that violates any applicable laws or regulations.
 
 ## Liability
@@ -65,5 +70,7 @@ Licensor reserve the right to change these terms and conditions at any time, wit
 
 ## Entire Agreement
 This Agreement constitutes the entire agreement between User and Licensor with respect to the subject matter hereof and supersedes all prior or contemporaneous communications and proposals, whether oral or written, between User and Licensor.
+
+In the event that any provision within this Agreement is found to be invalid, illegal, or unenforceable under any applicable law or by a court of competent jurisdiction, the remaining provisions of this Agreement shall remain in full force and effect, and the invalid, illegal, or unenforceable provision shall be deemed modified to the extent necessary to make it valid, legal, and enforceable, preserving the intentions of the parties to the maximum extent possible.
 
 By using the Library, User agrees to be bound by the terms of this Agreement. If User does not agree to the terms of this Agreement, User shall not use the Library.
