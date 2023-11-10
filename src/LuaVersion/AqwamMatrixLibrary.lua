@@ -338,7 +338,7 @@ function AqwamRobloxMatrixLibrary:createRandomMatrix(numberOfRows, numberOfColum
 
 		for column = 1, numberOfColumns, 1 do
 
-			result[row][column] = Random.new():NextInteger(minimumValue, maximumValue)
+			result[row][column] = math.random(minimumValue, maximumValue)
 
 		end	
 
@@ -358,7 +358,7 @@ function AqwamRobloxMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberO
 
 		for column = 1, numberOfColumns, 1 do
 
-			result[row][column] = Random.new():NextNumber()
+			result[row][column] = math.random()
 
 		end	
 
