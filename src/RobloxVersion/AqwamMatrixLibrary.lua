@@ -351,7 +351,38 @@ function AqwamMatrixLibrary:createRandomMatrix(numberOfRows, numberOfColumns, mi
 
 end
 
-function AqwamMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberOfColumns)
+function AqwamMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberOfColumns, mean, standardDeviation)
+	
+	local result = {}
+	
+	local random = Random.new()
+	
+	mean = mean or 0
+
+	standardDeviation = standardDeviation or 1
+
+	for row = 1, numberOfRows do
+		
+		result[row] = {}
+
+		for column = 1, numberOfColumns do
+
+			local u1 = random:NextNumber()
+			
+			local u2 = random:NextNumber()
+			
+			local z0 = math.sqrt(-2 * math.log(u1)) * math.cos(2 * math.pi * u2)
+
+			result[row][column] = z0 * standardDeviation + mean
+			
+		end
+	end
+
+	return result
+	
+end
+
+function AqwamMatrixLibrary:createRandomUniformMatrix(numberOfRows, numberOfColumns)
 
 	local result = {}
 
