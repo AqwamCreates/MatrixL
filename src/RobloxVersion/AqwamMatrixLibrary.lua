@@ -4,7 +4,7 @@
 
 	Version 1.93
 
-	Aqwam's Roblox Matrix Library (AR-MatrixL)
+	Aqwam's Matrix Library (A-MatrixL)
 
 	Author: Aqwam Harish Aiman
 	
@@ -233,6 +233,8 @@ function AqwamMatrixLibrary:dotProduct(...)
 	end
 
 	if (secondLastMatrixIndex > 1) then
+		
+		if (type(result) == "number") then result = {{result}} end
 
 		return AqwamMatrixLibrary:dotProduct(select(secondLastMatrixIndex - 1, ...), result)
 
@@ -1177,19 +1179,17 @@ function AqwamMatrixLibrary:minor(matrix, row, column)
 
 	local minor = {}
 
-	local coroutines = {}
-
 	for i = 1, size - 1 do
 
 		minor[i] = {}
 
 		for j = 1, size - 1 do
 
-			local m_row = i < row and i or i + 1
+			local mRow = (i < row and i) or (i + 1)
 
-			local m_col = j < column and j or j + 1
+			local mColumn = (j < column and j) or (j + 1)
 
-			minor[i][j] = matrix[m_row][m_col]
+			minor[i][j] = matrix[mRow][mColumn]
 
 		end
 
@@ -1203,9 +1203,9 @@ function  AqwamMatrixLibrary:cofactor(matrix, row, column)
 
 	local minor =  AqwamMatrixLibrary:minor(matrix, row, column)
 
-	local sign = ((row + column) % 2 == 0) and 1 or -1
+	local sign = (((row + column) % 2 == 0) and 1) or -1
 
-	return sign *  AqwamMatrixLibrary:determinant(minor)
+	return sign * AqwamMatrixLibrary:determinant(minor)
 
 end
 
@@ -1213,27 +1213,27 @@ function AqwamMatrixLibrary:determinant(matrix)
 
 	local size = #matrix
 
-	if size == 1 then
+	if (size == 1) then
 
 		return matrix[1][1]
 
-	elseif size == 2 then
+	elseif (size == 2) then
 
 		return matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]
 
 	else
 
-		local det = 0
+		local determinant = 0
 
 		for i = 1, size do
 
 			local cofactor =  AqwamMatrixLibrary:cofactor(matrix, 1, i)
 
-			det = det + matrix[1][i] * cofactor
+			determinant = determinant + matrix[1][i] * cofactor
 
 		end
 
-		return det
+		return determinant
 
 	end
 
@@ -1245,15 +1245,15 @@ function AqwamMatrixLibrary:inverse(matrix)
 
 	local size = #matrix
 
-	local det = AqwamMatrixLibrary:determinant(matrix)
+	local determinant = AqwamMatrixLibrary:determinant(matrix)
 
-	if det == 0 then
+	if (determinant == 0) then
 
 		return nil -- matrix is not invertible
 
-	elseif size == 1 then
+	elseif (size == 1) then
 
-		return {{1 / det}}
+		return {{1 / determinant}}
 
 	else
 
@@ -1281,7 +1281,7 @@ function AqwamMatrixLibrary:inverse(matrix)
 
 			for j = 1, size do
 
-				inverse[i][j] = inverse[i][j] / det
+				inverse[i][j] = inverse[i][j] / determinant
 
 			end
 
