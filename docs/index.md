@@ -8,7 +8,7 @@ If there are any suggestions or issues for this library, don't be afraid to reac
 
 In addition, if you are interested in Roblox tutorials and future projects by me, then you can subscribe to me in [Youtube](https://www.youtube.com/channel/UCUrwoxv5dufEmbGsxyEUPZw).
 
-By using or possesing any copies of this library, you agree to our [Terms and Conditions](TermsAndConditions.md).
+By using or possesing any copies of this library or its assets (including the icons), you agree to our [Terms and Conditions](TermsAndConditions.md).
 
 ## API Reference
 
