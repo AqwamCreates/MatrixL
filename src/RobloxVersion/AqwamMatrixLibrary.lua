@@ -404,12 +404,23 @@ function AqwamMatrixLibrary:createRandomUniformMatrix(numberOfRows, numberOfColu
 
 end
 
-function AqwamMatrixLibrary:getSize(matrix)
+function AqwamMatrixLibrary:getSize(...)
 
-	local numberOfRows = #matrix
-	local numberOfColumns = #matrix[1]
+	local matrixSizesArray = {}
 
-	return {numberOfRows, numberOfColumns}
+	for i, matrix in ipairs({...}) do
+
+		local numberOfRows = #matrix
+
+		local numberOfColumns = #matrix[1]
+
+		local sizesArray = {numberOfRows, numberOfColumns}
+
+		table.insert(matrixSizesArray, sizesArray)
+
+	end
+
+	return table.unpack(matrixSizesArray)
 
 end
 
