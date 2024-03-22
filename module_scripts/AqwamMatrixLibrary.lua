@@ -363,9 +363,12 @@ local function dotProduct(matrix1, matrix2)
 			result[row][column] = sum
 
 		end
+		
 	end
 
-	return result
+	local isScalar = (#result == 1 and #result[1] == 1)
+
+	return (isScalar and result[1][1]) or result
 
 end
 
