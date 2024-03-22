@@ -2,7 +2,7 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.93
+	Version 1.94
 
 	Aqwam's Matrix Library (A-MatrixL)
 
@@ -387,13 +387,7 @@ local function broadcastAndCalculate(operation, ...)
 
 	local numberOfMatrices = #matrices
 
-	local firstMatrix = matrices[1]
-
-	local secondMatrix
-
-	local result = AqwamMatrixLibrary:copy(firstMatrix)
-
-	local result = convertToMatrixIfScalar(result)
+	local result = convertToMatrixIfScalar(matrices[1])
 
 	for i = 2, numberOfMatrices, 1 do
 
