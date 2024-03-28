@@ -16,13 +16,9 @@ By using or possesing any copies of this library or its assets (including the ic
 
 ## Links
 
-### Packages (Recommended For Up-To-Date Libraries)
-
-[MatrixL (Matrix Library)](https://www.roblox.com/library/12728472338/MatrixL-Aqwams-Roblox-Matrix-Library)
-
 ### ModuleScripts
 
-[Aqwam's Matrix Library](https://www.roblox.com/library/12256162800/Aqwams-Roblox-Matrix-Library)
+[Aqwam's Matrix Library](https://github.com/AqwamCreates/MatrixL/blob/main/module_scripts/AqwamMatrixLibrary.lua)
 
 ### Repository
 
