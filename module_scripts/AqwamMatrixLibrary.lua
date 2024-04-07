@@ -40,7 +40,7 @@ local libraryVersion = 1.9
 
 local AqwamMatrixLibrary = {}
 
-local matrixOperationFunction = {
+local matrixOperationFunctionList = {
 
 	['+'] = function (x, y) return (x + y) end,
 	['-'] = function (x, y) return (x - y) end,
@@ -196,22 +196,17 @@ local function matrixBroadcast(matrix1, matrix2)
 
 end
 
-local function matrixOperation(operation, matrix1, matrix2)
+local function matrixOperation(functionToApply, matrix1, matrix2)
 
 	if (#matrix1 ~= #matrix2) or (#matrix1[1] ~= #matrix2[1]) then error("Incompatible Dimensions! (" .. #matrix1 .." x " .. #matrix1[1] .. ") and (" .. #matrix2 .. " x " .. #matrix2[1] .. ")") end
 
-	local maxRow = math.max(#matrix1, #matrix2)
-	local maxColumn = math.max(#matrix1[1], #matrix2[1])
-
-	local functionToApply = matrixOperationFunction[operation]
-
 	local result = {}
 
-	for row = 1, maxRow, 1 do
+	for row = 1, #matrix1, 1 do
 
 		result[row] = {}
 
-		for column = 1, maxColumn, 1 do
+		for column = 1, #matrix1[1], 1 do
 
 			result[row][column] = functionToApply(matrix1[row][column], matrix2[row][column])
 
@@ -390,6 +385,8 @@ local function broadcastAndCalculate(operation, ...)
 	local matrices = {...}
 
 	local numberOfMatrices = #matrices
+	
+	local functionToApply = matrixOperationFunctionList[operation]
 
 	local result = convertToMatrixIfScalar(matrices[1])
 
@@ -401,7 +398,7 @@ local function broadcastAndCalculate(operation, ...)
 
 			result, secondMatrix = matrixBroadcast(result, secondMatrix)
 
-			result = matrixOperation(operation, result, secondMatrix)
+			result = matrixOperation(functionToApply, result, secondMatrix)
 
 		end)
 
