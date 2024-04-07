@@ -202,6 +202,8 @@ local function matrixOperation(operation, matrix1, matrix2)
 
 	local maxRow = math.max(#matrix1, #matrix2)
 	local maxColumn = math.max(#matrix1[1], #matrix2[1])
+	
+	local functionToApply = matrixOperationFunction[operation]
 
 	local result = {}
 
@@ -211,7 +213,7 @@ local function matrixOperation(operation, matrix1, matrix2)
 
 		for column = 1, maxColumn, 1 do
 
-			result[row][column] = matrixOperationFunction[operation]( matrix1[row][column] , matrix2[row][column] )
+			result[row][column] = functionToApply(matrix1[row][column] , matrix2[row][column])
 
 		end
 
