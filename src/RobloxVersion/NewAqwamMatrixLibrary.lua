@@ -213,7 +213,7 @@ local function matrixOperation(operation, matrix1, matrix2)
 
 		for column = 1, maxColumn, 1 do
 
-			result[row][column] = functionToApply(matrix1[row][column] , matrix2[row][column])
+			result[row][column] = functionToApply(matrix1[row][column], matrix2[row][column])
 
 		end
 
