@@ -56,10 +56,6 @@ local matrixOperationFunctionList = {
 
 	['log'] = function (x, y) return (math.log(x, y)) end,
 
-	['exp'] = function (x, y) return (math.exp(x, y)) end,
-	['e'] = function (x, y) return (math.exp(x, y)) end,
-	['exponent'] = function (x, y) return (math.exp(x, y)) end,
-
 	['^'] = function (x, y) return (math.pow(x, y)) end,
 	['power'] = function (x, y) return (math.pow(x, y)) end,
 
@@ -446,12 +442,6 @@ function AqwamMatrixLibrary:logarithm(...)
 
 end
 
-function AqwamMatrixLibrary:exp(...)
-
-	return broadcastAndCalculate('exp', ...)
-
-end
-
 function AqwamMatrixLibrary:power(...)
 
 	return broadcastAndCalculate('power', ...)
@@ -511,6 +501,8 @@ function AqwamMatrixLibrary:dotProduct(...)
 	local matrices = {...}
 
 	local numberOfMatrices = #matrices
+	
+	if (numberOfMatrices == 1) then warn("Only one argument!") end
 
 	local result = matrices[1]
 
