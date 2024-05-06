@@ -40,31 +40,6 @@ local libraryVersion = 1.9
 
 local AqwamMatrixLibrary = {}
 
-local matrixOperationFunctionList = {
-
-	['+'] = function (x, y) return (x + y) end,
-	['-'] = function (x, y) return (x - y) end,
-	['*'] = function (x, y) return (x * y) end,
-	['/'] = function (x, y) return (x / y) end,
-	['%'] = function (x, y) return (x % y) end,
-
-	['=='] = function (x, y) return (x == y) end,
-	['>'] = function (x, y) return (x > y) end,
-	['<'] = function (x, y) return (x < y) end,
-	['>='] = function (x, y) return (x >= y) end,
-	['<='] = function (x, y) return (x <= y) end,
-
-	['log'] = function (x, y) return (math.log(x, y)) end,
-
-	['exp'] = function (x, y) return (math.exp(x, y)) end,
-	['e'] = function (x, y) return (math.exp(x, y)) end,
-	['exponent'] = function (x, y) return (math.exp(x, y)) end,
-
-	['^'] = function (x, y) return (math.pow(x, y)) end,
-	['power'] = function (x, y) return (math.pow(x, y)) end,
-
-}
-
 local module = {}
 
 local function onBroadcastError(matrix1, matrix2)
@@ -131,7 +106,7 @@ local function checkIfCanBroadcast(matrix1, matrix2)
 
 end
 
-local function broadcastMatrix(matrix, rowSize, columnSize)
+local function expandMatrix(matrix, rowSize, columnSize)
 
 	local result = {}
 
@@ -184,11 +159,11 @@ local function matrixBroadcast(matrix1, matrix2)
 
 	if (isMatrix1Broadcasted == true) then
 
-		matrix1 = broadcastMatrix(matrix1, #matrix2, #matrix2[1])
+		matrix1 = expandMatrix(matrix1, #matrix2, #matrix2[1])
 
 	elseif (isMatrix2Broadcasted == true) then
 
-		matrix2 = broadcastMatrix(matrix2, #matrix1, #matrix1[1])
+		matrix2 = expandMatrix(matrix2, #matrix1, #matrix1[1])
 
 	end
 
@@ -380,13 +355,11 @@ local function generateArgumentErrorString(matrices, firstMatrixIndex, secondMat
 
 end
 
-local function broadcastAndCalculate(operation, ...)
+local function broadcastAndCalculate(functionToApply, ...)
 
 	local matrices = {...}
 
 	local numberOfMatrices = #matrices
-	
-	local functionToApply = matrixOperationFunctionList[operation]
 
 	local result = convertToMatrixIfScalar(matrices[1])
 
@@ -418,79 +391,73 @@ end
 
 function AqwamMatrixLibrary:add(...)
 
-	return broadcastAndCalculate('+', ...)
+	return broadcastAndCalculate(function(a, b) return a + b end, ...)
 
 end
 
 function AqwamMatrixLibrary:subtract(...)
 
-	return broadcastAndCalculate('-', ...)
+	return broadcastAndCalculate(function(a, b) return a - b end, ...)
 
 end
 
 function AqwamMatrixLibrary:multiply(...)
 
-	return broadcastAndCalculate('*', ...)
+	return broadcastAndCalculate(function(a, b) return a * b end, ...)
 
 end
 
 function AqwamMatrixLibrary:divide(...)
 
-	return broadcastAndCalculate('/', ...)
+	return broadcastAndCalculate(function(a, b) return a / b end, ...)
 
 end
 
 function AqwamMatrixLibrary:logarithm(...)
 
-	return broadcastAndCalculate('log', ...)
-
-end
-
-function AqwamMatrixLibrary:exp(...)
-
-	return broadcastAndCalculate('exp', ...)
+	return broadcastAndCalculate(function(a, b) return math.log(a, b) end, ...)
 
 end
 
 function AqwamMatrixLibrary:power(...)
 
-	return broadcastAndCalculate('power', ...)
+	return broadcastAndCalculate(function(a, b) return math.pow(a, b) end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesEqual(...)
 
-	return broadcastAndCalculate('==', ...)
+	return broadcastAndCalculate(function(a, b) return a == b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesGreater(...)
 
-	return broadcastAndCalculate('>', ...)
+	return broadcastAndCalculate(function(a, b) return a > b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesGreaterOrEqual(...)
 
-	return broadcastAndCalculate('>=', ...)
+	return broadcastAndCalculate(function(a, b) return a >= b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesLesser(...)
 
-	return broadcastAndCalculate('<', ...)
+	return broadcastAndCalculate(function(a, b) return a < b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesLesserOrEqual(...)
 
-	return broadcastAndCalculate('<=', ...)
+	return broadcastAndCalculate(function(a, b) return a <= b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areMatricesEqual(...)
 
-	local resultMatrix = broadcastAndCalculate('==', ...)
+	local resultMatrix = broadcastAndCalculate(function(a, b) return a == b end, ...)
 
 	for row = 1, #resultMatrix, 1 do
 
@@ -511,6 +478,8 @@ function AqwamMatrixLibrary:dotProduct(...)
 	local matrices = {...}
 
 	local numberOfMatrices = #matrices
+	
+	if (numberOfMatrices == 1) then warn("Only one argument!") end
 
 	local result = matrices[1]
 
@@ -1436,7 +1405,7 @@ end
 
 function AqwamMatrixLibrary:copy(matrix)
 
-	if (typeof(matrix) == "number") then return matrix end
+	if (type(matrix) == "number") then return matrix end
 
 	local numberOfRows = #matrix
 
