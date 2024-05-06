@@ -106,7 +106,7 @@ local function checkIfCanBroadcast(matrix1, matrix2)
 
 end
 
-local function expandMatrix(matrix, rowSize, columnSize)
+local function expandMatrix(matrix, targetRowSize, targetColumnSize)
 
 	local result = {}
 
@@ -116,31 +116,31 @@ local function expandMatrix(matrix, rowSize, columnSize)
 
 	if (isMatrixRowSizeEqualToOne == true) and (isMatrixColumnSizeEqualToOne == false) then
 
-		for row = 1, rowSize, 1 do
+		for row = 1, targetRowSize, 1 do
 
 			result[row] = {}
 
-			for column = 1, columnSize, 1 do result[row][column] = matrix[1][column] end
+			for column = 1, targetColumnSize, 1 do result[row][column] = matrix[1][column] end
 
 		end
 
 	elseif (isMatrixRowSizeEqualToOne == false) and (isMatrixColumnSizeEqualToOne == true) then
 
-		for row = 1, rowSize, 1 do
+		for row = 1, targetRowSize, 1 do
 
 			result[row] = {}
 
-			for column = 1, columnSize, 1 do result[row][column] = matrix[row][1] end
+			for column = 1, targetColumnSize, 1 do result[row][column] = matrix[row][1] end
 
 		end
 
 	elseif (isMatrixRowSizeEqualToOne == true) and (isMatrixColumnSizeEqualToOne == true) then
 
-		for row = 1, rowSize, 1 do
+		for row = 1, targetRowSize, 1 do
 
 			result[row] = {}
 
-			for column = 1, columnSize, 1 do result[row][column] = matrix[1][1] end
+			for column = 1, targetColumnSize, 1 do result[row][column] = matrix[1][1] end
 
 		end
 
