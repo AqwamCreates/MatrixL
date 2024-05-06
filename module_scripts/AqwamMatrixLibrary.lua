@@ -106,15 +106,15 @@ local function checkIfCanBroadcast(matrix1, matrix2)
 
 end
 
-local function broadcastMatrix(matrix, rowSize, columnSize)
+local function expandMatrix(matrix, rowSize, columnSize)
 
 	local result = {}
 
-	local isMatrixSmallerThanRowSize = (#matrix < rowSize)
+	local isMatrixRowSizeEqualToOne = (#matrix == 1)
 
-	local isMatrixSmallerThanColumnSize = (#matrix[1] < columnSize)
+	local isMatrixColumnSizeEqualToOne = (#matrix[1] == 1)
 
-	if (isMatrixSmallerThanRowSize == true) and (isMatrixSmallerThanColumnSize == false) then
+	if (isMatrixRowSizeEqualToOne == true) and (isMatrixColumnSizeEqualToOne == false) then
 
 		for row = 1, rowSize, 1 do
 
@@ -124,7 +124,7 @@ local function broadcastMatrix(matrix, rowSize, columnSize)
 
 		end
 
-	elseif (isMatrixSmallerThanRowSize == false) and (isMatrixSmallerThanColumnSize == true) then
+	elseif (isMatrixRowSizeEqualToOne == false) and (isMatrixColumnSizeEqualToOne == true) then
 
 		for row = 1, rowSize, 1 do
 
@@ -134,7 +134,7 @@ local function broadcastMatrix(matrix, rowSize, columnSize)
 
 		end
 
-	elseif (isMatrixSmallerThanRowSize == true) and (isMatrixSmallerThanColumnSize == true) then
+	elseif (isMatrixRowSizeEqualToOne == true) and (isMatrixColumnSizeEqualToOne == true) then
 
 		for row = 1, rowSize, 1 do
 
@@ -159,11 +159,11 @@ local function matrixBroadcast(matrix1, matrix2)
 
 	if (isMatrix1Broadcasted == true) then
 
-		matrix1 = broadcastMatrix(matrix1, #matrix2, #matrix2[1])
+		matrix1 = expandMatrix(matrix1, #matrix2, #matrix2[1])
 
 	elseif (isMatrix2Broadcasted == true) then
 
-		matrix2 = broadcastMatrix(matrix2, #matrix1, #matrix1[1])
+		matrix2 = expandMatrix(matrix2, #matrix1, #matrix1[1])
 
 	end
 
