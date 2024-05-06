@@ -4,7 +4,7 @@
 
 	Version 1.94
 
-	Aqwam's Matrix Library (A-MatrixL)
+	Aqwam's Matrix Library (MatrixL)
 
 	Author: Aqwam Harish Aiman
 	
@@ -14,22 +14,13 @@
 	
 	--------------------------------------------------------------------
 	
-	DO NOT SELL, RENT, DISTRIBUTE THIS LIBRARY
-	
-	DO NOT SELL, RENT, DISTRIBUTE MODIFIED VERSION OF THIS LIBRARY
-	
-	DO NOT CLAIM OWNERSHIP OF THIS LIBRARY
-	
-	GIVE CREDIT AND SOURCE WHEN USING THIS LIBRARY IF YOUR USAGE FALLS UNDER ONE OF THESE CATEGORIES:
-	
-		- USED AS A VIDEO OR ARTICLE CONTENT
-		- USED AS RESEARCH AND EDUCATION CONTENT
-	
-	--------------------------------------------------------------------
-	
 	By using or possesing any copies of this library, you agree to our Terms and Conditions at:
 	
 	https://aqwamcreates.github.io/MatrixL/TermsAndConditions.html
+	
+	--------------------------------------------------------------------
+	
+	DO NOT REMOVE THIS TEXT WITHOUT PROPER PERMISSION!
 	
 	--------------------------------------------------------------------
 
