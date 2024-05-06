@@ -26,7 +26,6 @@
 
 --]]
 
-
 local libraryVersion = 1.9
 
 local AqwamMatrixLibrary = {}
