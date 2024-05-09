@@ -3,11 +3,13 @@
 ## License
 These terms and conditions (“Agreement”) are a legal agreement between you (or company or organization) recognized as “User” and Aqwam Harish Aiman recognised as “Licensor” for the use of MatrixL (or formerly known as Aqwam’s Matrix Library) (“Library”) within this terms and conditions. By using or possessing the Library, User, agrees to be bound by the terms of this Agreement.
 
-## License Exceptions
+## Commercial Use Conditions
 
-* The Agreement is not granted to Roblox Corporation or any of its employees. A separate written commercial agreement must be made between the Licensor and Roblox Corporation in order to use or possess the Library.
+* The Library may be utilized for both internal and external commercial purposes under the condition that all source codes, arts, videos or any other assets that utilize the Library, whether directly or indirectly, must be released and distributed to the public under the MIT license. This includes but is not limited to hosting the Library from another computer, server or machine.
 
-* The Agreement is not granted to Users intending to incorporate this Library within a commercial product or service. A separate written commercial agreement must be made between the Licensor and User in order to use or possess the Library in User's products or services. This includes the use of outputs produced by the Library for any parts of commercial products and services.
+* The term "use" encompasses all forms of utilization and application, including integration, modification, and hosting from another computer, server or machine.
+
+* Failure to comply with this condition will result in the User being liable for damages to the Licensor due to non-compliance with the licensing terms.
 
 ## Prohibited Actions
 User shall not:
