@@ -321,7 +321,7 @@ local function dotProduct(matrix1, matrix2)
 
 			local sum = 0
 
-			for i = 1, matrix1Column do sum = sum + matrix1[row][i] * matrix2[i][column] end
+			for i = 1, matrix1Column do sum = sum + (matrix1[row][i] * matrix2[i][column]) end
 
 			result[row][column] = sum
 
