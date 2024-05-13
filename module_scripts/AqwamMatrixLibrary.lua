@@ -188,7 +188,7 @@ local function horizontalConcatenate(matrix1, matrix2)
 	local matrix1RowSize = #matrix1
 	local matrix2RowSize = #matrix2
 
-	if (matrix1RowSize ~= matrix2RowSize) then error("Incompatible Matrix Dimensions. Matrix 1 has " .. matrix1RowSize .. " Row(s), Matrix 2" .. matrix2RowSize .. " Row(s).") end
+	if (matrix1RowSize ~= matrix2RowSize) then error("Incompatible Matrix Dimensions. Matrix 1 Has " .. matrix1RowSize .. " Row(s), Matrix 2 Has " .. matrix2RowSize .. " Row(s).") end
 
 	local horizontalMiddleIndex = #matrix1[1]
 
@@ -225,7 +225,7 @@ local function verticalConcatenate(matrix1, matrix2)
 	local matrix1ColumnSize = #matrix1[1]
 	local matrix2ColumnSize = #matrix2[1]
 
-	if (matrix1ColumnSize ~= matrix2ColumnSize) then error("Incompatible Matrix Dimensions. Matrix 1 has " .. matrix1ColumnSize .. " Column(s), Matrix 2" .. matrix2ColumnSize .. " Column(s).") end
+	if (matrix1ColumnSize ~= matrix2ColumnSize) then error("Incompatible Matrix Dimensions. Matrix 1 Has " .. matrix1ColumnSize .. " Column(s), Matrix 2 Has " .. matrix2ColumnSize .. " Column(s).") end
 
 	local verticalMiddleIndex = #matrix1
 
