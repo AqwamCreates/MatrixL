@@ -616,9 +616,9 @@ function AqwamMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberOfColum
 			
 			local u2 = random:NextNumber()
 			
-			local z0 = math.sqrt(-2 * math.log(u1)) * math.cos(2 * math.pi * u2)
+			local z0 = math.sqrt(-2 * math.log(u1)) * math.cos(2 * math.pi * u2) -- Box–Muller transform formula.
 
-			result[row][column] = z0 * standardDeviation + mean
+			result[row][column] = (z0 * standardDeviation) + mean
 			
 		end
 	end
