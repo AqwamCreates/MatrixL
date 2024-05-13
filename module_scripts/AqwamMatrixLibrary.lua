@@ -20,7 +20,7 @@
 	
 	--------------------------------------------------------------------
 	
-	DO NOT REMOVE THIS TEXT WITHOUT PROPER PERMISSION!
+	DO NOT REMOVE THIS TEXT WITHOUT PERMISSION!
 	
 	--------------------------------------------------------------------
 
