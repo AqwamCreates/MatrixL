@@ -142,10 +142,7 @@ end
 
 local function matrixBroadcast(matrix1, matrix2)
 
-	local isMatrix1Broadcasted = false
-	local isMatrix2Broadcasted = false
-
-	isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
+	local isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
 
 	if (isMatrix1Broadcasted == true) then
 
@@ -301,7 +298,6 @@ local function checkIfCanDotProduct(matrix1, matrix2)
 	end
 
 end
-
 
 local function dotProduct(matrix1, matrix2)
 
