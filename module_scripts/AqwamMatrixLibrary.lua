@@ -367,11 +367,11 @@ function AqwamMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberOfColum
 
 		for column = 1, numberOfColumns do
 
-			local u1 = random:NextNumber()
+			local randomNumber1 = random:NextNumber()
 			
-			local u2 = random:NextNumber()
+			local randomNumber2 = random:NextNumber()
 			
-			local zScore = math.sqrt(-2 * math.log(u1)) * math.cos(2 * math.pi * u2)
+			local zScore = math.sqrt(-2 * math.log(randomNumber1)) * math.cos(2 * math.pi * randomNumber2)
 
 			result[row][column] = (zScore * standardDeviation) + mean
 			
