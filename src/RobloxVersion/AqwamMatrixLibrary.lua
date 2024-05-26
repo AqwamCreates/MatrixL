@@ -4,7 +4,7 @@
 
 	Version 1.94
 
-	Aqwam's Matrix Library (A-MatrixL)
+	Aqwam's Matrix Library (MatrixL)
 
 	Author: Aqwam Harish Aiman
 	
@@ -14,27 +14,17 @@
 	
 	--------------------------------------------------------------------
 	
-	DO NOT SELL, RENT, DISTRIBUTE THIS LIBRARY
-	
-	DO NOT SELL, RENT, DISTRIBUTE MODIFIED VERSION OF THIS LIBRARY
-	
-	DO NOT CLAIM OWNERSHIP OF THIS LIBRARY
-	
-	GIVE CREDIT AND SOURCE WHEN USING THIS LIBRARY IF YOUR USAGE FALLS UNDER ONE OF THESE CATEGORIES:
-	
-		- USED AS A VIDEO OR ARTICLE CONTENT
-		- USED AS RESEARCH AND EDUCATION CONTENT
-	
-	--------------------------------------------------------------------
-	
 	By using or possesing any copies of this library, you agree to our Terms and Conditions at:
 	
 	https://aqwamcreates.github.io/MatrixL/TermsAndConditions.html
 	
 	--------------------------------------------------------------------
+	
+	DO NOT REMOVE THIS TEXT WITHOUT PERMISSION!
+	
+	--------------------------------------------------------------------
 
 --]]
-
 
 local libraryVersion = 1.9
 
@@ -77,9 +67,9 @@ local function checkIfCanBroadcast(matrix1, matrix2)
 
 	local isMatrix2Scalar = (matrix2Rows == 1) and (matrix2Columns == 1)
 
-	local isMatrix1Larger = (matrix1Rows > matrix2Rows) and (matrix1Columns > matrix2Columns)
+	local isMatrix1Larger = ((matrix1Rows >= matrix2Rows) or (matrix1Columns >= matrix2Columns)) and not ((matrix1Rows < matrix2Rows) and (matrix1Columns < matrix2Columns))
 
-	local isMatrix2Larger = (matrix2Rows > matrix1Rows) and (matrix2Columns > matrix1Columns)
+	local isMatrix2Larger = ((matrix2Rows >= matrix1Rows) or (matrix2Columns >= matrix1Columns)) and not ((matrix2Rows < matrix1Rows) and (matrix2Columns < matrix1Columns))
 
 	if (hasSameDimension) then
 
@@ -152,10 +142,7 @@ end
 
 local function matrixBroadcast(matrix1, matrix2)
 
-	local isMatrix1Broadcasted = false
-	local isMatrix2Broadcasted = false
-
-	isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
+	local isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
 
 	if (isMatrix1Broadcasted == true) then
 
@@ -195,7 +182,10 @@ end
 
 local function horizontalConcatenate(matrix1, matrix2)
 
-	if (#matrix1 ~= #matrix2) then error() end
+	local matrix1RowSize = #matrix1
+	local matrix2RowSize = #matrix2
+
+	if (matrix1RowSize ~= matrix2RowSize) then error("Incompatible Matrix Dimensions. Matrix 1 Has " .. matrix1RowSize .. " Row(s), Matrix 2 Has " .. matrix2RowSize .. " Row(s).") end
 
 	local horizontalMiddleIndex = #matrix1[1]
 
@@ -228,8 +218,11 @@ local function horizontalConcatenate(matrix1, matrix2)
 end
 
 local function verticalConcatenate(matrix1, matrix2)
+	
+	local matrix1ColumnSize = #matrix1[1]
+	local matrix2ColumnSize = #matrix2[1]
 
-	if (#matrix1[1] ~= #matrix2[1]) then error() end
+	if (matrix1ColumnSize ~= matrix2ColumnSize) then error("Incompatible Matrix Dimensions. Matrix 1 Has " .. matrix1ColumnSize .. " Column(s), Matrix 2 Has " .. matrix2ColumnSize .. " Column(s).") end
 
 	local verticalMiddleIndex = #matrix1
 
@@ -306,7 +299,6 @@ local function checkIfCanDotProduct(matrix1, matrix2)
 
 end
 
-
 local function dotProduct(matrix1, matrix2)
 
 	local result = {}
@@ -329,7 +321,7 @@ local function dotProduct(matrix1, matrix2)
 
 			local sum = 0
 
-			for i = 1, matrix1Column do sum = sum + matrix1[row][i] * matrix2[i][column] end
+			for i = 1, matrix1Column do sum = sum + (matrix1[row][i] * matrix2[i][column]) end
 
 			result[row][column] = sum
 
@@ -620,13 +612,13 @@ function AqwamMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberOfColum
 
 		for column = 1, numberOfColumns do
 
-			local u1 = random:NextNumber()
-			
-			local u2 = random:NextNumber()
-			
-			local z0 = math.sqrt(-2 * math.log(u1)) * math.cos(2 * math.pi * u2)
+			local randomNumber1 = random:NextNumber()
 
-			result[row][column] = z0 * standardDeviation + mean
+			local randomNumber2 = random:NextNumber()
+
+			local zScore = math.sqrt(-2 * math.log(randomNumber1)) * math.cos(2 * math.pi * randomNumber2)
+
+			result[row][column] = (zScore * standardDeviation) + mean
 			
 		end
 	end
