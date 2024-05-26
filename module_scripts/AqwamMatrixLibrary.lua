@@ -67,9 +67,9 @@ local function checkIfCanBroadcast(matrix1, matrix2)
 
 	local isMatrix2Scalar = (matrix2Rows == 1) and (matrix2Columns == 1)
 
-	local isMatrix1Larger = ((matrix1Rows > matrix2Rows) or (matrix1Columns > matrix2Columns)) and not ((matrix1Rows < matrix2Rows) and (matrix1Columns < matrix2Columns))
+	local isMatrix1Larger = ((matrix1Rows > matrix2Rows) or (matrix1Columns > matrix2Columns)) and not ((matrix1Rows < matrix2Rows) or (matrix1Columns < matrix2Columns))
 
-	local isMatrix2Larger = ((matrix2Rows > matrix1Rows) or (matrix2Columns > matrix1Columns)) and not ((matrix2Rows < matrix1Rows) and (matrix2Columns < matrix1Columns))
+	local isMatrix2Larger = ((matrix2Rows > matrix1Rows) or (matrix2Columns > matrix1Columns)) and not ((matrix2Rows < matrix1Rows) or (matrix2Columns < matrix1Columns))
 
 	if (hasSameDimension) then
 
