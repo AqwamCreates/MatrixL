@@ -264,15 +264,15 @@ function AqwamMatrixLibrary:sum(matrix)
 
 end
 
-function AqwamMatrixLibrary:createIdentityMatrix(numberOfRowsAndColumns)
+function AqwamMatrixLibrary:createIdentityMatrix(numberOfRows, numberOfColumns)
 
 	local result = {}
 
-	for row = 1, numberOfRowsAndColumns, 1 do
+	for row = 1, numberOfRows, 1 do
 
 		result[row] = {}
 
-		for column = 1, numberOfRowsAndColumns, 1 do
+		for column = 1, numberOfColumns, 1 do
 
 			if (row == column) then
 
