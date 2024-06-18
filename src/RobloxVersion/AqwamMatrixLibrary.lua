@@ -34,7 +34,7 @@ local module = {}
 
 local function onBroadcastError(matrix1, matrix2)
 
-	local errorMessage = "Unable To Broadcast. \n" .. "Matrix 1 Size: " .. "(" .. #matrix1 .. ", " .. #matrix1[1] .. ") \n" .. "Matrix 2 Size: " .. "(" .. #matrix2[1] .. ", " .. #matrix2[1] .. ") \n"
+	local errorMessage = "Unable To Broadcast. \n" .. "Matrix 1 Size: " .. "(" .. #matrix1 .. ", " .. #matrix1[1] .. ") \n" .. "Matrix 2 Size: " .. "(" .. #matrix2 .. ", " .. #matrix2[1] .. ") \n"
 
 	error(errorMessage)
 
