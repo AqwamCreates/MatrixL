@@ -1565,6 +1565,60 @@ function AqwamMatrixLibrary:isMatrix(matrix)
 
 end
 
+function AqwamMatrixLibrary:hasNan(matrix)
+	
+	for row = 1, #matrix, 1 do
+		
+		for column = 1, #matrix[1] do
+			
+			local value = matrix[i][column]
+			
+			if (value ~= value) then return true end
+			
+		end
+		
+	end
+	
+	return false
+	
+end
+
+function AqwamMatrixLibrary:findValue(matrix, valueToSearch)
+
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1] do 
+
+			if (matrix[row][column] == valueToSearch) then return {row, column} end
+
+		end
+
+	end
+
+	return nil
+
+end
+
+function AqwamMatrixLibrary:safeSetValue(matrix, value, rowIndex, columnIndex)
+	
+	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
+	
+	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to set a value that is out of bounds") end
+	
+	matrix[rowIndex][columnIndex] = value
+	
+end
+
+function AqwamMatrixLibrary:safeGetValue(matrix, rowIndex, columnIndex)
+	
+	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
+
+	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to get a value that is out of bounds") end
+
+	return matrix[rowIndex][columnIndex]
+	
+end
+
 function AqwamMatrixLibrary:getVersion()
 
 	return libraryVersion

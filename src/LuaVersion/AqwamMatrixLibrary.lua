@@ -2,7 +2,9 @@
 
 	--------------------------------------------------------------------
 
-	Aqwam's Matrix Library (Aqwam-MatrixL)
+	Version 1.94
+
+	Aqwam's Matrix Library (MatrixL)
 
 	Author: Aqwam Harish Aiman
 	
@@ -12,22 +14,13 @@
 	
 	--------------------------------------------------------------------
 	
-	DO NOT SELL, RENT, DISTRIBUTE THIS LIBRARY
-	
-	DO NOT SELL, RENT, DISTRIBUTE MODIFIED VERSION OF THIS LIBRARY
-	
-	DO NOT CLAIM OWNERSHIP OF THIS LIBRARY
-	
-	GIVE CREDIT AND SOURCE WHEN USING THIS LIBRARY IF YOUR USAGE FALLS UNDER ONE OF THESE CATEGORIES:
-	
-		- USED AS A VIDEO OR ARTICLE CONTENT
-		- USED AS COMMERCIAL OR PUBLIC USE 
-	
-	--------------------------------------------------------------------
-	
 	By using or possesing any copies of this library, you agree to our Terms and Conditions at:
 	
 	https://aqwamcreates.github.io/MatrixL/TermsAndConditions.html
+	
+	--------------------------------------------------------------------
+	
+	DO NOT REMOVE THIS TEXT WITHOUT PERMISSION!
 	
 	--------------------------------------------------------------------
 
@@ -35,12 +28,233 @@
 
 local libraryVersion = 1.9
 
-local MatrixOperation = require("MatrixOperation")
-local MatrixBroadcast = require("MatrixBroadcast")
-local MatrixDotProduct = require("MatrixDotProduct")
-local MatrixConcatenate = require("MatrixConcatenate")
-
 local AqwamMatrixLibrary = {}
+
+local module = {}
+
+local function onBroadcastError(matrix1, matrix2)
+
+	local errorMessage = "Unable To Broadcast. \n" .. "Matrix 1 Size: " .. "(" .. #matrix1 .. ", " .. #matrix1[1] .. ") \n" .. "Matrix 2 Size: " .. "(" .. #matrix2 .. ", " .. #matrix2[1] .. ") \n"
+
+	error(errorMessage)
+
+end
+
+local function checkIfCanBroadcast(matrix1, matrix2)
+
+	local matrix1Rows = #matrix1
+
+	local matrix2Rows = #matrix2
+
+	local matrix1Columns = #matrix1[1]
+
+	local matrix2Columns = #matrix2[1]
+
+	local isMatrix1Broadcasted
+	local isMatrix2Broadcasted
+
+	local hasSameRowSize = (matrix1Rows == matrix2Rows)
+
+	local hasSameColumnSize = (matrix1Columns == matrix2Columns)
+
+	local hasSameDimension = hasSameRowSize and hasSameColumnSize
+
+	local isMatrix1IsLargerInOneDimension = ((matrix1Rows > 1) and hasSameColumnSize and (matrix2Rows == 1)) or ((matrix1Columns > 1) and hasSameRowSize and (matrix2Columns == 1))
+
+	local isMatrix2IsLargerInOneDimension = ((matrix2Rows > 1) and hasSameColumnSize and (matrix1Rows == 1)) or ((matrix2Columns > 1) and hasSameRowSize and (matrix1Columns == 1))
+
+	local isMatrix1Scalar = (matrix1Rows == 1) and (matrix1Columns == 1)
+
+	local isMatrix2Scalar = (matrix2Rows == 1) and (matrix2Columns == 1)
+
+	local isMatrix1Larger = ((matrix1Rows > matrix2Rows) or (matrix1Columns > matrix2Columns)) and not ((matrix1Rows < matrix2Rows) or (matrix1Columns < matrix2Columns))
+
+	local isMatrix2Larger = ((matrix2Rows > matrix1Rows) or (matrix2Columns > matrix1Columns)) and not ((matrix2Rows < matrix1Rows) or (matrix2Columns < matrix1Columns))
+
+	if (hasSameDimension) then
+
+		isMatrix1Broadcasted = false
+		isMatrix2Broadcasted = false
+
+	elseif (isMatrix2IsLargerInOneDimension) or (isMatrix2Larger and isMatrix1Scalar) then
+
+		isMatrix1Broadcasted = true
+		isMatrix2Broadcasted = false
+
+	elseif (isMatrix1IsLargerInOneDimension) or (isMatrix1Larger and isMatrix2Scalar) then
+
+		isMatrix1Broadcasted = false
+		isMatrix2Broadcasted = true
+
+	else
+
+		onBroadcastError(matrix1, matrix2)
+
+	end
+
+	return isMatrix1Broadcasted, isMatrix2Broadcasted
+
+end
+
+local function expandMatrix(matrix, targetRowSize, targetColumnSize)
+
+	local result = {}
+
+	local isMatrixRowSizeEqualToOne = (#matrix == 1)
+
+	local isMatrixColumnSizeEqualToOne = (#matrix[1] == 1)
+
+	if (isMatrixRowSizeEqualToOne == true) and (isMatrixColumnSizeEqualToOne == false) then
+
+		for row = 1, targetRowSize, 1 do
+
+			result[row] = {}
+
+			for column = 1, targetColumnSize, 1 do result[row][column] = matrix[1][column] end
+
+		end
+
+	elseif (isMatrixRowSizeEqualToOne == false) and (isMatrixColumnSizeEqualToOne == true) then
+
+		for row = 1, targetRowSize, 1 do
+
+			result[row] = {}
+
+			for column = 1, targetColumnSize, 1 do result[row][column] = matrix[row][1] end
+
+		end
+
+	elseif (isMatrixRowSizeEqualToOne == true) and (isMatrixColumnSizeEqualToOne == true) then
+
+		for row = 1, targetRowSize, 1 do
+
+			result[row] = {}
+
+			for column = 1, targetColumnSize, 1 do result[row][column] = matrix[1][1] end
+
+		end
+
+	end
+
+	return result
+
+end
+
+local function matrixBroadcast(matrix1, matrix2)
+
+	local isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
+
+	if (isMatrix1Broadcasted == true) then
+
+		matrix1 = expandMatrix(matrix1, #matrix2, #matrix2[1])
+
+	elseif (isMatrix2Broadcasted == true) then
+
+		matrix2 = expandMatrix(matrix2, #matrix1, #matrix1[1])
+
+	end
+
+	return matrix1, matrix2		
+
+end
+
+local function matrixOperation(functionToApply, matrix1, matrix2)
+
+	if (#matrix1 ~= #matrix2) or (#matrix1[1] ~= #matrix2[1]) then error("Incompatible Dimensions! (" .. #matrix1 .." x " .. #matrix1[1] .. ") and (" .. #matrix2 .. " x " .. #matrix2[1] .. ")") end
+
+	local result = {}
+
+	for row = 1, #matrix1, 1 do
+
+		result[row] = {}
+
+		for column = 1, #matrix1[1], 1 do
+
+			result[row][column] = functionToApply(matrix1[row][column], matrix2[row][column])
+
+		end
+
+	end
+
+	return result
+
+end
+
+local function horizontalConcatenate(matrix1, matrix2)
+
+	local matrix1RowSize = #matrix1
+	local matrix2RowSize = #matrix2
+
+	if (matrix1RowSize ~= matrix2RowSize) then error("Incompatible Matrix Dimensions. Matrix 1 Has " .. matrix1RowSize .. " Row(s), Matrix 2 Has " .. matrix2RowSize .. " Row(s).") end
+
+	local horizontalMiddleIndex = #matrix1[1]
+
+	local result = {}
+
+	for row = 1, #matrix1, 1 do
+
+		result[row] = {}
+
+		for column = 1, #matrix1[1], 1 do
+
+			result[row][column] = matrix1[row][column]
+
+		end	
+
+	end
+
+	for row = 1, #matrix2, 1 do
+
+		for column = 1, #matrix2[1], 1 do
+
+			result[row][horizontalMiddleIndex + column] = matrix2[row][column]
+
+		end
+
+	end
+
+	return result
+
+end
+
+local function verticalConcatenate(matrix1, matrix2)
+	
+	local matrix1ColumnSize = #matrix1[1]
+	local matrix2ColumnSize = #matrix2[1]
+
+	if (matrix1ColumnSize ~= matrix2ColumnSize) then error("Incompatible Matrix Dimensions. Matrix 1 Has " .. matrix1ColumnSize .. " Column(s), Matrix 2 Has " .. matrix2ColumnSize .. " Column(s).") end
+
+	local verticalMiddleIndex = #matrix1
+
+	local result = {}
+
+	for row = 1, #matrix1, 1 do
+
+		result[row] = {}
+
+		for column = 1, #matrix1[1], 1 do
+
+			result[row][column] = matrix1[row][column]
+
+		end	
+
+	end
+
+	for row = 1, #matrix2, 1 do
+
+		result[verticalMiddleIndex + row] = {}
+
+		for column = 1, #matrix2[1], 1 do
+
+			result[verticalMiddleIndex + row][column] = matrix2[row][column]
+
+		end	
+
+	end
+
+	return result
+
+end
 
 local function convertToMatrixIfScalar(value)
 
@@ -64,6 +278,63 @@ local function convertToMatrixIfScalar(value)
 
 end
 
+local function onDotProductError(matrix1Column, matrix2Row)
+
+	local errorMessage = "Incompatible Matrix Dimensions: " .. matrix1Column .. " Column(s), " .. matrix2Row .. " Row(s)."
+
+	error(errorMessage)
+
+end
+
+local function checkIfCanDotProduct(matrix1, matrix2)
+
+	local matrix1Column = #matrix1[1]
+	local matrix2Row = #matrix2
+
+	if (matrix1Column ~= matrix2Row) then
+
+		onDotProductError(matrix1Column, matrix2Row)
+
+	end
+
+end
+
+local function dotProduct(matrix1, matrix2)
+
+	local result = {}
+
+	local matrix1Row = #matrix1
+	local matrix1Column = #matrix1[1]
+	local matrix2Column = #matrix2[1]
+
+	local extractedMatrix2Column
+	local multipliedRowVector
+	local calculatedVectorSum
+
+	checkIfCanDotProduct(matrix1, matrix2)
+
+	for row = 1, matrix1Row, 1 do
+
+		result[row] = {}
+
+		for column = 1, matrix2Column, 1 do
+
+			local sum = 0
+
+			for i = 1, matrix1Column do sum = sum + (matrix1[row][i] * matrix2[i][column]) end
+
+			result[row][column] = sum
+
+		end
+		
+	end
+
+	local isScalar = (#result == 1 and #result[1] == 1)
+
+	return (isScalar and result[1][1]) or result
+
+end
+
 local function generateArgumentErrorString(matrices, firstMatrixIndex, secondMatrixIndex)
 
 	local text1 = "Argument " .. firstMatrixIndex .. " and " .. secondMatrixIndex .. " are incompatible! "
@@ -76,19 +347,13 @@ local function generateArgumentErrorString(matrices, firstMatrixIndex, secondMat
 
 end
 
-local function broadcastAndCalculate(operation, ...)
+local function broadcastAndCalculate(functionToApply, ...)
 
 	local matrices = {...}
 
 	local numberOfMatrices = #matrices
 
-	local firstMatrix = matrices[1]
-
-	local secondMatrix
-
-	local result = AqwamMatrixLibrary:copy(firstMatrix)
-
-	local result = convertToMatrixIfScalar(result)
+	local result = convertToMatrixIfScalar(matrices[1])
 
 	for i = 2, numberOfMatrices, 1 do
 
@@ -96,9 +361,9 @@ local function broadcastAndCalculate(operation, ...)
 
 			local secondMatrix = convertToMatrixIfScalar(matrices[i])
 
-			result, secondMatrix = MatrixBroadcast:matrixBroadcast(result, secondMatrix)
+			result, secondMatrix = matrixBroadcast(result, secondMatrix)
 
-			result = MatrixOperation:matrixOperation(operation, result, secondMatrix)
+			result = matrixOperation(functionToApply, result, secondMatrix)
 
 		end)
 
@@ -118,79 +383,73 @@ end
 
 function AqwamMatrixLibrary:add(...)
 
-	return broadcastAndCalculate('+', ...)
+	return broadcastAndCalculate(function(a, b) return a + b end, ...)
 
 end
 
 function AqwamMatrixLibrary:subtract(...)
 
-	return broadcastAndCalculate('-', ...)
+	return broadcastAndCalculate(function(a, b) return a - b end, ...)
 
 end
 
 function AqwamMatrixLibrary:multiply(...)
 
-	return broadcastAndCalculate('*', ...)
+	return broadcastAndCalculate(function(a, b) return a * b end, ...)
 
 end
 
 function AqwamMatrixLibrary:divide(...)
 
-	return broadcastAndCalculate('/', ...)
+	return broadcastAndCalculate(function(a, b) return a / b end, ...)
 
 end
 
 function AqwamMatrixLibrary:logarithm(...)
 
-	return broadcastAndCalculate('log', ...)
-
-end
-
-function AqwamMatrixLibrary:exp(...)
-
-	return broadcastAndCalculate('exp', ...)
+	return broadcastAndCalculate(function(a, b) return math.log(a, b) end, ...)
 
 end
 
 function AqwamMatrixLibrary:power(...)
 
-	return broadcastAndCalculate('power', ...)
+	return broadcastAndCalculate(function(a, b) return math.pow(a, b) end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesEqual(...)
 
-	return broadcastAndCalculate('==', ...)
+	return broadcastAndCalculate(function(a, b) return a == b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesGreater(...)
 
-	return broadcastAndCalculate('>', ...)
+	return broadcastAndCalculate(function(a, b) return a > b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesGreaterOrEqual(...)
 
-	return broadcastAndCalculate('>=', ...)
+	return broadcastAndCalculate(function(a, b) return a >= b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesLesser(...)
 
-	return broadcastAndCalculate('<', ...)
+	return broadcastAndCalculate(function(a, b) return a < b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesLesserOrEqual(...)
 
-	return broadcastAndCalculate('<=', ...)
+	return broadcastAndCalculate(function(a, b) return a <= b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areMatricesEqual(...)
 
-	local resultMatrix = broadcastAndCalculate('==', ...)
+	local resultMatrix = broadcastAndCalculate(function(a, b) return a == b end, ...)
 
 	for row = 1, #resultMatrix, 1 do
 
@@ -210,36 +469,23 @@ function AqwamMatrixLibrary:dotProduct(...)
 
 	local matrices = {...}
 
-	local lastMatrixIndex = #matrices
-	local secondLastMatrixIndex = lastMatrixIndex - 1 
+	local numberOfMatrices = #matrices
+	
+	if (numberOfMatrices == 1) then warn("Only one argument!") end
 
-	local result
+	local result = matrices[1]
 
-	local success = pcall(function()
+	result = convertToMatrixIfScalar(result)
 
-		result = MatrixDotProduct:dotProduct(matrices[secondLastMatrixIndex], matrices[lastMatrixIndex])
+	for i = 2, numberOfMatrices, 1 do
 
-	end)
+		result = convertToMatrixIfScalar(result)
 
-	if (not success) then
-
-		local text = generateArgumentErrorString(matrices, secondLastMatrixIndex, lastMatrixIndex)
-
-		error(text)
+		result = dotProduct(result, matrices[i])
 
 	end
 
-	if (secondLastMatrixIndex > 1) then
-		
-		if (type(result) == "number") then result = {{result}} end
-
-		return AqwamMatrixLibrary:dotProduct(select(secondLastMatrixIndex - 1, ...), result)
-
-	else
-
-		return result
-
-	end
+	return result
 
 end
 
@@ -366,13 +612,13 @@ function AqwamMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberOfColum
 
 		for column = 1, numberOfColumns do
 
-			local u1 = random:NextNumber()
-			
-			local u2 = random:NextNumber()
-			
-			local z0 = math.sqrt(-2 * math.log(u1)) * math.cos(2 * math.pi * u2)
+			local randomNumber1 = random:NextNumber()
 
-			result[row][column] = z0 * standardDeviation + mean
+			local randomNumber2 = random:NextNumber()
+
+			local zScore = math.sqrt(-2 * math.log(randomNumber1)) * math.cos(2 * math.pi * randomNumber2)
+
+			result[row][column] = (zScore * standardDeviation) + mean
 			
 		end
 	end
@@ -870,31 +1116,27 @@ function AqwamMatrixLibrary:horizontalConcatenate(...)
 	local lastMatrixIndex = #matrices
 	local secondLastMatrixIndex = lastMatrixIndex - 1 
 
-	local result
+	local result = matrices[1]
 
-	local success = pcall(function()
+	for i = 2, #matrices, 1 do
 
-		result = MatrixConcatenate:horizontalConcatenate(matrices[secondLastMatrixIndex], matrices[lastMatrixIndex])
+		local success = pcall(function()
 
-	end)
+			result = horizontalConcatenate(result, matrices[i])
 
-	if (not success) then
+		end)
 
-		local text = generateArgumentErrorString(matrices, secondLastMatrixIndex, lastMatrixIndex)
+		if (not success) then
 
-		error(text)
+			local text = generateArgumentErrorString(matrices, i - 1, i)
 
-	end
+			error(text)
 
-	if (secondLastMatrixIndex > 1) then
-
-		return AqwamMatrixLibrary:horizontalConcatenate(select(secondLastMatrixIndex - 1, ...), result)
-
-	else
-
-		return result
+		end
 
 	end
+
+	return result
 
 end
 
@@ -905,31 +1147,27 @@ function AqwamMatrixLibrary:verticalConcatenate(...)
 	local lastMatrixIndex = #matrices
 	local secondLastMatrixIndex = lastMatrixIndex - 1 
 
-	local result
+	local result = matrices[1]
+	
+	for i = 2, #matrices, 1 do
+		
+		local success = pcall(function()
 
-	local success = pcall(function()
+			result = verticalConcatenate(result, matrices[i])
 
-		result = MatrixConcatenate:verticalConcatenate(matrices[secondLastMatrixIndex], matrices[lastMatrixIndex])
+		end)
 
-	end)
+		if (not success) then
 
-	if (not success) then
+			local text = generateArgumentErrorString(matrices, i - 1, i)
 
-		local text = generateArgumentErrorString(matrices, secondLastMatrixIndex, lastMatrixIndex)
+			error(text)
 
-		error(text)
-
+		end
+		
 	end
-
-	if (secondLastMatrixIndex > 1) then
-
-		return AqwamMatrixLibrary:verticalConcatenate(select(secondLastMatrixIndex - 1, ...), result)
-
-	else
-
-		return result
-
-	end
+	
+	return result
 
 end
 
@@ -1159,7 +1397,7 @@ end
 
 function AqwamMatrixLibrary:copy(matrix)
 
-	if (typeof(matrix) == "number") then return matrix end
+	if (type(matrix) == "number") then return matrix end
 
 	local numberOfRows = #matrix
 
@@ -1325,6 +1563,60 @@ function AqwamMatrixLibrary:isMatrix(matrix)
 
 	return itIsAMatrix 
 
+end
+
+function AqwamMatrixLibrary:hasNan(matrix)
+	
+	for row = 1, #matrix, 1 do
+		
+		for column = 1, #matrix[1] do
+			
+			local value = matrix[i][column]
+			
+			if (value ~= value) then return true end
+			
+		end
+		
+	end
+	
+	return false
+	
+end
+
+function AqwamMatrixLibrary:findValue(matrix, valueToSearch)
+
+	for row = 1, #matrix, 1 do
+
+		for column = 1, #matrix[1] do 
+
+			if (matrix[row][column] == valueToSearch) then return {row, column} end
+
+		end
+
+	end
+
+	return nil
+
+end
+
+function AqwamMatrixLibrary:safeSetValue(matrix, value, rowIndex, columnIndex)
+	
+	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
+	
+	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to set a value that is out of bounds") end
+	
+	matrix[rowIndex][columnIndex] = value
+	
+end
+
+function AqwamMatrixLibrary:safeGetValue(matrix, rowIndex, columnIndex)
+	
+	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
+
+	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to get a value that is out of bounds") end
+
+	return matrix[rowIndex][columnIndex]
+	
 end
 
 function AqwamMatrixLibrary:getVersion()
