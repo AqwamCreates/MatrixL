@@ -1571,7 +1571,7 @@ function AqwamMatrixLibrary:hasNan(matrix)
 		
 		for column = 1, #matrix[1] do
 			
-			local value = matrix[i][column]
+			local value = matrix[row][column]
 			
 			if (value ~= value) then return true end
 			
@@ -1583,13 +1583,13 @@ function AqwamMatrixLibrary:hasNan(matrix)
 	
 end
 
-function AqwamMatrixLibrary:findValue(matrix, valueToSearch)
+function AqwamMatrixLibrary:findValue(matrix, valueToFind)
 
 	for row = 1, #matrix, 1 do
 
 		for column = 1, #matrix[1] do 
 
-			if (matrix[row][column] == valueToSearch) then return {row, column} end
+			if (matrix[row][column] == valueToFind) then return {row, column} end
 
 		end
 
