@@ -2,7 +2,7 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.94
+	Version 1.92
 
 	Aqwam's Matrix Library (MatrixL)
 
@@ -26,7 +26,7 @@
 
 --]]
 
-local libraryVersion = 1.9
+local libraryVersion = 1.92
 
 local AqwamMatrixLibrary = {}
 
@@ -1206,7 +1206,7 @@ function AqwamMatrixLibrary:applyFunction(functionToApply, ...)
 
 end
 
-function AqwamMatrixLibrary:findMaximumValueInMatrix(matrix)
+function AqwamMatrixLibrary:findMaximumValue(matrix)
 
 	local matrixIndex
 
@@ -1236,7 +1236,7 @@ function AqwamMatrixLibrary:findMaximumValueInMatrix(matrix)
 
 end
 
-function AqwamMatrixLibrary:findMinimumValueInMatrix(matrix)
+function AqwamMatrixLibrary:findMinimumValue(matrix)
 
 	local matrixIndex
 
@@ -1266,7 +1266,7 @@ function AqwamMatrixLibrary:findMinimumValueInMatrix(matrix)
 
 end
 
-function AqwamMatrixLibrary:normalizeMatrix(matrix)
+function AqwamMatrixLibrary:normalize(matrix)
 
 	local mean = AqwamMatrixLibrary:mean(matrix)
 
@@ -1280,7 +1280,7 @@ function AqwamMatrixLibrary:normalizeMatrix(matrix)
 
 end
 
-function AqwamMatrixLibrary:verticalNormalizeMatrix(matrix)
+function AqwamMatrixLibrary:verticalNormalize(matrix)
 
 	local verticalMean = AqwamMatrixLibrary:verticalMean(matrix)
 
@@ -1302,7 +1302,7 @@ function AqwamMatrixLibrary:verticalNormalizeMatrix(matrix)
 
 end
 
-function AqwamMatrixLibrary:horizontalNormalizeMatrix(matrix)
+function AqwamMatrixLibrary:horizontalNormalize(matrix)
 
 	local horizontalMean = AqwamMatrixLibrary:horizontalMean(matrix)
 
