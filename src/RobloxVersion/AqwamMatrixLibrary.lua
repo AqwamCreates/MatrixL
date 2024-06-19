@@ -26,7 +26,7 @@
 
 --]]
 
-local libraryVersion = 1.92
+local libraryVersion = 1.95
 
 local AqwamMatrixLibrary = {}
 
