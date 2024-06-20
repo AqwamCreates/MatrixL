@@ -1595,7 +1595,7 @@ function AqwamMatrixLibrary:findValue(matrix, valueToFind)
 
 	end
 
-	return nil, nil
+	return nil
 
 end
 
