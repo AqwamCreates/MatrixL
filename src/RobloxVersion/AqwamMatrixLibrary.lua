@@ -1565,7 +1565,7 @@ function AqwamMatrixLibrary:isMatrix(matrix)
 
 end
 
-function AqwamMatrixLibrary:hasNan(matrix)
+function AqwamMatrixLibrary:findNanValue(matrix)
 	
 	for row = 1, #matrix, 1 do
 		
@@ -1573,13 +1573,13 @@ function AqwamMatrixLibrary:hasNan(matrix)
 			
 			local value = matrix[row][column]
 			
-			if (value ~= value) then return true, {row, column} end
+			if (value ~= value) then return {row, column} end
 			
 		end
 		
 	end
 	
-	return false, nil
+	return nil
 	
 end
 
