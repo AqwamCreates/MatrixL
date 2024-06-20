@@ -96,7 +96,7 @@ local function checkIfCanBroadcast(matrix1, matrix2)
 
 end
 
-local function expandMatrix(matrix, targetRowSize, targetColumnSize)
+function AqwamMatrixLibrary:expand(matrix, targetRowSize, targetColumnSize)
 
 	local result = {}
 
@@ -146,11 +146,11 @@ local function matrixBroadcast(matrix1, matrix2)
 
 	if (isMatrix1Broadcasted == true) then
 
-		matrix1 = expandMatrix(matrix1, #matrix2, #matrix2[1])
+		matrix1 = AqwamMatrixLibrary:expand(matrix1, #matrix2, #matrix2[1])
 
 	elseif (isMatrix2Broadcasted == true) then
 
-		matrix2 = expandMatrix(matrix2, #matrix1, #matrix1[1])
+		matrix2 = AqwamMatrixLibrary:expand(matrix2, #matrix1, #matrix1[1])
 
 	end
 
@@ -1603,7 +1603,7 @@ function AqwamMatrixLibrary:safeSetValue(matrix, value, rowIndex, columnIndex)
 	
 	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
 	
-	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to set a value that is out of bounds") end
+	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to set a value that is out of bounds.") end
 	
 	matrix[rowIndex][columnIndex] = value
 	
@@ -1613,7 +1613,7 @@ function AqwamMatrixLibrary:safeGetValue(matrix, rowIndex, columnIndex)
 	
 	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
 
-	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to get a value that is out of bounds") end
+	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to get a value that is out of bounds.") end
 
 	return matrix[rowIndex][columnIndex]
 	
