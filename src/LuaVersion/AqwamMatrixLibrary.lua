@@ -407,13 +407,13 @@ end
 
 function AqwamMatrixLibrary:logarithm(...)
 
-	return broadcastAndCalculate(function(a, b) return math.log(a, b) end, ...)
+	return broadcastAndCalculate(math.log, ...)
 
 end
 
 function AqwamMatrixLibrary:power(...)
 
-	return broadcastAndCalculate(function(a, b) return math.pow(a, b) end, ...)
+	return broadcastAndCalculate(math.pow, ...)
 
 end
 
