@@ -373,11 +373,9 @@ local function broadcastAndCalculate(functionToApply, ...)
 
 	local numberOfMatrices = #matrices
 	
-	local firstMatrix = matrices[1]
+	local result = convertToMatrixIfScalar(matrices[1])
 	
-	if (numberOfMatrices == 1) then return matrixSingleOperation(functionToApply, firstMatrix) end
-
-	local result = convertToMatrixIfScalar(firstMatrix)
+	if (numberOfMatrices == 1) then return matrixSingleOperation(functionToApply, result) end
 
 	for i = 2, numberOfMatrices, 1 do
 
