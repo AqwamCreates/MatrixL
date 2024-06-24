@@ -180,6 +180,26 @@ local function matrixOperation(functionToApply, matrix1, matrix2)
 
 end
 
+local function matrixSingleOperation(functionToApply, matrix)
+	
+	local result = {}
+
+	for row = 1, #matrix, 1 do
+
+		result[row] = {}
+
+		for column = 1, #matrix[1], 1 do
+
+			result[row][column] = functionToApply(matrix[row][column])
+
+		end
+
+	end
+
+	return result
+	
+end
+
 local function horizontalConcatenate(matrix1, matrix2)
 
 	local matrix1RowSize = #matrix1
@@ -352,8 +372,12 @@ local function broadcastAndCalculate(functionToApply, ...)
 	local matrices = {...}
 
 	local numberOfMatrices = #matrices
+	
+	local firstMatrix = matrices[1]
+	
+	if (#numberOfMatrices == 1) then return matrixSingleOperation(functionToApply, firstMatrix) end
 
-	local result = convertToMatrixIfScalar(matrices[1])
+	local result = convertToMatrixIfScalar(firstMatrix)
 
 	for i = 2, numberOfMatrices, 1 do
 
