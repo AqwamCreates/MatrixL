@@ -2,9 +2,9 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.95
-
 	Aqwam's Matrix Library (MatrixL)
+
+	Version: 1.95
 
 	Author: Aqwam Harish Aiman
 	
