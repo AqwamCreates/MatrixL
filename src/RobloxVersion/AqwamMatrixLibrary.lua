@@ -1288,7 +1288,7 @@ function AqwamMatrixLibrary:findMinimumValue(matrix)
 
 end
 
-function AqwamMatrixLibrary:normalize(matrix)
+function AqwamMatrixLibrary:zScoreNormalize(matrix)
 
 	local mean = AqwamMatrixLibrary:mean(matrix)
 
@@ -1302,7 +1302,7 @@ function AqwamMatrixLibrary:normalize(matrix)
 
 end
 
-function AqwamMatrixLibrary:verticalNormalize(matrix)
+function AqwamMatrixLibrary:verticalZScoreNormalize(matrix)
 
 	local verticalMean = AqwamMatrixLibrary:verticalMean(matrix)
 
@@ -1324,7 +1324,7 @@ function AqwamMatrixLibrary:verticalNormalize(matrix)
 
 end
 
-function AqwamMatrixLibrary:horizontalNormalize(matrix)
+function AqwamMatrixLibrary:horizontalZScoreNormalize(matrix)
 
 	local horizontalMean = AqwamMatrixLibrary:horizontalMean(matrix)
 
