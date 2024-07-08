@@ -1308,17 +1308,9 @@ function AqwamMatrixLibrary:verticalZScoreNormalize(matrix)
 
 	local verticalStandardDeviaton = AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
-	local rowVector
+	local result = AqwamMatrixLibrary:subtract(matrix, verticalMean)
 
-	local result = {}
-
-	for row = 1, #matrix, 1 do
-
-		rowVector = AqwamMatrixLibrary:subtract({matrix[1]}, verticalMean)
-
-		result[row] = AqwamMatrixLibrary:divide(rowVector, verticalStandardDeviaton)[1]
-
-	end
+	result = AqwamMatrixLibrary:divide(result, verticalStandardDeviaton)
 
 	return result, verticalMean, verticalStandardDeviaton
 
@@ -1329,31 +1321,10 @@ function AqwamMatrixLibrary:horizontalZScoreNormalize(matrix)
 	local horizontalMean = AqwamMatrixLibrary:horizontalMean(matrix)
 
 	local horizontalStandardDeviation = AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
-
-	local columnVector
-
-	local result
-
-	for column = 1, #matrix[1], 1 do
-
-		columnVector = AqwamMatrixLibrary:extractColumns(matrix, column, column)
-
-		columnVector = AqwamMatrixLibrary:subtract(columnVector, horizontalMean)
-
-		columnVector = AqwamMatrixLibrary:divide(columnVector, horizontalStandardDeviation)
-
-		if (result == nil) then
-
-			result = columnVector
-
-		else
-
-			result = AqwamMatrixLibrary:horizontalConcatenate(result, columnVector)
-
-		end
-
-	end
-
+	
+	local result = AqwamMatrixLibrary:subtract(matrix, horizontalMean)
+	
+	result = AqwamMatrixLibrary:divide(result, horizontalStandardDeviation)
 
 	return result, horizontalMean, horizontalStandardDeviation
 
