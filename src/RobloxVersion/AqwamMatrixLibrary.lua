@@ -1298,7 +1298,7 @@ function AqwamMatrixLibrary:zScoreNormalize(matrix)
 
 	result = AqwamMatrixLibrary:divide(result, standardDeviation)
 
-	return result
+	return result, mean, standardDeviation
 
 end
 
