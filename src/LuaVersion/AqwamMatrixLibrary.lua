@@ -8,6 +8,8 @@
 
 	Author: Aqwam Harish Aiman
 	
+	Email: aqwam.harish.aiman@gmail.com
+	
 	YouTube: https://www.youtube.com/channel/UCUrwoxv5dufEmbGsxyEUPZw
 	
 	LinkedIn: https://www.linkedin.com/in/aqwam-harish-aiman/
@@ -20,7 +22,7 @@
 	
 	--------------------------------------------------------------------
 	
-	DO NOT REMOVE THIS TEXT WITHOUT PERMISSION!
+	DO NOT REMOVE THIS TEXT!
 	
 	--------------------------------------------------------------------
 
