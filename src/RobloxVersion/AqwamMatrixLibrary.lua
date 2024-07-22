@@ -1594,7 +1594,7 @@ function AqwamMatrixLibrary:findValue(matrix, valueToFind)
 
 end
 
-function AqwamMatrixLibrary:safeSetValue(matrix, value, rowIndex, columnIndex)
+function AqwamMatrixLibrary:getValue(matrix, value, rowIndex, columnIndex)
 	
 	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
 	
@@ -1604,7 +1604,7 @@ function AqwamMatrixLibrary:safeSetValue(matrix, value, rowIndex, columnIndex)
 	
 end
 
-function AqwamMatrixLibrary:safeGetValue(matrix, rowIndex, columnIndex)
+function AqwamMatrixLibrary:getValue(matrix, rowIndex, columnIndex)
 	
 	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
 
