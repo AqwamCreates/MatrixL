@@ -2,13 +2,11 @@
 
 	--------------------------------------------------------------------
 
+	Version 1.95
+
 	Aqwam's Matrix Library (MatrixL)
 
-	Version: 1.95
-
 	Author: Aqwam Harish Aiman
-	
-	Email: aqwam.harish.aiman@gmail.com
 	
 	YouTube: https://www.youtube.com/channel/UCUrwoxv5dufEmbGsxyEUPZw
 	
@@ -22,7 +20,7 @@
 	
 	--------------------------------------------------------------------
 	
-	DO NOT REMOVE THIS TEXT!
+	DO NOT REMOVE THIS TEXT WITHOUT PERMISSION!
 	
 	--------------------------------------------------------------------
 
@@ -1290,7 +1288,7 @@ function AqwamMatrixLibrary:findMinimumValue(matrix)
 
 end
 
-function AqwamMatrixLibrary:zScoreNormalization(matrix)
+function AqwamMatrixLibrary:normalize(matrix)
 
 	local mean = AqwamMatrixLibrary:mean(matrix)
 
@@ -1304,29 +1302,58 @@ function AqwamMatrixLibrary:zScoreNormalization(matrix)
 
 end
 
-function AqwamMatrixLibrary:verticalZScoreNormalization(matrix)
+function AqwamMatrixLibrary:verticalNormalize(matrix)
 
 	local verticalMean = AqwamMatrixLibrary:verticalMean(matrix)
 
 	local verticalStandardDeviaton = AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
-	local result = AqwamMatrixLibrary:subtract(matrix, verticalMean)
+	local rowVector
 
-	result = AqwamMatrixLibrary:divide(result, verticalStandardDeviaton)
+	local result = {}
+
+	for row = 1, #matrix, 1 do
+
+		rowVector = AqwamMatrixLibrary:subtract({matrix[1]}, verticalMean)
+
+		result[row] = AqwamMatrixLibrary:divide(rowVector, verticalStandardDeviaton)[1]
+
+	end
 
 	return result, verticalMean, verticalStandardDeviaton
 
 end
 
-function AqwamMatrixLibrary:horizontalZScoreNormalization(matrix)
+function AqwamMatrixLibrary:horizontalNormalize(matrix)
 
 	local horizontalMean = AqwamMatrixLibrary:horizontalMean(matrix)
 
 	local horizontalStandardDeviation = AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
-	
-	local result = AqwamMatrixLibrary:subtract(matrix, horizontalMean)
-	
-	result = AqwamMatrixLibrary:divide(result, horizontalStandardDeviation)
+
+	local columnVector
+
+	local result
+
+	for column = 1, #matrix[1], 1 do
+
+		columnVector = AqwamMatrixLibrary:extractColumns(matrix, column, column)
+
+		columnVector = AqwamMatrixLibrary:subtract(columnVector, horizontalMean)
+
+		columnVector = AqwamMatrixLibrary:divide(columnVector, horizontalStandardDeviation)
+
+		if (result == nil) then
+
+			result = columnVector
+
+		else
+
+			result = AqwamMatrixLibrary:horizontalConcatenate(result, columnVector)
+
+		end
+
+	end
+
 
 	return result, horizontalMean, horizontalStandardDeviation
 
@@ -1594,7 +1621,7 @@ function AqwamMatrixLibrary:findValue(matrix, valueToFind)
 
 end
 
-function AqwamMatrixLibrary:setValue(matrix, value, rowIndex, columnIndex)
+function AqwamMatrixLibrary:safeSetValue(matrix, value, rowIndex, columnIndex)
 	
 	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
 	
@@ -1604,7 +1631,7 @@ function AqwamMatrixLibrary:setValue(matrix, value, rowIndex, columnIndex)
 	
 end
 
-function AqwamMatrixLibrary:getValue(matrix, rowIndex, columnIndex)
+function AqwamMatrixLibrary:safeGetValue(matrix, rowIndex, columnIndex)
 	
 	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
 
