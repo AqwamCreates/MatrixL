@@ -1380,7 +1380,7 @@ function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingCo
 
 	if (startingColumnIndex < 0) then error("The starting column index must be a positive integer value!") end 
 
-	if (endingColumnIndex < 0) then error("The ending row column must be a positive integer value!") end
+	if (endingColumnIndex < 0) then error("The ending column index must be a positive integer value!") end
 	
 	local numberOfRows = #matrix
 
