@@ -1380,25 +1380,31 @@ function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingCo
 
 	if (endingColumnIndex == nil) then endingColumnIndex = #matrix end
 
-	if (startingColumnIndex < 0) then error("The starting row index must be a positive integer value!") end 
+	if (startingColumnIndex < 0) then error("The starting column index must be a positive integer value!") end 
 
-	if (endingColumnIndex < 0) then error("The ending row index must be a positive integer value!") end 
+	if (endingColumnIndex < 0) then error("The ending row column must be a positive integer value!") end
+	
+	local numberOfRows = #matrix
 
 	local result = {}
-
+	
 	if (endingColumnIndex >= startingColumnIndex) then
 		
-		for row = 1, #matrix, 1 do
+		for row = 1, numberOfRows, 1 do
 			
 			result[row] = {}
 			
-			for index = startingColumnIndex, endingColumnIndex, 1 do table.insert(result[row], matrix[row][index]) end
+			for index = startingColumnIndex, endingColumnIndex, 1 do 
+				
+				table.insert(result[row], matrix[row][index])
+				
+			end
 			
 		end
 
 	else
 		
-		for row = 1, #matrix, 1 do
+		for row = 1, numberOfRows, 1 do
 			
 			result[row] = {}
 			
