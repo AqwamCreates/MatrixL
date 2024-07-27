@@ -2,11 +2,13 @@
 
 	--------------------------------------------------------------------
 
-	Version 1.95
-
 	Aqwam's Matrix Library (MatrixL)
 
+	Version: 1.95
+
 	Author: Aqwam Harish Aiman
+	
+	Email: aqwam.harish.aiman@gmail.com
 	
 	YouTube: https://www.youtube.com/channel/UCUrwoxv5dufEmbGsxyEUPZw
 	
@@ -20,7 +22,7 @@
 	
 	--------------------------------------------------------------------
 	
-	DO NOT REMOVE THIS TEXT WITHOUT PERMISSION!
+	DO NOT REMOVE THIS TEXT!
 	
 	--------------------------------------------------------------------
 
@@ -181,7 +183,7 @@ local function matrixOperation(functionToApply, matrix1, matrix2)
 end
 
 local function matrixSingleOperation(functionToApply, matrix)
-	
+
 	local result = {}
 
 	for row = 1, #matrix, 1 do
@@ -197,7 +199,7 @@ local function matrixSingleOperation(functionToApply, matrix)
 	end
 
 	return result
-	
+
 end
 
 local function horizontalConcatenate(matrix1, matrix2)
@@ -238,7 +240,7 @@ local function horizontalConcatenate(matrix1, matrix2)
 end
 
 local function verticalConcatenate(matrix1, matrix2)
-	
+
 	local matrix1ColumnSize = #matrix1[1]
 	local matrix2ColumnSize = #matrix2[1]
 
@@ -346,7 +348,7 @@ local function dotProduct(matrix1, matrix2)
 			result[row][column] = sum
 
 		end
-		
+
 	end
 
 	local isScalar = (#result == 1 and #result[1] == 1)
@@ -372,9 +374,9 @@ local function broadcastAndCalculate(functionToApply, ...)
 	local matrices = {...}
 
 	local numberOfMatrices = #matrices
-	
+
 	local result = convertToMatrixIfScalar(matrices[1])
-	
+
 	if (numberOfMatrices == 1) then return matrixSingleOperation(functionToApply, result) end
 
 	for i = 2, numberOfMatrices, 1 do
@@ -492,7 +494,7 @@ function AqwamMatrixLibrary:dotProduct(...)
 	local matrices = {...}
 
 	local numberOfMatrices = #matrices
-	
+
 	if (numberOfMatrices == 1) then warn("Only one argument!") end
 
 	local result = matrices[1]
@@ -619,17 +621,17 @@ function AqwamMatrixLibrary:createRandomMatrix(numberOfRows, numberOfColumns, mi
 end
 
 function AqwamMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberOfColumns, mean, standardDeviation)
-	
+
 	local result = {}
-	
+
 	local random = Random.new()
-	
+
 	mean = mean or 0
 
 	standardDeviation = standardDeviation or 1
 
 	for row = 1, numberOfRows do
-		
+
 		result[row] = {}
 
 		for column = 1, numberOfColumns do
@@ -641,12 +643,12 @@ function AqwamMatrixLibrary:createRandomNormalMatrix(numberOfRows, numberOfColum
 			local zScore = math.sqrt(-2 * math.log(randomNumber1)) * math.cos(2 * math.pi * randomNumber2)
 
 			result[row][column] = (zScore * standardDeviation) + mean
-			
+
 		end
 	end
 
 	return result
-	
+
 end
 
 function AqwamMatrixLibrary:createRandomUniformMatrix(numberOfRows, numberOfColumns)
@@ -962,11 +964,11 @@ local function generateMatrixStringWithComma(matrix)
 		for row = 1, numberOfRows do
 
 			local cellWidth = string.len(tostring(matrix[row][column]))
-			
+
 			if (column < numberOfColumns) then
-				
+
 				cellWidth += 1
-				
+
 			end
 
 			if (cellWidth > maxWidth) then
@@ -998,13 +1000,13 @@ local function generateMatrixStringWithComma(matrix)
 			local padding = columnWidths[column] - cellWidth + 1
 
 			text = text .. string.rep(" ", padding) .. cellText
-			
+
 			if (column < numberOfColumns) then
 
 				text = text .. ","
 
 			end
-			
+
 		end
 
 		text = text .. " }\n"
@@ -1098,11 +1100,11 @@ local function generatePortableMatrixString(matrix)
 			end
 
 		end
-		
+
 		text = text .. " },\n"
-		
+
 	end
-	
+
 	text = text .. "}\n"
 
 	return text
@@ -1170,9 +1172,9 @@ function AqwamMatrixLibrary:verticalConcatenate(...)
 	local secondLastMatrixIndex = lastMatrixIndex - 1 
 
 	local result = matrices[1]
-	
+
 	for i = 2, #matrices, 1 do
-		
+
 		local success = pcall(function()
 
 			result = verticalConcatenate(result, matrices[i])
@@ -1186,9 +1188,9 @@ function AqwamMatrixLibrary:verticalConcatenate(...)
 			error(text)
 
 		end
-		
+
 	end
-	
+
 	return result
 
 end
@@ -1288,7 +1290,7 @@ function AqwamMatrixLibrary:findMinimumValue(matrix)
 
 end
 
-function AqwamMatrixLibrary:normalize(matrix)
+function AqwamMatrixLibrary:zScoreNormalization(matrix)
 
 	local mean = AqwamMatrixLibrary:mean(matrix)
 
@@ -1302,58 +1304,29 @@ function AqwamMatrixLibrary:normalize(matrix)
 
 end
 
-function AqwamMatrixLibrary:verticalNormalize(matrix)
+function AqwamMatrixLibrary:verticalZScoreNormalization(matrix)
 
 	local verticalMean = AqwamMatrixLibrary:verticalMean(matrix)
 
 	local verticalStandardDeviaton = AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
-	local rowVector
+	local result = AqwamMatrixLibrary:subtract(matrix, verticalMean)
 
-	local result = {}
-
-	for row = 1, #matrix, 1 do
-
-		rowVector = AqwamMatrixLibrary:subtract({matrix[1]}, verticalMean)
-
-		result[row] = AqwamMatrixLibrary:divide(rowVector, verticalStandardDeviaton)[1]
-
-	end
+	result = AqwamMatrixLibrary:divide(result, verticalStandardDeviaton)
 
 	return result, verticalMean, verticalStandardDeviaton
 
 end
 
-function AqwamMatrixLibrary:horizontalNormalize(matrix)
+function AqwamMatrixLibrary:horizontalZScoreNormalization(matrix)
 
 	local horizontalMean = AqwamMatrixLibrary:horizontalMean(matrix)
 
 	local horizontalStandardDeviation = AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
 
-	local columnVector
+	local result = AqwamMatrixLibrary:subtract(matrix, horizontalMean)
 
-	local result
-
-	for column = 1, #matrix[1], 1 do
-
-		columnVector = AqwamMatrixLibrary:extractColumns(matrix, column, column)
-
-		columnVector = AqwamMatrixLibrary:subtract(columnVector, horizontalMean)
-
-		columnVector = AqwamMatrixLibrary:divide(columnVector, horizontalStandardDeviation)
-
-		if (result == nil) then
-
-			result = columnVector
-
-		else
-
-			result = AqwamMatrixLibrary:horizontalConcatenate(result, columnVector)
-
-		end
-
-	end
-
+	result = AqwamMatrixLibrary:divide(result, horizontalStandardDeviation)
 
 	return result, horizontalMean, horizontalStandardDeviation
 
@@ -1361,17 +1334,23 @@ end
 
 local function extract(matrix, startingIndex, endingIndex)
 
-	if (endingIndex == nil) then endingIndex = #matrix end
 
-	if (startingIndex < 0) then error("The starting index must be a positive integer value!") end 
 
-	if (endingIndex < 0) then error("The ending index must be a positive integer value!") end 
+end
+
+function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex)
+
+	if (endingRowIndex == nil) then endingRowIndex = #matrix end
+
+	if (startingRowIndex < 0) then error("The starting row index must be a positive integer value!") end 
+
+	if (endingRowIndex < 0) then error("The ending row index must be a positive integer value!") end 
 
 	local result = {}
 
-	if (endingIndex >= startingIndex) then
+	if (endingRowIndex >= startingRowIndex) then
 
-		for index = startingIndex, endingIndex, 1 do
+		for index = startingRowIndex, endingRowIndex, 1 do
 
 			table.insert(result, matrix[index])
 
@@ -1379,13 +1358,13 @@ local function extract(matrix, startingIndex, endingIndex)
 
 	else
 
-		for index = endingIndex, #matrix do
+		for index = endingRowIndex, #matrix do
 
 			table.insert(result, matrix[index])
 
 		end
 
-		for index = 1, startingIndex, 1 do
+		for index = 1, startingRowIndex, 1 do
 
 			table.insert(result, matrix[index])
 
@@ -1397,21 +1376,47 @@ local function extract(matrix, startingIndex, endingIndex)
 
 end
 
-function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex)
-
-	local result = extract(matrix, startingRowIndex, endingRowIndex)
-
-	return result
-
-end
-
 function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingColumnIndex)
 
-	local transposedMatrix = AqwamMatrixLibrary:transpose(matrix)
+	if (endingColumnIndex == nil) then endingColumnIndex = #matrix end
 
-	local result = extract(transposedMatrix, startingColumnIndex, endingColumnIndex)
+	if (startingColumnIndex < 0) then error("The starting row index must be a positive integer value!") end 
 
-	result = AqwamMatrixLibrary:transpose(result)
+	if (endingColumnIndex < 0) then error("The ending row index must be a positive integer value!") end 
+
+	local result = {}
+
+	if (endingColumnIndex >= startingColumnIndex) then
+		
+		for row = 1, #matrix, 1 do
+			
+			result[row] = {}
+			
+			for index = startingColumnIndex, endingColumnIndex, 1 do table.insert(result[row], matrix[row][index]) end
+			
+		end
+
+	else
+		
+		for row = 1, #matrix, 1 do
+			
+			result[row] = {}
+			
+			for index = endingColumnIndex, #matrix do
+
+				table.insert(result[row], matrix[row][index])
+
+			end
+			
+			for index = 1, startingColumnIndex, 1 do
+
+				table.insert(result[row], matrix[row][index])
+
+			end
+			
+		end
+
+	end
 
 	return result
 
@@ -1588,21 +1593,21 @@ function AqwamMatrixLibrary:isMatrix(matrix)
 end
 
 function AqwamMatrixLibrary:findNanValue(matrix)
-	
+
 	for row = 1, #matrix, 1 do
-		
+
 		for column = 1, #matrix[1] do
-			
+
 			local value = matrix[row][column]
-			
+
 			if (value ~= value) then return {row, column} end
-			
+
 		end
-		
+
 	end
-	
+
 	return nil
-	
+
 end
 
 function AqwamMatrixLibrary:findValue(matrix, valueToFind)
@@ -1621,24 +1626,24 @@ function AqwamMatrixLibrary:findValue(matrix, valueToFind)
 
 end
 
-function AqwamMatrixLibrary:safeSetValue(matrix, value, rowIndex, columnIndex)
-	
+function AqwamMatrixLibrary:setValue(matrix, value, rowIndex, columnIndex)
+
 	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
-	
+
 	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to set a value that is out of bounds.") end
-	
+
 	matrix[rowIndex][columnIndex] = value
-	
+
 end
 
-function AqwamMatrixLibrary:safeGetValue(matrix, rowIndex, columnIndex)
-	
+function AqwamMatrixLibrary:getValue(matrix, rowIndex, columnIndex)
+
 	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
 
 	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to get a value that is out of bounds.") end
 
 	return matrix[rowIndex][columnIndex]
-	
+
 end
 
 function AqwamMatrixLibrary:getVersion()
