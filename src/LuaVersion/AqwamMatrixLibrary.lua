@@ -1338,7 +1338,11 @@ function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex
 
 	if (startingRowIndex < 0) then error("The starting row index must be a positive integer value!") end 
 
-	if (endingRowIndex < 0) then error("The ending row index must be a positive integer value!") end 
+	if (endingRowIndex < 0) then error("The ending row index must be a positive integer value!") end
+	
+	local numberOfRows = #matrix
+	
+	local numberOfColumns = #matrix[1]
 
 	local result = {}
 
@@ -1352,7 +1356,7 @@ function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex
 
 	else
 
-		for index = endingRowIndex, #matrix do
+		for index = endingRowIndex, numberOfRows do
 
 			table.insert(result, matrix[index])
 
@@ -1380,6 +1384,8 @@ function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingCo
 	
 	local numberOfRows = #matrix
 
+	local numberOfColumns = #matrix[1]
+
 	local result = {}
 	
 	if (endingColumnIndex >= startingColumnIndex) then
@@ -1402,7 +1408,7 @@ function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingCo
 			
 			result[row] = {}
 			
-			for index = endingColumnIndex, #matrix do
+			for index = endingColumnIndex, numberOfColumns do
 
 				table.insert(result[row], matrix[row][index])
 
