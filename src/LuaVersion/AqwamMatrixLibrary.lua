@@ -1332,12 +1332,6 @@ function AqwamMatrixLibrary:horizontalZScoreNormalization(matrix)
 
 end
 
-local function extract(matrix, startingIndex, endingIndex)
-
-
-
-end
-
 function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex)
 
 	if (endingRowIndex == nil) then endingRowIndex = #matrix end
