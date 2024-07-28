@@ -142,63 +142,21 @@ function AqwamMatrixLibrary:expand(matrix, targetRowSize, targetColumnSize)
 
 end
 
-local function matrixBroadcast(matrix1, matrix2)
+local function broadcastAMatrixIfDifferentSize(matrix1, matrix2)
 
 	local isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
 
-	if (isMatrix1Broadcasted == true) then
+	if (isMatrix1Broadcasted) then
 
 		matrix1 = AqwamMatrixLibrary:expand(matrix1, #matrix2, #matrix2[1])
 
-	elseif (isMatrix2Broadcasted == true) then
+	elseif (isMatrix2Broadcasted) then
 
 		matrix2 = AqwamMatrixLibrary:expand(matrix2, #matrix1, #matrix1[1])
 
 	end
 
 	return matrix1, matrix2		
-
-end
-
-local function matrixOperation(functionToApply, matrix1, matrix2)
-
-	if (#matrix1 ~= #matrix2) or (#matrix1[1] ~= #matrix2[1]) then error("Incompatible Dimensions! (" .. #matrix1 .." x " .. #matrix1[1] .. ") and (" .. #matrix2 .. " x " .. #matrix2[1] .. ")") end
-
-	local result = {}
-
-	for row = 1, #matrix1, 1 do
-
-		result[row] = {}
-
-		for column = 1, #matrix1[1], 1 do
-
-			result[row][column] = functionToApply(matrix1[row][column], matrix2[row][column])
-
-		end
-
-	end
-
-	return result
-
-end
-
-local function matrixSingleOperation(functionToApply, matrix)
-
-	local result = {}
-
-	for row = 1, #matrix, 1 do
-
-		result[row] = {}
-
-		for column = 1, #matrix[1], 1 do
-
-			result[row][column] = functionToApply(matrix[row][column])
-
-		end
-
-	end
-
-	return result
 
 end
 
@@ -369,33 +327,17 @@ local function generateArgumentErrorString(matrices, firstMatrixIndex, secondMat
 
 end
 
-local function broadcastAndCalculate(functionToApply, ...)
+local function applyFunctionUsingOneMatrix(functionToApply, matrix)
 
-	local matrices = {...}
+	local result = {}
 
-	local numberOfMatrices = #matrices
+	for row = 1, #matrix, 1 do
 
-	local result = convertToMatrixIfScalar(matrices[1])
+		result[row] = {}
 
-	if (numberOfMatrices == 1) then return matrixSingleOperation(functionToApply, result) end
+		for column = 1, #matrix[1], 1 do
 
-	for i = 2, numberOfMatrices, 1 do
-
-		local success = pcall(function()
-
-			local secondMatrix = convertToMatrixIfScalar(matrices[i])
-
-			result, secondMatrix = matrixBroadcast(result, secondMatrix)
-
-			result = matrixOperation(functionToApply, result, secondMatrix)
-
-		end)
-
-		if not success then
-
-			local text = generateArgumentErrorString(matrices, (i - 1), i)
-
-			error(text)
+			result[row][column] = functionToApply(matrix[row][column])
 
 		end
 
@@ -405,75 +347,193 @@ local function broadcastAndCalculate(functionToApply, ...)
 
 end
 
+local function applyFunctionUsingTwoMatrices(functionToApply, matrix1, matrix2)
+
+	if (#matrix1 ~= #matrix2) or (#matrix1[1] ~= #matrix2[1]) then error("Incompatible Dimensions! (" .. #matrix1 .." x " .. #matrix1[1] .. ") and (" .. #matrix2 .. " x " .. #matrix2[1] .. ")") end
+
+	local result = {}
+
+	for row = 1, #matrix1, 1 do
+
+		result[row] = {}
+
+		for column = 1, #matrix1[1], 1 do
+
+			result[row][column] = functionToApply(matrix1[row][column], matrix2[row][column])
+
+		end
+
+	end
+
+	return result
+
+end
+
+local function applyFunctionWhenTheFirstValueIsAScalar(functionToApply, matrix, scalar)
+	
+	local result = {}
+
+	for row = 1, #matrix, 1 do
+
+		result[row] = {}
+
+		for column = 1, #matrix[1], 1 do
+
+			result[row][column] = functionToApply(matrix[row][column], scalar)
+
+		end
+
+	end
+
+	return result
+	
+end
+
+local function applyFunctionWhenTheSecondValueIsAScalar(functionToApply, scalar, matrix)
+
+	local result = {}
+
+	for row = 1, #matrix, 1 do
+
+		result[row] = {}
+
+		for column = 1, #matrix[1], 1 do
+
+			result[row][column] = functionToApply(scalar, matrix[row][column])
+
+		end
+
+	end
+
+	return result
+
+end
+
+local function applyFunctionUsingMultipleMatrices(functionToApply, ...)
+
+	local matrices = {...}
+
+	local numberOfMatrices = #matrices
+
+	local matrix = matrices[1]
+
+	if (numberOfMatrices == 1) then 
+		
+		if (type(matrix) == "table") then
+			
+			return applyFunctionUsingOneMatrix(functionToApply, matrix) 
+			
+		else
+			
+			return functionToApply(matrix)
+			
+		end
+		
+	end
+
+	for i = 2, numberOfMatrices, 1 do
+		
+		local otherMatrix = matrices[i]
+
+		local isFirstValueIsMatrix = (type(matrix) == "table")
+
+		local isSecondValueIsMatrix = (type(otherMatrix) == "table")
+
+		if (isFirstValueIsMatrix) and (isSecondValueIsMatrix) then
+
+			matrix, otherMatrix = broadcastAMatrixIfDifferentSize(matrix, otherMatrix)
+
+			matrix = applyFunctionUsingTwoMatrices(functionToApply, matrix, otherMatrix)
+
+		elseif (not isFirstValueIsMatrix) and (isSecondValueIsMatrix) then
+			
+			matrix = applyFunctionWhenTheFirstValueIsAScalar(functionToApply, matrix, otherMatrix)
+
+		elseif (isFirstValueIsMatrix) and (not isSecondValueIsMatrix) then
+
+			matrix = applyFunctionWhenTheSecondValueIsAScalar(functionToApply, matrix, otherMatrix)
+
+		else
+
+			matrix = functionToApply(matrix, otherMatrix)
+
+		end
+
+	end
+
+	return matrix
+
+end
+
 function AqwamMatrixLibrary:add(...)
 
-	return broadcastAndCalculate(function(a, b) return a + b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a + b end, ...)
 
 end
 
 function AqwamMatrixLibrary:subtract(...)
 
-	return broadcastAndCalculate(function(a, b) return a - b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a - b end, ...)
 
 end
 
 function AqwamMatrixLibrary:multiply(...)
 
-	return broadcastAndCalculate(function(a, b) return a * b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a * b end, ...)
 
 end
 
 function AqwamMatrixLibrary:divide(...)
 
-	return broadcastAndCalculate(function(a, b) return a / b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a / b end, ...)
 
 end
 
 function AqwamMatrixLibrary:logarithm(...)
 
-	return broadcastAndCalculate(math.log, ...)
+	return applyFunctionUsingMultipleMatrices(math.log, ...)
 
 end
 
 function AqwamMatrixLibrary:power(...)
 
-	return broadcastAndCalculate(math.pow, ...)
+	return applyFunctionUsingMultipleMatrices(math.pow, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesEqual(...)
 
-	return broadcastAndCalculate(function(a, b) return a == b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a == b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesGreater(...)
 
-	return broadcastAndCalculate(function(a, b) return a > b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a > b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesGreaterOrEqual(...)
 
-	return broadcastAndCalculate(function(a, b) return a >= b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a >= b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesLesser(...)
 
-	return broadcastAndCalculate(function(a, b) return a < b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a < b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areValuesLesserOrEqual(...)
 
-	return broadcastAndCalculate(function(a, b) return a <= b end, ...)
+	return applyFunctionUsingMultipleMatrices(function(a, b) return a <= b end, ...)
 
 end
 
 function AqwamMatrixLibrary:areMatricesEqual(...)
 
-	local resultMatrix = broadcastAndCalculate(function(a, b) return a == b end, ...)
+	local resultMatrix = applyFunctionUsingMultipleMatrices(function(a, b) return a == b end, ...)
 
 	for row = 1, #resultMatrix, 1 do
 
