@@ -369,28 +369,8 @@ local function applyFunctionUsingTwoMatrices(functionToApply, matrix1, matrix2)
 
 end
 
-local function applyFunctionWhenTheFirstValueIsAScalar(functionToApply, matrix, scalar)
+local function applyFunctionWhenTheFirstValueIsAScalar(functionToApply, scalar, matrix)
 	
-	local result = {}
-
-	for row = 1, #matrix, 1 do
-
-		result[row] = {}
-
-		for column = 1, #matrix[1], 1 do
-
-			result[row][column] = functionToApply(matrix[row][column], scalar)
-
-		end
-
-	end
-
-	return result
-	
-end
-
-local function applyFunctionWhenTheSecondValueIsAScalar(functionToApply, scalar, matrix)
-
 	local result = {}
 
 	for row = 1, #matrix, 1 do
@@ -400,6 +380,26 @@ local function applyFunctionWhenTheSecondValueIsAScalar(functionToApply, scalar,
 		for column = 1, #matrix[1], 1 do
 
 			result[row][column] = functionToApply(scalar, matrix[row][column])
+
+		end
+
+	end
+
+	return result
+	
+end
+
+local function applyFunctionWhenTheSecondValueIsAScalar(functionToApply, matrix, scalar)
+
+	local result = {}
+
+	for row = 1, #matrix, 1 do
+
+		result[row] = {}
+
+		for column = 1, #matrix[1], 1 do
+
+			result[row][column] = functionToApply(matrix[row][column], scalar)
 
 		end
 
