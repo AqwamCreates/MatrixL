@@ -1336,9 +1336,9 @@ function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex
 
 	if (endingRowIndex == nil) then endingRowIndex = #matrix end
 
-	if (startingRowIndex < 0) then error("The starting row index must be a positive integer value!") end 
+	if (startingRowIndex <= 0) then error("The starting row index must be greater than 0!") end 
 
-	if (endingRowIndex < 0) then error("The ending row index must be a positive integer value!") end
+	if (endingRowIndex <= 0) then error("The ending row index must be greater than 0!") end
 	
 	local numberOfRows = #matrix
 	
@@ -1378,9 +1378,9 @@ function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingCo
 
 	if (endingColumnIndex == nil) then endingColumnIndex = #matrix end
 
-	if (startingColumnIndex < 0) then error("The starting column index must be a positive integer value!") end 
+	if (startingColumnIndex <= 0) then error("The starting column index must be greater than 0!") end 
 
-	if (endingColumnIndex < 0) then error("The ending column index must be a positive integer value!") end
+	if (endingColumnIndex <= 0) then error("The ending column index must be greater than 0!") end
 	
 	local numberOfRows = #matrix
 
