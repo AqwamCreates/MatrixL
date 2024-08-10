@@ -142,7 +142,7 @@ function AqwamMatrixLibrary:expand(matrix, targetRowSize, targetColumnSize)
 
 end
 
-function AqwamMatrixLibrary:broadcastAMatrixIfDifferentSize(matrix1, matrix2)
+function AqwamMatrixLibrary:broadcast(matrix1, matrix2)
 
 	local isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
 
@@ -441,7 +441,7 @@ local function applyFunctionUsingMultipleMatrices(functionToApply, ...)
 
 		if (isFirstValueIsMatrix) and (isSecondValueIsMatrix) then
 
-			matrix, otherMatrix = AqwamMatrixLibrary:broadcastAMatrixIfDifferentSize(matrix, otherMatrix)
+			matrix, otherMatrix = AqwamMatrixLibrary:broadcast(matrix, otherMatrix)
 
 			matrix = applyFunctionUsingTwoMatrices(functionToApply, matrix, otherMatrix)
 
@@ -731,7 +731,7 @@ function AqwamMatrixLibrary:createRandomUniformMatrix(numberOfRows, numberOfColu
 
 end
 
-function AqwamMatrixLibrary:getSizeArray(...)
+function AqwamMatrixLibrary:getDimensionSizeArray(...)
 
 	local matrixSizeArray = {}
 
@@ -1694,7 +1694,7 @@ end
 
 function AqwamMatrixLibrary:setValue(matrix, value, rowIndex, columnIndex)
 
-	local dimensionSizeArray = AqwamMatrixLibrary:getSizeArray(matrix)
+	local dimensionSizeArray = AqwamMatrixLibrary:getDimensionSizeArray(matrix)
 
 	if (rowIndex < 1) or (rowIndex > dimensionSizeArray[1]) or (columnIndex < 1) or (columnIndex > dimensionSizeArray[2]) then error("Attempting to set a value that is out of bounds.") end
 
@@ -1704,7 +1704,7 @@ end
 
 function AqwamMatrixLibrary:getValue(matrix, rowIndex, columnIndex)
 
-	local dimensionSizeArray = AqwamMatrixLibrary:getSizeArray(matrix)
+	local dimensionSizeArray = AqwamMatrixLibrary:getDimensionSizeArray(matrix)
 
 	if (rowIndex < 1) or (rowIndex > dimensionSizeArray[1]) or (columnIndex < 1) or (columnIndex > dimensionSizeArray[2]) then error("Attempting to get a value that is out of bounds.") end
 
