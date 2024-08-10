@@ -741,9 +741,9 @@ function AqwamMatrixLibrary:getSizeArray(...)
 
 		local numberOfColumns = #matrix[1]
 
-		local sizeArray = {numberOfRows, numberOfColumns}
+		local dimensionSizeArray = {numberOfRows, numberOfColumns}
 
-		table.insert(matrixSizeArray, sizeArray)
+		table.insert(matrixSizeArray, dimensionSizeArray)
 
 	end
 
@@ -1514,15 +1514,15 @@ end
 
 function AqwamMatrixLibrary:minor(matrix, row, column)
 
-	local size = #matrix
+	local dimensionSize = #matrix
 
 	local minor = {}
 
-	for i = 1, size - 1 do
+	for i = 1, dimensionSize - 1 do
 
 		minor[i] = {}
 
-		for j = 1, size - 1 do
+		for j = 1, dimensionSize - 1 do
 
 			local mRow = (i < row and i) or (i + 1)
 
@@ -1550,13 +1550,13 @@ end
 
 function AqwamMatrixLibrary:determinant(matrix)
 
-	local size = #matrix
+	local dimensionSize = #matrix
 
-	if (size == 1) then
+	if (dimensionSize == 1) then
 
 		return matrix[1][1]
 
-	elseif (size == 2) then
+	elseif (dimensionSize == 2) then
 
 		return matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]
 
@@ -1564,7 +1564,7 @@ function AqwamMatrixLibrary:determinant(matrix)
 
 		local determinant = 0
 
-		for i = 1, size do
+		for i = 1, dimensionSize do
 
 			local cofactor =  AqwamMatrixLibrary:cofactor(matrix, 1, i)
 
@@ -1582,7 +1582,7 @@ function AqwamMatrixLibrary:inverse(matrix)
 
 	if (#matrix ~= #matrix[1]) then return nil end
 
-	local size = #matrix
+	local dimensionSize = #matrix
 
 	local determinant = AqwamMatrixLibrary:determinant(matrix)
 
@@ -1590,7 +1590,7 @@ function AqwamMatrixLibrary:inverse(matrix)
 
 		return nil -- matrix is not invertible
 
-	elseif (size == 1) then
+	elseif (dimensionSize == 1) then
 
 		return {{1 / determinant}}
 
@@ -1598,11 +1598,11 @@ function AqwamMatrixLibrary:inverse(matrix)
 
 		local adjugate = {}
 
-		for i = 1, size do
+		for i = 1, dimensionSize do
 
 			adjugate[i] = {}
 
-			for j = 1, size do
+			for j = 1, dimensionSize do
 
 				local sign = ((i + j) % 2 == 0) and 1 or -1
 
@@ -1616,9 +1616,9 @@ function AqwamMatrixLibrary:inverse(matrix)
 
 		local inverse = AqwamMatrixLibrary:transpose(adjugate)
 
-		for i = 1, size do
+		for i = 1, dimensionSize do
 
-			for j = 1, size do
+			for j = 1, dimensionSize do
 
 				inverse[i][j] = inverse[i][j] / determinant
 
@@ -1694,9 +1694,9 @@ end
 
 function AqwamMatrixLibrary:setValue(matrix, value, rowIndex, columnIndex)
 
-	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
+	local dimensionSizeArray = AqwamMatrixLibrary:getSizeArray(matrix)
 
-	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to set a value that is out of bounds.") end
+	if (rowIndex < 1) or (rowIndex > dimensionSizeArray[1]) or (columnIndex < 1) or (columnIndex > dimensionSizeArray[2]) then error("Attempting to set a value that is out of bounds.") end
 
 	matrix[rowIndex][columnIndex] = value
 
@@ -1704,9 +1704,9 @@ end
 
 function AqwamMatrixLibrary:getValue(matrix, rowIndex, columnIndex)
 
-	local sizeArray = AqwamMatrixLibrary:getSize(matrix)
+	local dimensionSizeArray = AqwamMatrixLibrary:getSizeArray(matrix)
 
-	if (rowIndex < 1) or (rowIndex > sizeArray[1]) or (columnIndex < 1) or (columnIndex > sizeArray[2]) then error("Attempting to get a value that is out of bounds.") end
+	if (rowIndex < 1) or (rowIndex > dimensionSizeArray[1]) or (columnIndex < 1) or (columnIndex > dimensionSizeArray[2]) then error("Attempting to get a value that is out of bounds.") end
 
 	return matrix[rowIndex][columnIndex]
 
