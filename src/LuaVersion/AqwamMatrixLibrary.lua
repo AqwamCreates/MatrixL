@@ -370,7 +370,7 @@ local function applyFunctionUsingTwoMatrices(functionToApply, matrix1, matrix2)
 end
 
 local function applyFunctionWhenTheFirstValueIsAScalar(functionToApply, scalar, matrix)
-	
+
 	local result = {}
 
 	for row = 1, #matrix, 1 do
@@ -386,7 +386,7 @@ local function applyFunctionWhenTheFirstValueIsAScalar(functionToApply, scalar, 
 	end
 
 	return result
-	
+
 end
 
 local function applyFunctionWhenTheSecondValueIsAScalar(functionToApply, matrix, scalar)
@@ -418,21 +418,21 @@ local function applyFunctionUsingMultipleMatrices(functionToApply, ...)
 	local matrix = matrices[1]
 
 	if (numberOfMatrices == 1) then 
-		
+
 		if (type(matrix) == "table") then
-			
+
 			return applyFunctionUsingOneMatrix(functionToApply, matrix) 
-			
+
 		else
-			
+
 			return functionToApply(matrix)
-			
+
 		end
-		
+
 	end
 
 	for i = 2, numberOfMatrices, 1 do
-		
+
 		local otherMatrix = matrices[i]
 
 		local isFirstValueIsMatrix = (type(matrix) == "table")
@@ -446,7 +446,7 @@ local function applyFunctionUsingMultipleMatrices(functionToApply, ...)
 			matrix = applyFunctionUsingTwoMatrices(functionToApply, matrix, otherMatrix)
 
 		elseif (not isFirstValueIsMatrix) and (isSecondValueIsMatrix) then
-			
+
 			matrix = applyFunctionWhenTheFirstValueIsAScalar(functionToApply, matrix, otherMatrix)
 
 		elseif (isFirstValueIsMatrix) and (not isSecondValueIsMatrix) then
@@ -1399,9 +1399,9 @@ function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex
 	if (startingRowIndex <= 0) then error("The starting row index must be greater than 0!") end 
 
 	if (endingRowIndex <= 0) then error("The ending row index must be greater than 0!") end
-	
+
 	local numberOfRows = #matrix
-	
+
 	local numberOfColumns = #matrix[1]
 
 	local result = {}
@@ -1441,45 +1441,45 @@ function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingCo
 	if (startingColumnIndex <= 0) then error("The starting column index must be greater than 0!") end 
 
 	if (endingColumnIndex <= 0) then error("The ending column index must be greater than 0!") end
-	
+
 	local numberOfRows = #matrix
 
 	local numberOfColumns = #matrix[1]
 
 	local result = {}
-	
+
 	if (endingColumnIndex >= startingColumnIndex) then
-		
+
 		for row = 1, numberOfRows, 1 do
-			
+
 			result[row] = {}
-			
+
 			for index = startingColumnIndex, endingColumnIndex, 1 do 
-				
+
 				table.insert(result[row], matrix[row][index])
-				
+
 			end
-			
+
 		end
 
 	else
-		
+
 		for row = 1, numberOfRows, 1 do
-			
+
 			result[row] = {}
-			
+
 			for index = endingColumnIndex, numberOfColumns do
 
 				table.insert(result[row], matrix[row][index])
 
 			end
-			
+
 			for index = 1, startingColumnIndex, 1 do
 
 				table.insert(result[row], matrix[row][index])
 
 			end
-			
+
 		end
 
 	end
