@@ -142,7 +142,7 @@ function AqwamMatrixLibrary:expand(matrix, targetRowSize, targetColumnSize)
 
 end
 
-local function broadcastAMatrixIfDifferentSize(matrix1, matrix2)
+function AqwamMatrixLibrary:broadcastAMatrixIfDifferentSize(matrix1, matrix2)
 
 	local isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
 
@@ -441,7 +441,7 @@ local function applyFunctionUsingMultipleMatrices(functionToApply, ...)
 
 		if (isFirstValueIsMatrix) and (isSecondValueIsMatrix) then
 
-			matrix, otherMatrix = broadcastAMatrixIfDifferentSize(matrix, otherMatrix)
+			matrix, otherMatrix = AqwamMatrixLibrary:broadcastAMatrixIfDifferentSize(matrix, otherMatrix)
 
 			matrix = applyFunctionUsingTwoMatrices(functionToApply, matrix, otherMatrix)
 
@@ -731,9 +731,9 @@ function AqwamMatrixLibrary:createRandomUniformMatrix(numberOfRows, numberOfColu
 
 end
 
-function AqwamMatrixLibrary:getSize(...)
+function AqwamMatrixLibrary:getSizeArray(...)
 
-	local matrixSizesArray = {}
+	local matrixSizeArray = {}
 
 	for i, matrix in ipairs({...}) do
 
@@ -741,13 +741,13 @@ function AqwamMatrixLibrary:getSize(...)
 
 		local numberOfColumns = #matrix[1]
 
-		local sizesArray = {numberOfRows, numberOfColumns}
+		local sizeArray = {numberOfRows, numberOfColumns}
 
-		table.insert(matrixSizesArray, sizesArray)
+		table.insert(matrixSizeArray, sizeArray)
 
 	end
 
-	return table.unpack(matrixSizesArray)
+	return table.unpack(matrixSizeArray)
 
 end
 
