@@ -1006,7 +1006,7 @@ function AqwamMatrixLibrary:printMatrix(...)
 
 end
 
-local function generateMatrixWithComma(matrix)
+local function generateMatrixWithCommaString(matrix)
 
 	if matrix == nil then return "" end
 
@@ -1086,7 +1086,7 @@ function AqwamMatrixLibrary:printMatrixWithComma(...)
 
 	for matrixNumber = 1, #matrices, 1 do
 
-		generatedText = generateMatrixWithComma(matrices[matrixNumber])
+		generatedText = generateMatrixWithCommaString(matrices[matrixNumber])
 
 		text = text .. generatedText
 
