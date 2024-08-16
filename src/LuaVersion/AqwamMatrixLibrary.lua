@@ -927,8 +927,8 @@ function AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
 
 end
 
-local function generateMatrixString(matrix)
-
+function AqwamMatrixLibrary:generateMatrixString(matrix)
+	
 	if matrix == nil then return "" end
 
 	local numberOfRows = #matrix
@@ -981,7 +981,7 @@ local function generateMatrixString(matrix)
 	end
 
 	return text
-
+	
 end
 
 function AqwamMatrixLibrary:printMatrix(...)
@@ -994,7 +994,7 @@ function AqwamMatrixLibrary:printMatrix(...)
 
 	for matrixNumber = 1, #matrices, 1 do
 
-		generatedText = generateMatrixString(matrices[matrixNumber])
+		generatedText = AqwamMatrixLibrary:generateMatrixString(matrices[matrixNumber])
 
 		text = text .. generatedText
 
@@ -1006,8 +1006,8 @@ function AqwamMatrixLibrary:printMatrix(...)
 
 end
 
-local function generateMatrixWithCommaString(matrix)
-
+function AqwamMatrixLibrary:generateMatrixWithCommaString(matrix)
+	
 	if matrix == nil then return "" end
 
 	local numberOfRows = #matrix
@@ -1073,7 +1073,7 @@ local function generateMatrixWithCommaString(matrix)
 	end
 
 	return text
-
+	
 end
 
 function AqwamMatrixLibrary:printMatrixWithComma(...)
@@ -1086,7 +1086,7 @@ function AqwamMatrixLibrary:printMatrixWithComma(...)
 
 	for matrixNumber = 1, #matrices, 1 do
 
-		generatedText = generateMatrixWithCommaString(matrices[matrixNumber])
+		generatedText = AqwamMatrixLibrary:generateMatrixWithCommaString(matrices[matrixNumber])
 
 		text = text .. generatedText
 
@@ -1098,7 +1098,7 @@ function AqwamMatrixLibrary:printMatrixWithComma(...)
 
 end
 
-local function generatePortableMatrixString(matrix)
+function AqwamMatrixLibrary:generatePortableMatrixString(matrix)
 
 	if matrix == nil then return "" end
 
@@ -1181,7 +1181,7 @@ function AqwamMatrixLibrary:printPortableMatrix(...)
 
 	for matrixNumber = 1, #matrices, 1 do
 
-		generatedText = generatePortableMatrixString(matrices[matrixNumber])
+		generatedText = AqwamMatrixLibrary:generatePortableMatrixString(matrices[matrixNumber])
 
 		text = text .. generatedText
 
