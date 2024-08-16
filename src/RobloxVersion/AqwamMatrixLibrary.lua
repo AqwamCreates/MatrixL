@@ -901,7 +901,7 @@ function AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
 	local dividedMatrix = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
 
-	local squareRootMatrix = AqwamMatrixLibrary:power(dividedMatrix, (1/2))
+	local squareRootMatrix = AqwamMatrixLibrary:power(dividedMatrix, 0.5)
 
 	return squareRootMatrix
 
@@ -921,7 +921,7 @@ function AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
 
 	local dividedMatrix = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
 
-	local squareRootMatrix = AqwamMatrixLibrary:power(dividedMatrix, (1/2))
+	local squareRootMatrix = AqwamMatrixLibrary:power(dividedMatrix, 0.5)
 
 	return squareRootMatrix
 
