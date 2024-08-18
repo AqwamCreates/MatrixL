@@ -883,7 +883,7 @@ function AqwamMatrixLibrary:standardDeviation(matrix)
 
 	standardDeviation = math.sqrt(squaredSum/numberOfElements)
 
-	return standardDeviation	
+	return standardDeviation, mean
 
 end
 
@@ -903,7 +903,7 @@ function AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
 	local squareRootMatrix = AqwamMatrixLibrary:power(dividedMatrix, 0.5)
 
-	return squareRootMatrix
+	return squareRootMatrix, verticalMean
 
 end
 
@@ -923,7 +923,7 @@ function AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
 
 	local squareRootMatrix = AqwamMatrixLibrary:power(dividedMatrix, 0.5)
 
-	return squareRootMatrix
+	return squareRootMatrix, horizontalMean
 
 end
 
@@ -1352,43 +1352,37 @@ end
 
 function AqwamMatrixLibrary:zScoreNormalization(matrix)
 
-	local mean = AqwamMatrixLibrary:mean(matrix)
-
-	local standardDeviation = AqwamMatrixLibrary:standardDeviation(matrix)
+	local standardDeviation, mean = AqwamMatrixLibrary:standardDeviation(matrix)
 
 	local result = AqwamMatrixLibrary:subtract(matrix, mean)
 
 	result = AqwamMatrixLibrary:divide(result, standardDeviation)
 
-	return result, mean, standardDeviation
+	return result, standardDeviation, mean
 
 end
 
 function AqwamMatrixLibrary:verticalZScoreNormalization(matrix)
 
-	local verticalMean = AqwamMatrixLibrary:verticalMean(matrix)
-
-	local verticalStandardDeviaton = AqwamMatrixLibrary:verticalStandardDeviation(matrix)
+	local verticalStandardDeviaton, verticalMean = AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
 	local result = AqwamMatrixLibrary:subtract(matrix, verticalMean)
 
 	result = AqwamMatrixLibrary:divide(result, verticalStandardDeviaton)
 
-	return result, verticalMean, verticalStandardDeviaton
+	return result, verticalStandardDeviaton, verticalMean
 
 end
 
 function AqwamMatrixLibrary:horizontalZScoreNormalization(matrix)
 
-	local horizontalMean = AqwamMatrixLibrary:horizontalMean(matrix)
-
-	local horizontalStandardDeviation = AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
+	local horizontalStandardDeviation, horizontalMean = AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
 
 	local result = AqwamMatrixLibrary:subtract(matrix, horizontalMean)
 
 	result = AqwamMatrixLibrary:divide(result, horizontalStandardDeviation)
 
-	return result, horizontalMean, horizontalStandardDeviation
+	return result, horizontalStandardDeviation, horizontalMean
 
 end
 
