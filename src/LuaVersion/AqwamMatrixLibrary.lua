@@ -1442,7 +1442,7 @@ end
 
 function AqwamMatrixLibrary:copy(matrix)
 
-	if (type(matrix) == "number") then return matrix end
+	if (type(matrix) ~= "table") then return matrix end
 
 	local numberOfRows = #matrix
 
