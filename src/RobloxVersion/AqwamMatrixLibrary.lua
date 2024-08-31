@@ -1400,27 +1400,9 @@ function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex
 
 	local result = {}
 
-	if (endingRowIndex >= startingRowIndex) then
+	for index = startingRowIndex, endingRowIndex do
 
-		for index = startingRowIndex, endingRowIndex, 1 do
-
-			table.insert(result, matrix[index])
-
-		end
-
-	else
-
-		for index = endingRowIndex, numberOfRows do
-
-			table.insert(result, matrix[index])
-
-		end
-
-		for index = 1, startingRowIndex, 1 do
-
-			table.insert(result, matrix[index])
-
-		end
+		table.insert(result, matrix[index])
 
 	end
 
@@ -1441,38 +1423,14 @@ function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingCo
 	local numberOfColumns = #matrix[1]
 
 	local result = {}
+	
+	for row = 1, numberOfRows, 1 do
 
-	if (endingColumnIndex >= startingColumnIndex) then
+		result[row] = {}
 
-		for row = 1, numberOfRows, 1 do
+		for index = startingColumnIndex, endingColumnIndex do 
 
-			result[row] = {}
-
-			for index = startingColumnIndex, endingColumnIndex, 1 do 
-
-				table.insert(result[row], matrix[row][index])
-
-			end
-
-		end
-
-	else
-
-		for row = 1, numberOfRows, 1 do
-
-			result[row] = {}
-
-			for index = endingColumnIndex, numberOfColumns do
-
-				table.insert(result[row], matrix[row][index])
-
-			end
-
-			for index = 1, startingColumnIndex, 1 do
-
-				table.insert(result[row], matrix[row][index])
-
-			end
+			table.insert(result[row], matrix[row][index])
 
 		end
 
