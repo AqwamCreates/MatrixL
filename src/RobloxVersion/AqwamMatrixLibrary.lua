@@ -1400,9 +1400,9 @@ function AqwamMatrixLibrary:extractRows(matrix, startingRowIndex, endingRowIndex
 
 	local result = {}
 
-	for index = startingRowIndex, endingRowIndex do
+	for row = startingRowIndex, endingRowIndex do
 
-		table.insert(result, matrix[index])
+		table.insert(result, matrix[row])
 
 	end
 
@@ -1428,9 +1428,9 @@ function AqwamMatrixLibrary:extractColumns(matrix, startingColumnIndex, endingCo
 
 		result[row] = {}
 
-		for index = startingColumnIndex, endingColumnIndex do 
+		for column = startingColumnIndex, endingColumnIndex do 
 
-			table.insert(result[row], matrix[row][index])
+			table.insert(result[row], matrix[row][column])
 
 		end
 
