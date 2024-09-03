@@ -879,7 +879,7 @@ function AqwamMatrixLibrary:standardDeviation(matrix)
 
 	end
 
-	variance = sum^2 / (numberOfElements - 1)
+	variance = sum^2 / numberOfElements
 
 	standardDeviation = math.sqrt(variance)
 
@@ -897,9 +897,7 @@ function AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
 	local summedSquaredMatrixSubtractedByMean = AqwamMatrixLibrary:verticalSum(squaredMatrixSubtractedByMean, 2)
 
-	local divisor =  #matrix - 1
-
-	local verticalVariance = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
+	local verticalVariance = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, #matrix)
 
 	local verticalStandardDeviation = AqwamMatrixLibrary:power(verticalVariance, 0.5)
 
@@ -917,9 +915,7 @@ function AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
 
 	local summedSquaredMatrixSubtractedByMean = AqwamMatrixLibrary:horizontalSum(squaredMatrixSubtractedByMean, 2)
 
-	local divisor =  #matrix[1] - 1
-
-	local horizontalVariance = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
+	local horizontalVariance = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, #matrix[1])
 
 	local horizontalStandardDeviation = AqwamMatrixLibrary:power(horizontalVariance, 0.5)
 
