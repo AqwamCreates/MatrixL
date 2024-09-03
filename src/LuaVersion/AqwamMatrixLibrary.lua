@@ -865,7 +865,7 @@ function AqwamMatrixLibrary:standardDeviation(matrix)
 
 	local sum = 0
 
-	local squaredSum
+	local variance
 
 	local standardDeviation
 
@@ -879,11 +879,11 @@ function AqwamMatrixLibrary:standardDeviation(matrix)
 
 	end
 
-	squaredSum = sum^2
+	variance = sum^2 / (numberOfElements - 1)
 
-	standardDeviation = math.sqrt(squaredSum/numberOfElements)
+	standardDeviation = math.sqrt(variance)
 
-	return standardDeviation, mean
+	return standardDeviation, variance, mean
 
 end
 
@@ -899,11 +899,11 @@ function AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
 	local divisor =  #matrix - 1
 
-	local dividedMatrix = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
+	local verticalVariance = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
 
-	local squareRootMatrix = AqwamMatrixLibrary:power(dividedMatrix, 0.5)
+	local verticalStandardDeviation = AqwamMatrixLibrary:power(verticalVariance, 0.5)
 
-	return squareRootMatrix, verticalMean
+	return verticalStandardDeviation, verticalVariance, verticalMean
 
 end
 
@@ -919,11 +919,11 @@ function AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
 
 	local divisor =  #matrix[1] - 1
 
-	local dividedMatrix = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
+	local horizontalVariance = AqwamMatrixLibrary:divide(summedSquaredMatrixSubtractedByMean, divisor)
 
-	local squareRootMatrix = AqwamMatrixLibrary:power(dividedMatrix, 0.5)
+	local horizontalStandardDeviation = AqwamMatrixLibrary:power(horizontalVariance, 0.5)
 
-	return squareRootMatrix, horizontalMean
+	return horizontalStandardDeviation, horizontalVariance, horizontalMean
 
 end
 
@@ -1352,37 +1352,37 @@ end
 
 function AqwamMatrixLibrary:zScoreNormalization(matrix)
 
-	local standardDeviation, mean = AqwamMatrixLibrary:standardDeviation(matrix)
+	local standardDeviation, variance, mean = AqwamMatrixLibrary:standardDeviation(matrix)
 
-	local result = AqwamMatrixLibrary:subtract(matrix, mean)
+	local zScore = AqwamMatrixLibrary:subtract(matrix, mean)
 
-	result = AqwamMatrixLibrary:divide(result, standardDeviation)
+	zScore = AqwamMatrixLibrary:divide(zScore, standardDeviation)
 
-	return result, standardDeviation, mean
+	return zScore, standardDeviation, variance, mean
 
 end
 
 function AqwamMatrixLibrary:verticalZScoreNormalization(matrix)
 
-	local verticalStandardDeviaton, verticalMean = AqwamMatrixLibrary:verticalStandardDeviation(matrix)
+	local verticalStandardDeviaton, verticalVariance, verticalMean = AqwamMatrixLibrary:verticalStandardDeviation(matrix)
 
-	local result = AqwamMatrixLibrary:subtract(matrix, verticalMean)
+	local verticalZScore = AqwamMatrixLibrary:subtract(matrix, verticalMean)
 
-	result = AqwamMatrixLibrary:divide(result, verticalStandardDeviaton)
+	verticalZScore = AqwamMatrixLibrary:divide(verticalZScore, verticalStandardDeviaton)
 
-	return result, verticalStandardDeviaton, verticalMean
+	return verticalZScore, verticalStandardDeviaton, verticalVariance, verticalMean
 
 end
 
 function AqwamMatrixLibrary:horizontalZScoreNormalization(matrix)
 
-	local horizontalStandardDeviation, horizontalMean = AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
+	local horizontalStandardDeviation, horizontalVariance, horizontalMean = AqwamMatrixLibrary:horizontalStandardDeviation(matrix)
 
-	local result = AqwamMatrixLibrary:subtract(matrix, horizontalMean)
+	local horizontalZScore = AqwamMatrixLibrary:subtract(matrix, horizontalMean)
 
-	result = AqwamMatrixLibrary:divide(result, horizontalStandardDeviation)
+	horizontalZScore = AqwamMatrixLibrary:divide(horizontalZScore, horizontalStandardDeviation)
 
-	return result, horizontalStandardDeviation, horizontalMean
+	return horizontalZScore, horizontalStandardDeviation, horizontalVariance, horizontalMean
 
 end
 
