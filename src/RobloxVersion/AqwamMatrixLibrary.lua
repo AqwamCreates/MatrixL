@@ -495,6 +495,12 @@ function AqwamMatrixLibrary:logarithm(...)
 
 end
 
+function AqwamMatrixLibrary:exponent(...)
+
+	return applyFunctionUsingMultipleMatrices(math.exp, ...)
+
+end
+
 function AqwamMatrixLibrary:power(...)
 
 	return applyFunctionUsingMultipleMatrices(math.pow, ...)
