@@ -465,6 +465,12 @@ local function applyFunctionUsingMultipleMatrices(functionToApply, ...)
 
 end
 
+function AqwamMatrixLibrary:unaryMinus(...)
+	
+	return applyFunctionUsingMultipleMatrices(function(a) return -a end, ...)
+	
+end
+
 function AqwamMatrixLibrary:add(...)
 
 	return applyFunctionUsingMultipleMatrices(function(a, b) return a + b end, ...)
