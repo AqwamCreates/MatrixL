@@ -200,7 +200,7 @@ end
 
 function AqwamMatrixLibrary:broadcast(matrix1, matrix2)
 
-	return broadcast(matrix1, matrix2, false)
+	return broadcast(matrix1, matrix2, true)
 
 end
 
