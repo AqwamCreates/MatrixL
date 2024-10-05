@@ -1289,7 +1289,7 @@ function AqwamMatrixLibrary:applyFunction(functionToApply, ...)
 
 		for column = 1, numberOfColumns, 1 do
 
-			for matrixArgument = 1, numberOfMatrices, 1 do matrixValueArray[matrixArgument] = matrixArray[matrixArgument][row][column] end 
+			for matrixIndex = 1, numberOfMatrices, 1 do matrixValueArray[matrixIndex] = matrixArray[matrixIndex][row][column] end 
 
 			result[row][column] = functionToApply(table.unpack(matrixValueArray))
 
