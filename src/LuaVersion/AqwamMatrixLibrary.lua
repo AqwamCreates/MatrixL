@@ -34,6 +34,46 @@ local AqwamMatrixLibrary = {}
 
 local module = {}
 
+local function deepCopyTable(original, copies)
+
+	copies = copies or {}
+
+	local originalType = type(original)
+
+	local copy
+
+	if (originalType == 'table') then
+
+		if copies[original] then
+
+			copy = copies[original]
+
+		else
+
+			copy = {}
+
+			copies[original] = copy
+
+			for originalKey, originalValue in next, original, nil do
+
+				copy[deepCopyTable(originalKey, copies)] = deepCopyTable(originalValue, copies)
+
+			end
+
+			setmetatable(copy, deepCopyTable(getmetatable(original), copies))
+
+		end
+
+	else -- number, string, boolean, etc
+
+		copy = original
+
+	end
+
+	return copy
+
+end
+
 local function onBroadcastError(matrix1, matrix2)
 
 	local errorMessage = "Unable To Broadcast. \n" .. "Matrix 1 Size: " .. "(" .. #matrix1 .. ", " .. #matrix1[1] .. ") \n" .. "Matrix 2 Size: " .. "(" .. #matrix2 .. ", " .. #matrix2[1] .. ") \n"
@@ -142,21 +182,25 @@ function AqwamMatrixLibrary:expand(matrix, targetRowSize, targetColumnSize)
 
 end
 
-function AqwamMatrixLibrary:broadcast(matrix1, matrix2)
-
+local function broadcast(matrix1, matrix2, deepCopyOriginalMatrix)
+	
 	local isMatrix1Broadcasted, isMatrix2Broadcasted = checkIfCanBroadcast(matrix1, matrix2)
 
-	if (isMatrix1Broadcasted) then
+	if (isMatrix1Broadcasted) then matrix1 = AqwamMatrixLibrary:expand(matrix1, #matrix2, #matrix2[1]) end
 
-		matrix1 = AqwamMatrixLibrary:expand(matrix1, #matrix2, #matrix2[1])
+	if (isMatrix2Broadcasted) then matrix2 = AqwamMatrixLibrary:expand(matrix2, #matrix1, #matrix1[1]) end
+	
+	if (not isMatrix1Broadcasted) and (deepCopyOriginalMatrix) then matrix1 = deepCopyTable(matrix1) end
 
-	elseif (isMatrix2Broadcasted) then
+	if (not isMatrix2Broadcasted) and (deepCopyOriginalMatrix) then matrix2 = deepCopyTable(matrix2) end
 
-		matrix2 = AqwamMatrixLibrary:expand(matrix2, #matrix1, #matrix1[1])
+	return matrix1, matrix2	
+	
+end
 
-	end
+function AqwamMatrixLibrary:broadcast(matrix1, matrix2)
 
-	return matrix1, matrix2		
+	return broadcast(matrix1, matrix2, false)
 
 end
 
@@ -441,7 +485,7 @@ local function applyFunctionUsingMultipleMatrices(functionToApply, ...)
 
 		if (isFirstValueIsMatrix) and (isSecondValueIsMatrix) then
 
-			matrix, otherMatrix = AqwamMatrixLibrary:broadcast(matrix, otherMatrix)
+			matrix, otherMatrix = broadcast(matrix, otherMatrix, false)
 
 			matrix = applyFunctionUsingTwoMatrices(functionToApply, matrix, otherMatrix)
 
