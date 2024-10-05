@@ -1266,29 +1266,32 @@ end
 
 function AqwamMatrixLibrary:applyFunction(functionToApply, ...)
 
-	local matricesValues
+	local matrixArray = {...}
+	
+	local numberOfMatrices = #matrixArray
 
-	local matrices = {...}
-	local matrix = matrices[1]
+	for i = 1, (numberOfMatrices - 1), 1 do
+		
+		matrixArray[i], matrixArray[i + 1] = AqwamMatrixLibrary:broadcast(matrixArray[i], matrixArray[i + 1])
+		
+	end
+	
+	local matrix = matrixArray[1]
 
 	local numberOfRows = #matrix
 	local numberOfColumns = #matrix[1]
 
-	local result = AqwamMatrixLibrary:createMatrix(numberOfRows, numberOfColumns)
+	local result = AqwamMatrixLibrary:createMatrix(numberOfRows, numberOfColumns, true)
+	
+	local matrixValueArray = {}
 
 	for row = 1, numberOfRows, 1 do
 
 		for column = 1, numberOfColumns, 1 do
 
-			matricesValues = {}
+			for matrixArgument = 1, numberOfMatrices, 1 do matrixValueArray[matrixArgument] = matrixArray[matrixArgument][row][column] end 
 
-			for matrixArgument = 1, #matrices, 1  do
-
-				table.insert(matricesValues, matrices[matrixArgument][row][column])
-
-			end 
-
-			result[row][column] = functionToApply(table.unpack(matricesValues))
+			result[row][column] = functionToApply(table.unpack(matrixValueArray))
 
 		end	
 
