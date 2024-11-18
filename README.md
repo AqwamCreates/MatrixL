@@ -10,9 +10,11 @@ Aqwam's Matrix Library (Aqwam-MatrixL)
 
 Author: Aqwam Harish Aiman
 	
-YouTube: https://www.youtube.com/channel/UCUrwoxv5dufEmbGsxyEUPZw
-	
+Email: aqwam.harish.aiman@gmail.com
+
 LinkedIn: https://www.linkedin.com/in/aqwam-harish-aiman/
+	
+YouTube: https://www.youtube.com/channel/UCUrwoxv5dufEmbGsxyEUPZw
 	
 --------------------------------------------------------------------
 	
