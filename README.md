@@ -1,5 +1,7 @@
 # MatrixL
 
+![MatrixL Icon](icons/MatrixLIcon.png)
+
 --------------------------------------------------------------------
 
 ## THIS IS A PROPRIETARY SOURCE CODE! NOT OPEN SOURCE! 
