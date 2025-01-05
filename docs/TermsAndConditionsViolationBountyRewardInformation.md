@@ -84,13 +84,13 @@ The individual responsible for the false accusation or defamation will be requir
 
 The individual responsible for the false accusation or defamation will be required to pay compensatory damages, and the Licensor reserves the right to pursue legal action for damages resulting from a false report or malicious defamation.
 
-## Exclusions and Terms for False Claims:
+## Exclusions and Terms for False Claims
 
 * No Rewards for False Claims: If it is determined that the violation was fabricated, misleading, or not substantiated by evidence, no reward will be given, and the reporting individual may face legal consequences, including criminal prosecution for defamation or false accusations.
 
 * Bounty Restrictions: Any reward for reporting a violation is contingent upon the truthfulness and validity of the accusation. If the report is determined to be false or misleading, the individual will forfeit any claim to the reward and may be legally liable for any damages caused by the false claim.
 
-## Summary of Key Points:
+## Summary of Key Points
 
 * Maximum reward: Up to 50% of the value of the violating company/group.
 
@@ -108,7 +108,7 @@ The individual responsible for the false accusation or defamation will be requir
 
 * Damages for false accusations: Any company or individual falsely accused will be entitled to compensation for damages, including reputational harm, business losses, and legal fees.
 
-## Example:
+## Example
 
 If a CEO of Company X approves the decision to use your library commercially without releasing the interacting code, and someone reports this violation with sufficient evidence, the person reporting the violation could receive a larger bounty reward (up to 50% of the company's value), given the systemic nature of the violation at the executive level.
 
