@@ -1,3 +1,5 @@
+# Terms And Conditions Violation Bounty Reward Information
+
 ## License Violation Reporting & Bounty Rewards
 
 If you suspect that any license violations, including those involving your own company/group, have occurred, you may be eligible for a bounty reward of up to 50% of the value of the violating company/group, subject to the following terms:
