@@ -49,7 +49,7 @@ User shall not:
 
 * Remove or alter any copyright, trademark, or other proprietary notices or labels contained in the Library;
 
-* Copyright, trademark, or patent any icons contained in the Library, either individually or as a collection;
+* Copyright, trademark, or patent any source codes and icons contained in the Library, either individually or as a collection;
 
 * Include the icons from the Library in projects that do not utilize the Library;
 
@@ -62,6 +62,10 @@ User shall not:
 * Use the Library in any manner that violates any applicable laws or regulations.
 
 * Should the User violates the prohibited actions as stated above, the User must pay monetary compensation. No other forms of compensation will be accepted.
+
+## Liability
+
+The Library is provided "AS IS" and without warranty of any kind. Licensor shall not be liable for any damages or losses, including but not limited to direct, indirect, incidental, consequential, or punitive damages arising out of the use or inability to use the Library.
 
 ## Liability
 
