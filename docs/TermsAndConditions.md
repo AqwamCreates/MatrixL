@@ -33,7 +33,7 @@ These terms and conditions (“Agreement”) are a legal agreement between you (
 
 * The User is not allowed to remove distributed codes released under the MIT license due to the commercial usage of this Library from the public without the Licensor's permission.
 
-* The term "commercial use" encompasses all forms of utilization and application, including integration, storing, and hosting from another computer, server, or machine. This applies to companies (or individuals, if none) whose combined revenue (including from subsidiaries or related entities) exceeds $3,000 within 365 days (not per 365 days) or those engaged in business-to-business activities.
+* The term "commercial use" encompasses all forms of utilization and application, including integration, storing, and hosting from another computer, server, or machine. This applies to companies (or individuals, if none) whose combined revenue (including from subsidiaries or related entities) exceeds $5,000 within 365 days (not per 365 days) or those engaged in business-to-business activities.
 
 * Failure to comply with these conditions will make the User liable for damages due to non-compliance, and the User must pay monetary compensation. No other forms of compensation will be accepted.
 
